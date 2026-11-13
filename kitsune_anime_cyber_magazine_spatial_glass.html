@@ -1,0 +1,2598 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KITSUNE // ANIME — Spatial Cyber-Magazine & Trophy Gallery</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2307080b'/%3E%3Cpath d='M14 14 L25 26 L32 24 L39 26 L50 14 L47 36 L32 52 L17 36 Z' fill='none' stroke='%23f43f5e' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M23 34 L28 36 M41 34 L36 37' stroke='%23f43f5e' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- HLS.js для прямого потокового вещания AniLibria -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            dark: {
+              950: '#06080e',
+              900: '#0c0f17',
+              800: '#141824',
+              700: '#1c2233',
+            },
+            brand: {
+              300: 'var(--brand-300, #fda4af)',
+              400: 'var(--brand-400, #fb7185)',
+              500: 'var(--brand-500, #f43f5e)',
+              600: 'var(--brand-600, #e11d48)',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --season-bg: #07080b;
+      --season-glow: rgba(244, 63, 94, 0.16);
+      --season-secondary: rgba(99, 102, 241, 0.08);
+      --season-accent: #f43f5e;
+      --brand-300: #fda4af;
+      --brand-400: #fb7185;
+      --brand-500: #f43f5e;
+      --brand-600: #e11d48;
+      --ease-60fps: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body {
+      background-color: var(--season-bg);
+      color: #f4f4f5;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 15% 0%, var(--season-glow), transparent 48%),
+        radial-gradient(circle at 85% 20%, var(--season-secondary), transparent 48%);
+      transition: background-color 0.35s var(--ease-60fps);
+    }
+
+    .glass {
+      background: rgba(12, 15, 23, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .gear-btn svg {
+      transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+      will-change: transform;
+    }
+    .gear-btn:hover svg { transform: rotate(45deg); }
+    .gear-btn:active svg { transform: rotate(135deg) scale(0.88); }
+    .gear-btn.gear-open svg { transform: rotate(180deg); color: var(--brand-400); }
+
+    .anim-60fps .anime-card {
+      opacity: 0;
+      transform: translate3d(0, 14px, 0) scale(0.985);
+      animation: cardReveal60fps 0.42s var(--ease-60fps) forwards;
+      animation-delay: var(--stagger, 0ms);
+      will-change: transform, opacity;
+      transition: transform 0.22s var(--ease-60fps), border-color 0.25s ease, box-shadow 0.28s var(--ease-60fps);
+      transform-style: preserve-3d;
+    }
+    .anim-60fps .anime-card:hover {
+      box-shadow: 0 20px 38px -12px rgba(0, 0, 0, 0.82), 0 0 0 1px var(--season-accent);
+    }
+
+    .card-glare {
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.22), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .anime-card:hover .card-glare { opacity: 1; }
+
+    .anim-60fps .modal-panel {
+      animation: modalPopIn 0.26s var(--ease-60fps) forwards;
+      will-change: transform, opacity;
+    }
+    .anim-60fps .page-view {
+      animation: pageSlideIn 0.3s var(--ease-60fps) forwards;
+    }
+
+    @keyframes cardReveal60fps {
+      from { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.985); }
+      to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+    }
+    @keyframes modalPopIn {
+      from { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.97); }
+      to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+    }
+    @keyframes pageSlideIn {
+      from { opacity: 0; transform: translate3d(0, 8px, 0); }
+      to { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+
+    .season-particle {
+      position: absolute;
+      top: -40px;
+      left: var(--x, 50%);
+      opacity: 0;
+      will-change: transform, opacity;
+      animation: seasonFall var(--dur, 12s) linear infinite;
+      animation-delay: var(--delay, 0s);
+    }
+    @keyframes seasonFall {
+      0% { opacity: 0; transform: translate3d(0, -20px, 0) rotate(0deg) scale(var(--scale, 1)); }
+      12% { opacity: var(--max-op, 0.72); }
+      50% { transform: translate3d(var(--sway, 35px), 52vh, 0) rotate(190deg) scale(var(--scale, 1)); }
+      88% { opacity: var(--max-op, 0.65); }
+      100% { opacity: 0; transform: translate3d(calc(var(--sway, 35px) * -0.6), 106vh, 0) rotate(360deg) scale(var(--scale, 1)); }
+    }
+
+    @keyframes eqPulse {
+      0%, 100% { transform: scaleY(0.25); }
+      50% { transform: scaleY(1); }
+    }
+    .eq-bar { transform-origin: bottom; animation: eqPulse 0.7s ease-in-out infinite; }
+
+    .hanko-stamp {
+      font-family: serif;
+      writing-mode: vertical-rl;
+      border: 2px solid currentColor;
+      box-shadow: inset 0 0 0 1px currentColor;
+      transform: rotate(-8deg);
+    }
+
+    .frame-kitsune { box-shadow: 0 0 0 2px #f43f5e, 0 0 14px rgba(244, 63, 94, 0.7); }
+    .frame-crown { box-shadow: 0 0 0 2px #fbbf24, 0 0 16px rgba(251, 191, 36, 0.75); }
+    .frame-ice { box-shadow: 0 0 0 2px #38bdf8, 0 0 16px rgba(56, 189, 248, 0.75); }
+    .frame-cyber { box-shadow: 0 0 0 2px #a855f7, 0 0 16px rgba(168, 85, 247, 0.8); }
+
+    #playerVideoContainer:fullscreen,
+    #playerVideoContainer:-webkit-full-screen {
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      max-height: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #000 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    #playerVideoContainer:fullscreen video,
+    #playerVideoContainer:-webkit-full-screen video {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: 100vh !important;
+      object-fit: contain !important;
+    }
+
+    /* Когда включён pseudo-fullscreen (внутри iframe или без разрешений), убираем transform у модалки */
+    #playerModal.fs-active {
+      padding: 0 !important;
+      overflow: hidden !important;
+      background: #000 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    #playerModal.fs-active #playerCinemaBox {
+      transform: none !important;
+      animation: none !important;
+      max-width: none !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: #000 !important;
+    }
+    #playerVideoContainer.pseudo-fullscreen {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 99999 !important;
+      background: #000 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      aspect-ratio: auto !important;
+    }
+    #playerVideoContainer.pseudo-fullscreen video {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: 100vh !important;
+      object-fit: contain !important;
+    }
+
+    #animeVideoElement:focus,
+    #animeVideoElement:focus-visible {
+      outline: none !important;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .spoiler-blur { filter: blur(6px); user-select: none; cursor: pointer; transition: filter 0.22s ease; }
+    .spoiler-blur.revealed { filter: none; user-select: auto; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white anim-60fps pb-16 lg:pb-0">
+
+  <div id="seasonParticlesLayer" class="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-45"></div>
+
+  <!-- ШАПКА ПОРТАЛА -->
+  <header class="sticky top-0 z-40 glass border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+
+      <div class="flex items-center gap-2.5 shrink-0">
+        <a href="#home" onclick="navigateTo('home'); return false;" class="flex items-center gap-2.5 group">
+          <div id="headerLogoBox" class="w-9 h-9 rounded-xl bg-dark-800 border border-white/10 group-hover:border-brand-500/50 flex items-center justify-center transition-colors shadow-lg">
+            <svg id="headerFoxSvg" class="w-5 h-5 text-brand-500 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 64 64" fill="none">
+              <path d="M12 12 L24 25 L32 23 L40 25 L52 12 L48 37 L32 54 L16 37 Z" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round" />
+              <path d="M22 35 L28 37 M42 35 L36 37" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+              <path d="M10 31 L17 33 M54 31 L47 33" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" opacity="0.65" />
+            </svg>
+          </div>
+          <div class="leading-none">
+            <span id="headerBrandTitle" class="font-display font-black text-lg tracking-tight text-white">KITSUNE</span>
+            <span class="text-brand-500 font-display font-black text-lg">//</span>
+            <span class="hidden xl:inline text-xs font-bold uppercase tracking-widest text-zinc-400 ml-1">ANIME</span>
+          </div>
+        </a>
+
+        <button type="button" id="headerRadioEq" onclick="toggleLofiRadio()" title="KITSUNE Lo-Fi Radio" class="hidden items-end gap-0.5 h-6 px-2 py-1 rounded-lg bg-brand-500/15 border border-brand-500/30 cursor-pointer">
+          <span class="eq-bar w-0.5 h-3 bg-brand-400" style="animation-delay:0s"></span>
+          <span class="eq-bar w-0.5 h-3 bg-brand-400" style="animation-delay:0.2s"></span>
+          <span class="eq-bar w-0.5 h-3 bg-brand-400" style="animation-delay:0.4s"></span>
+          <span class="eq-bar w-0.5 h-3 bg-brand-400" style="animation-delay:0.1s"></span>
+        </button>
+      </div>
+
+      <nav class="hidden lg:flex items-center gap-1 bg-dark-900/90 border border-white/10 p-1 rounded-2xl shrink-0">
+        <button type="button" data-top-nav="home" onclick="navigateTo('home'); switchFeedTab('popular');" class="top-nav-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-brand-600 text-white transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Каталог</span>
+        </button>
+        <button type="button" data-top-nav="mylist" onclick="navigateTo('home'); switchFeedTab('mylist');" class="top-nav-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-white/5 transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <span>Мой список</span>
+          <span id="myListCountBadge" class="px-1.5 py-0.5 rounded-md bg-brand-500/20 text-brand-400 font-bold text-[11px]">0</span>
+        </button>
+        <button type="button" data-top-nav="tierlist" onclick="navigateTo('tierlist')" class="top-nav-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-white/5 transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          <span>Тир-лист</span>
+        </button>
+        <button type="button" data-top-nav="calendar" onclick="navigateTo('calendar')" class="top-nav-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-white/5 transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Календарь</span>
+        </button>
+        <button type="button" data-top-nav="ai" onclick="navigateTo('ai')" class="top-nav-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-white/5 transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+          <span>ИИ-подбор</span>
+        </button>
+      </nav>
+
+      <div class="relative flex-1 max-w-xs sm:max-w-sm">
+        <div class="relative flex items-center">
+          <svg class="w-4 h-4 text-zinc-400 absolute left-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+          </svg>
+          <input
+            id="searchInput"
+            type="text"
+            oninput="handleSearchInput(this.value)"
+            onfocus="handleSearchInput(this.value)"
+            placeholder="Поиск аниме..."
+            class="w-full bg-dark-800/90 border border-white/10 focus:border-brand-500/70 rounded-xl pl-9 pr-7 py-2 text-xs sm:text-sm text-white placeholder-zinc-500 outline-none transition-colors"
+          />
+          <button id="clearSearchBtn" type="button" onclick="clearSearch()" aria-label="Очистить поиск" class="hidden absolute right-2 text-zinc-400 hover:text-white p-1 cursor-pointer">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div id="liveSearchDropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-[#0c0e14] border border-white/15 rounded-2xl shadow-2xl overflow-hidden z-50 max-h-96 overflow-y-auto"></div>
+      </div>
+
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <div class="relative">
+          <button
+            type="button"
+            id="themeQuickBtn"
+            onclick="toggleThemeMiniMenu(event)"
+            class="h-10 px-2.5 sm:px-3 rounded-xl bg-dark-800 hover:bg-dark-700 border border-white/10 hover:border-brand-500/40 inline-flex items-center gap-1.5 text-xs font-bold text-zinc-200 transition cursor-pointer"
+          >
+            <svg class="w-4 h-4 text-brand-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+            <span id="headerThemeBadge" class="hidden sm:inline text-brand-300">Неон</span>
+            <svg class="w-3 h-3 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+
+          <div
+            id="themeMiniMenuDropdown"
+            class="hidden absolute right-0 top-full mt-2 w-72 bg-[#0c0e14] border border-white/15 rounded-2xl shadow-2xl p-3 z-50 space-y-2 modal-panel"
+          >
+            <div class="flex items-center justify-between px-1">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Дизайны портала (10)</span>
+              <span class="text-[10px] text-brand-400 font-bold">1 клик</span>
+            </div>
+            <div id="themeMiniMenuGrid" class="grid grid-cols-2 gap-1.5"></div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <button
+            type="button"
+            id="headerMiniMenuBtn"
+            title="Настройки"
+            onclick="toggleHeaderMiniMenu(event)"
+            class="gear-btn w-10 h-10 rounded-xl bg-dark-800 hover:bg-dark-700 border border-white/10 hover:border-brand-500/40 flex items-center justify-center text-zinc-200 transition cursor-pointer"
+          >
+            <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </button>
+
+          <div
+            id="headerMiniMenuDropdown"
+            class="hidden absolute right-0 top-full mt-2 w-64 bg-[#0c0e14] border border-white/15 rounded-2xl shadow-2xl p-2 z-50 space-y-1 modal-panel"
+          >
+            <button type="button" onclick="closeHeaderMiniMenu(); navigateTo('settings');" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl bg-brand-500/15 hover:bg-brand-500/25 text-left text-xs font-bold text-brand-300 cursor-pointer">
+              <span>Все настройки портала</span>
+              <span>→</span>
+            </button>
+            <button type="button" onclick="toggleLofiRadio()" class="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/10 text-left text-xs font-semibold text-zinc-200 cursor-pointer">
+              <span>KITSUNE Lo-Fi Radio</span>
+              <span id="radioStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-zinc-400">ВЫКЛ</span>
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          id="headerProfileBtn"
+          onclick="navigateTo('profile')"
+          class="h-10 inline-flex items-center gap-2 px-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition shadow-lg shadow-brand-600/20 cursor-pointer"
+        >
+          <span id="headerAvatarCircle" class="w-6 h-6 rounded-lg bg-black/25 flex items-center justify-center text-[11px] font-black overflow-hidden">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <span id="headerProfileName" class="hidden sm:inline max-w-[95px] truncate">Войти</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- МОБИЛЬНЫЙ ДОК -->
+  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 glass border-t border-white/10 px-2 py-1.5 flex items-center justify-around">
+    <button type="button" onclick="navigateTo('home'); switchFeedTab('popular');" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Каталог</span>
+    </button>
+    <button type="button" onclick="navigateTo('home'); switchFeedTab('mylist');" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span>Список</span>
+    </button>
+    <button type="button" onclick="navigateTo('tierlist')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      <span>Тир-лист</span>
+    </button>
+    <button type="button" onclick="navigateTo('calendar')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Календарь</span>
+    </button>
+    <button type="button" onclick="navigateTo('ai')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+      <span>ИИ-подбор</span>
+    </button>
+  </nav>
+
+  <!-- СТРАНИЦА 1: ГЛАВНАЯ И КАТАЛОГ -->
+  <main id="page-home" class="page-view relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-7">
+
+    <!-- HERO ПРЕМЬЕРЫ -->
+    <section
+      id="heroBannerSection"
+      onmouseenter="state.heroPaused = true"
+      onmouseleave="state.heroPaused = false"
+      class="relative rounded-3xl overflow-hidden border border-white/10 bg-dark-900 shadow-2xl"
+    >
+      <div class="absolute inset-0 bg-gradient-to-r from-[#07080b] via-[#07080b]/85 to-transparent z-10"></div>
+      <img
+        id="heroPosterBg"
+        src="https://anilibria.top/storage/releases/posters/9651/poster.jpg"
+        onerror="this.src='https://placehold.co/1200x480/131620/f43f5e?text=KITSUNE+ANIME'"
+        alt="Featured Anime"
+        class="absolute right-0 top-0 w-full md:w-3/5 h-full object-cover opacity-55 transition-opacity duration-500"
+      />
+      <div class="relative z-20 p-6 sm:p-10 max-w-2xl space-y-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-500/20 border border-brand-500/40 text-brand-300 text-[11px] font-bold uppercase tracking-wider">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Прямой HLS поток • Без VPN</span>
+          </span>
+          <span id="heroRatingBadge" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>9.1</span>
+          </span>
+        </div>
+
+        <h1 id="heroTitle" class="font-display font-black text-2xl sm:text-4xl text-white leading-tight">
+          Поднятие уровня в одиночку
+        </h1>
+
+        <p id="heroDesc" class="text-xs sm:text-sm text-zinc-300 line-clamp-3 leading-relaxed">
+          Десять лет назад открылись Врата, соединившие реальный мир с измерением монстров. Сон Джин-Ву — слабейший охотник E-ранга, который получает загадочную Систему прокачки.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3 pt-1">
+          <button
+            type="button"
+            onclick="openHeroAnime()"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-600/30 transition cursor-pointer"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Смотреть онлайн</span>
+          </button>
+          <button
+            type="button"
+            onclick="navigateTo('tierlist')"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-xs sm:text-sm font-semibold transition cursor-pointer"
+          >
+            <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            <span>Составить Тир-лист</span>
+          </button>
+        </div>
+
+        <div id="heroDotsBar" class="flex items-center gap-2 pt-2"></div>
+      </div>
+    </section>
+
+    <!-- ПРОДОЛЖИТЬ ПРОСМОТР -->
+    <section id="continueWatchingSection" class="hidden space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
+          <svg class="w-5 h-5 text-brand-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+          <span>Продолжить просмотр</span>
+          <span id="historyOwnerTag" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-white/5 text-zinc-400"></span>
+        </h2>
+        <button type="button" onclick="clearWatchHistory()" class="text-xs text-zinc-500 hover:text-zinc-300 cursor-pointer">
+          Очистить историю
+        </button>
+      </div>
+      <div id="continueWatchingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+    </section>
+
+    <!-- КАТАЛОГ С АВТОПОДГРУЗКОЙ -->
+    <section class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-1.5 bg-dark-900 p-1 rounded-2xl border border-white/10 self-start overflow-x-auto max-w-full no-scrollbar">
+          <button type="button" id="tab-popular" onclick="switchFeedTab('popular')" class="feed-tab inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white transition cursor-pointer shrink-0">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            <span>Популярное</span>
+          </button>
+          <button type="button" id="tab-ongoing" onclick="switchFeedTab('ongoing')" class="feed-tab inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition cursor-pointer shrink-0">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Онгоинги</span>
+          </button>
+          <button type="button" id="tab-top" onclick="switchFeedTab('top')" class="feed-tab inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition cursor-pointer shrink-0">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Топ рейтинга</span>
+          </button>
+          <button type="button" id="tab-mylist" onclick="switchFeedTab('mylist')" class="feed-tab inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition cursor-pointer shrink-0">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            <span>Мой список</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <select
+            id="genreFilterSelect"
+            onchange="applyGenreFilter(this.value)"
+            class="bg-dark-900 border border-white/10 rounded-xl px-3 py-2 text-xs font-semibold text-zinc-200 outline-none cursor-pointer"
+          >
+            <option value="">Все жанры</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="myListSubfilters" class="hidden flex flex-wrap items-center gap-2 bg-dark-900/70 p-2 rounded-2xl border border-white/10">
+        <button type="button" data-list-sub="all" onclick="setMyListSubfilter('all')" class="mylist-sub-btn px-3 py-1.5 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer">Все закладки</button>
+        <button type="button" data-list-sub="watching" onclick="setMyListSubfilter('watching')" class="mylist-sub-btn px-3 py-1.5 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">Смотрю</button>
+        <button type="button" data-list-sub="planned" onclick="setMyListSubfilter('planned')" class="mylist-sub-btn px-3 py-1.5 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">В планах</button>
+        <button type="button" data-list-sub="completed" onclick="setMyListSubfilter('completed')" class="mylist-sub-btn px-3 py-1.5 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">Просмотрено</button>
+      </div>
+
+      <div id="animeCatalogGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+
+      <!-- Бесконечный скролл: сенсор автоподгрузки -->
+      <div id="infiniteScrollSentinel" class="py-6 flex flex-col items-center justify-center gap-3">
+        <div id="catalogSpinner" class="hidden w-6 h-6 rounded-full border-2 border-brand-500 border-t-transparent animate-spin"></div>
+        <div id="catalogStatusText" class="text-xs text-zinc-400">Листайте ниже для автоподгрузки релизов</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- СТРАНИЦА 2: ТИР-ЛИСТ -->
+  <section id="page-tierlist" class="page-view hidden relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-dark-900 border border-white/10 rounded-3xl p-5 sm:p-6">
+      <div>
+        <div class="text-xs font-bold uppercase tracking-wider text-brand-400 mb-1">Интерактивный рейтинг</div>
+        <h2 class="font-display font-black text-xl sm:text-2xl text-white flex items-center gap-2">
+          <svg class="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          <span>Твой персональный Тир-лист</span>
+        </h2>
+        <p class="text-xs text-zinc-400 mt-1">Нажимай S / A / B / C на карточках. Тайтлы из S-ранга получают золотую японскую печать 「神」 в каталоге!</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button type="button" onclick="copyTierListSummary()" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition cursor-pointer">Скопировать топ</button>
+        <button type="button" onclick="resetTierList()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-zinc-300 transition cursor-pointer">Сбросить</button>
+        <button type="button" onclick="navigateTo('home')" class="px-3.5 py-2 rounded-xl bg-dark-800 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">В каталог</button>
+      </div>
+    </div>
+    <div class="space-y-3" id="tierRowsContainer"></div>
+    <div class="bg-dark-900 border border-white/10 rounded-3xl p-5 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <h3 class="font-display font-bold text-base text-white">Пул тайтлов (нажми S, A, B или C)</h3>
+        <input type="text" id="tierSearchInput" oninput="handleTierSearch(this.value)" placeholder="Поиск аниме для тир-листа..." class="w-full sm:w-80 bg-dark-800 border border-white/10 focus:border-brand-500 rounded-xl px-3.5 py-2 text-xs text-white placeholder-zinc-500 outline-none" />
+      </div>
+      <div id="tierPoolGrid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-3"></div>
+    </div>
+  </section>
+
+  <!-- СТРАНИЦА 3: КАЛЕНДАРЬ -->
+  <section id="page-calendar" class="page-view hidden relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="flex items-center justify-between bg-dark-900 border border-white/10 rounded-3xl p-5 sm:p-6">
+      <div>
+        <h2 class="font-display font-black text-xl sm:text-2xl text-white">Расписание выхода серий</h2>
+        <p class="text-xs text-zinc-400 mt-1">Актуальный график онгоингов по дням недели.</p>
+      </div>
+      <button type="button" onclick="navigateTo('home')" class="px-4 py-2 rounded-xl bg-dark-800 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">В каталог</button>
+    </div>
+    <div id="calendarDaysGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </section>
+
+  <!-- СТРАНИЦА 4: ИИ-ПОДБОР -->
+  <section id="page-ai" class="page-view hidden relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="bg-dark-900 border border-white/10 rounded-3xl p-6 space-y-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs font-bold text-brand-400 uppercase tracking-wider">KITSUNE AI CURATOR</span>
+          <h2 class="font-display font-black text-xl sm:text-2xl text-white mt-1">Подбор аниме по настроению</h2>
+        </div>
+        <button type="button" onclick="navigateTo('home')" class="px-3.5 py-2 rounded-xl bg-dark-800 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">Назад</button>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button type="button" onclick="runAiMoodPick('Мрачный экшен с сильным главным героем')" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-zinc-200 cursor-pointer">Мрачный экшен</button>
+        <button type="button" onclick="runAiMoodPick('Уютное фэнтези для отдыха вечером')" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-zinc-200 cursor-pointer">Уютное фэнтези</button>
+        <button type="button" onclick="runAiMoodPick('Романтика и драма до мурашек')" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-zinc-200 cursor-pointer">Романтика и драма</button>
+      </div>
+      <div class="flex gap-2">
+        <input type="text" id="aiMoodInput" placeholder="Опиши настроение..." class="flex-1 bg-dark-800 border border-white/10 focus:border-brand-500 rounded-xl px-4 py-2.5 text-xs text-white outline-none" />
+        <button type="button" onclick="runAiMoodPick()" class="px-5 py-2.5 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer">Подобрать</button>
+      </div>
+      <div id="aiRecommendationsResult" class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2"></div>
+    </div>
+  </section>
+
+  <!-- СТРАНИЦА 5: НАСТРОЙКИ -->
+  <section id="page-settings" class="page-view hidden relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="bg-dark-900 border border-white/10 rounded-3xl p-6 space-y-6">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <h2 class="font-display font-black text-xl text-white">Настройки портала и тем</h2>
+        <button type="button" onclick="navigateTo('home')" class="px-4 py-2 rounded-xl bg-dark-800 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">В каталог</button>
+      </div>
+      <div class="space-y-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-brand-400">Галерея дизайнов (10 тем)</h3>
+        <div id="settingsThemeCardsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- СТРАНИЦА 6: ПРОФИЛЬ И КОЛЛЕКЦИЯ ТРОФЕЕВ -->
+  <section id="page-profile" class="page-view hidden relative z-10 flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="bg-dark-900 border border-white/10 rounded-3xl p-6 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+        <div class="flex items-center gap-4">
+          <div id="profileBigAvatar" class="w-16 h-16 rounded-2xl bg-brand-600 text-white flex items-center justify-center font-display font-black text-2xl overflow-hidden">
+            🦊
+          </div>
+          <div>
+            <h2 id="profileDisplayName" class="font-display font-black text-2xl text-white">Гость KITSUNE</h2>
+            <p id="profileDisplayEmail" class="text-xs text-zinc-400">Личный кабинет и галерея трофеев</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="exportCollectionPng()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition cursor-pointer">
+            <span>Скачать паспорт в PNG</span>
+          </button>
+          <button type="button" onclick="navigateTo('home')" class="px-4 py-2 rounded-xl bg-dark-800 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">В каталог</button>
+        </div>
+      </div>
+
+      <!-- Набор рамок аватара -->
+      <div class="p-4 rounded-2xl bg-dark-800/70 border border-white/10 space-y-2">
+        <div class="text-xs font-bold uppercase tracking-wider text-brand-400">Неоновая рамка профиля</div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="setAvatarFrame('')" class="px-3 py-1.5 rounded-xl bg-dark-900 border border-white/10 text-xs font-semibold text-zinc-300 cursor-pointer">Без рамки</button>
+          <button type="button" onclick="setAvatarFrame('frame-kitsune')" class="px-3 py-1.5 rounded-xl bg-dark-900 border border-rose-500/40 text-xs font-semibold text-rose-300 cursor-pointer">Пламя Кицунэ</button>
+          <button type="button" onclick="setAvatarFrame('frame-crown')" class="px-3 py-1.5 rounded-xl bg-dark-900 border border-amber-400/40 text-xs font-semibold text-amber-300 cursor-pointer">Корона S-ранга</button>
+          <button type="button" onclick="setAvatarFrame('frame-ice')" class="px-3 py-1.5 rounded-xl bg-dark-900 border border-sky-400/40 text-xs font-semibold text-sky-300 cursor-pointer">Ледяной кристалл</button>
+          <button type="button" onclick="setAvatarFrame('frame-cyber')" class="px-3 py-1.5 rounded-xl bg-dark-900 border border-purple-500/40 text-xs font-semibold text-purple-300 cursor-pointer">Кибер-нимб</button>
+        </div>
+      </div>
+
+      <!-- Вкладки профиля: Статистика / Галерея коллекции / Витрина -->
+      <div class="space-y-4 pt-2">
+        <div class="flex items-center gap-2 border-b border-white/10 pb-2">
+          <button type="button" id="profileTab-collection" onclick="switchProfileTab('collection')" class="px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer">
+            Коллекция трофеев (<span id="collectionCountBadge">0</span>)
+          </button>
+          <button type="button" id="profileTab-showcase" onclick="switchProfileTab('showcase')" class="px-4 py-2 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">
+            Витрина топов
+          </button>
+          <button type="button" id="profileTab-auth" onclick="switchProfileTab('auth')" class="px-4 py-2 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">
+            Аккаунт и безопасность
+          </button>
+        </div>
+
+        <!-- ВКЛАДКА 1: КОЛЛЕКЦИЯ ТРОФЕЕВ С СОРТИРОВКОЙ -->
+        <div id="profileContent-collection" class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-dark-800/80 p-3.5 rounded-2xl border border-white/10">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-bold text-zinc-400">Сортировка:</span>
+              <select id="collectionSortSelect" onchange="renderUserCollection()" class="bg-dark-900 border border-white/15 rounded-xl px-3 py-1.5 text-xs font-semibold text-white outline-none cursor-pointer">
+                <option value="default">По дате добавления</option>
+                <option value="alpha">По алфавиту (А-Я)</option>
+                <option value="alpha_rev">По алфавиту (Я-А)</option>
+                <option value="year">По году выпуска (сначала новые)</option>
+                <option value="rating">По рейтингу</option>
+              </select>
+            </div>
+            <div id="collectionGenreFilterSlot" class="flex flex-wrap items-center gap-1.5"></div>
+          </div>
+
+          <div id="userCollectionGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+        </div>
+
+        <!-- ВКЛАДКА 2: ВИТРИНА ТОПОВ -->
+        <div id="profileContent-showcase" class="hidden space-y-4">
+          <p class="text-xs text-zinc-400">Закрепи до 3 любимых тайтлов на главной витрине своего профиля.</p>
+          <div id="userShowcaseGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+        </div>
+
+        <!-- ВКЛАДКА 3: АККАУНТ И ВХОД -->
+        <div id="profileContent-auth" class="hidden space-y-4">
+          <div id="savedAccountsSwitcher" class="hidden p-4 rounded-2xl bg-dark-800/70 border border-white/10 space-y-2">
+            <div class="text-xs font-bold text-zinc-300">Переключение между аккаунтами на этом устройстве:</div>
+            <div id="savedAccountsList" class="flex flex-wrap gap-2"></div>
+          </div>
+          <div id="authSectionBox" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-3 bg-dark-800/60 p-5 rounded-2xl border border-white/10">
+              <div class="flex gap-2 bg-dark-900 p-1 rounded-xl border border-white/10">
+                <button type="button" id="authModeRegBtn" onclick="switchAuthMode('register')" class="flex-1 py-1.5 rounded-lg bg-brand-600 text-white text-xs font-bold cursor-pointer">Регистрация</button>
+                <button type="button" id="authModeLoginBtn" onclick="switchAuthMode('login')" class="flex-1 py-1.5 rounded-lg text-zinc-400 text-xs font-semibold cursor-pointer">Вход</button>
+              </div>
+              <form onsubmit="handleEmailAuth(event)" class="space-y-3">
+                <input type="text" id="authNickInput" placeholder="Никнейм" class="w-full bg-dark-900 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white outline-none" />
+                <input type="email" id="authEmailInput" required placeholder="Email" class="w-full bg-dark-900 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white outline-none" />
+                <input type="password" id="authPassInput" required minlength="4" placeholder="Пароль (от 4 символов)" class="w-full bg-dark-900 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white outline-none" />
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer">Сохранить аккаунт</button>
+              </form>
+            </div>
+          </div>
+          <div id="loggedOutBar" class="hidden pt-2">
+            <button type="button" onclick="logoutAccount()" class="px-4 py-2 rounded-xl bg-rose-500/20 text-rose-300 text-xs font-bold cursor-pointer">Выйти из аккаунта</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- МОДАЛЬНОЕ ОКНО ПЛЕЕРА И КАРТОЧКИ ТАЙТЛА -->
+  <div id="playerModal" onclick="if(event.target === this) closePlayerModal()" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md overflow-y-auto p-2 sm:p-6">
+    <div id="playerCinemaBox" class="modal-panel max-w-5xl mx-auto bg-dark-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl my-auto transition-shadow duration-500">
+
+      <div class="px-4 sm:px-6 py-3.5 border-b border-white/10 flex flex-wrap items-center justify-between gap-3 bg-[#0c0e14]">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+          <h3 id="modalAnimeTitle" class="font-display font-bold text-base sm:text-lg text-white truncate">Название аниме</h3>
+          <span id="playerStreamBadge" class="hidden sm:inline-block text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-zinc-400">Серия 1 • AniLibria HLS</span>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <button type="button" id="ambilightToggleBtn" onclick="toggleAmbilight(); this.blur();" class="px-2.5 py-1.5 rounded-lg bg-brand-500/20 border border-brand-500/40 text-xs text-brand-300 font-semibold cursor-pointer">Амбилайт</button>
+          <button type="button" id="theaterModeBtn" onclick="toggleTheaterMode(); this.blur();" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-zinc-200 cursor-pointer">Кинотеатр</button>
+          <select
+            id="hlsQualitySelect"
+            onchange="changeHlsQuality(this.value); this.blur();"
+            class="bg-dark-800 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 font-semibold outline-none cursor-pointer"
+          >
+            <option value="1080">1080p</option>
+            <option value="720" selected>720p</option>
+            <option value="480">480p</option>
+          </select>
+          <select
+            id="playbackSpeedSelect"
+            onchange="changePlaybackSpeed(this.value); this.blur();"
+            class="bg-dark-800 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 font-semibold outline-none cursor-pointer"
+          >
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1.0x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2.0x</option>
+          </select>
+          <button
+            type="button"
+            onclick="togglePlayerFullscreen(); this.blur();"
+            title="Полный экран (F)"
+            class="px-2.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-xs text-white font-bold cursor-pointer"
+          >Полный экран</button>
+          <button type="button" onclick="closePlayerModal()" aria-label="Закрыть" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-rose-500/20 text-zinc-400 hover:text-rose-300 flex items-center justify-center cursor-pointer">✕</button>
+        </div>
+      </div>
+
+      <div
+        id="playerVideoContainer"
+        onmousemove="revealFullscreenOverlay()"
+        ontouchstart="revealFullscreenOverlay()"
+        ondblclick="togglePlayerFullscreen(event)"
+        class="relative aspect-video bg-black group select-none overflow-hidden"
+      >
+        <video
+          id="animeVideoElement"
+          controls
+          controlsList="nodownload"
+          playsinline
+          crossorigin="anonymous"
+          onclick="handleVideoSurfaceClick(event)"
+          ontimeupdate="handlePlayerTimeUpdate()"
+          onpause="saveCurrentWatchProgress(true)"
+          onended="handleEpisodeEnded()"
+          class="w-full h-full object-contain bg-black cursor-pointer outline-none"
+        ></video>
+
+        <!-- Панель переключения серий поверх видео и в полном экране -->
+        <div
+          id="fullscreenEpisodeBar"
+          class="opacity-0 transition-opacity duration-300 absolute top-3 left-3 right-3 z-30 flex items-center justify-between pointer-events-none"
+        >
+          <div class="pointer-events-auto inline-flex items-center gap-1.5 rounded-2xl bg-black/80 backdrop-blur-md border border-white/15 p-1.5 shadow-2xl">
+            <button
+              type="button"
+              id="fsPrevEpBtn"
+              onclick="stepEpisode(-1); this.blur();"
+              class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-35 text-xs font-bold text-white cursor-pointer"
+            >← Пред.</button>
+
+            <div class="relative">
+              <button
+                type="button"
+                onclick="toggleFullscreenEpDropdown(); this.blur();"
+                class="px-3.5 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-xs font-bold text-white inline-flex items-center gap-1.5 cursor-pointer"
+              >
+                <span id="fsCurrentEpLabel">Серия 1 / 12</span>
+                <span>▾</span>
+              </button>
+              <div
+                id="fsEpisodeDropdownList"
+                class="hidden absolute left-0 top-full mt-2 w-44 max-h-60 overflow-y-auto rounded-2xl bg-[#090d16]/95 border border-white/15 p-1.5 shadow-2xl space-y-1"
+              ></div>
+            </div>
+
+            <button
+              type="button"
+              id="fsNextEpBtn"
+              onclick="stepEpisode(1); this.blur();"
+              class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-35 text-xs font-bold text-white cursor-pointer"
+            >След. →</button>
+          </div>
+
+          <button
+            type="button"
+            id="fsToggleBtnLabel"
+            onclick="togglePlayerFullscreen(); this.blur();"
+            class="pointer-events-auto px-3.5 py-2 rounded-xl bg-black/80 hover:bg-brand-600 backdrop-blur-md border border-white/15 text-xs font-bold text-white cursor-pointer"
+          >Полный экран (F)</button>
+        </div>
+
+        <div id="playerHudFeedback" class="hidden pointer-events-none absolute inset-0 flex items-center justify-center z-30">
+          <div id="playerHudText" class="px-5 py-2.5 rounded-2xl bg-black/80 border border-white/15 text-white font-display font-bold text-sm sm:text-base shadow-2xl backdrop-blur-md"></div>
+        </div>
+      </div>
+
+      <div class="p-4 sm:p-6 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="text-[11px] text-zinc-500">Хоткеи: <span class="text-zinc-300 font-semibold">Space</span> Пауза • <span class="text-zinc-300 font-semibold">Стрелки</span> Перемотка • <span class="text-zinc-300 font-semibold">F</span> Экран</div>
+          <div class="flex items-center gap-2">
+            <select id="modalStatusSelect" onchange="setAnimeUserStatus(this.value)" class="bg-dark-800 border border-white/10 rounded-xl px-3 py-1.5 text-xs font-bold text-white outline-none cursor-pointer">
+              <option value="">+ В мой список / Коллекцию</option>
+              <option value="watching">Смотрю</option>
+              <option value="planned">В планах</option>
+              <option value="completed">Просмотрено (в коллекцию)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="episodesRibbon" class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar"></div>
+        <p id="modalAnimeDesc" class="text-xs sm:text-sm text-zinc-300 leading-relaxed"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно заметки к тайтлу в коллекции -->
+  <div id="noteModal" onclick="if(event.target === this) closeNoteModal()" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md p-4 flex items-center justify-center">
+    <div class="modal-panel max-w-md w-full bg-dark-900 border border-white/15 rounded-3xl p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 id="noteModalTitle" class="font-display font-bold text-base text-white">Заметка к трофею</h3>
+        <button type="button" onclick="closeNoteModal()" class="w-7 h-7 rounded-lg bg-white/10 text-zinc-300 text-xs flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+      <textarea id="noteTextarea" rows="4" placeholder="Напишите свою рецензию или памятную заметку..." class="w-full bg-dark-800 border border-white/10 rounded-2xl p-3 text-xs text-white outline-none focus:border-brand-500"></textarea>
+      <div class="flex justify-end gap-2">
+        <button type="button" onclick="closeNoteModal()" class="px-4 py-2 rounded-xl bg-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">Отмена</button>
+        <button type="button" onclick="saveNoteModal()" class="px-5 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-xs font-bold text-white cursor-pointer">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-20 lg:bottom-6 right-6 z-50 translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-[#0c0e14] border border-white/15 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold">
+    <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+    <span id="toastMessage">Готово!</span>
+  </div>
+
+  <footer class="relative z-10 border-t border-white/10 bg-dark-900/90 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
+      <div class="flex items-center gap-2"><span class="font-display font-black text-white">KITSUNE // ANIME</span><span>• Spatial Glass Trophy Gallery</span></div>
+      <div class="flex items-center gap-4"><button type="button" onclick="navigateTo('home')" class="hover:text-white cursor-pointer">Каталог</button><button type="button" onclick="navigateTo('tierlist')" class="hover:text-white cursor-pointer">Тир-лист</button><button type="button" onclick="navigateTo('profile')" class="hover:text-white cursor-pointer">Профиль</button></div>
+    </div>
+  </footer>
+
+  <script>
+    const ANILIBRIA_API = 'https://anilibria.top/api/v1';
+    const ANILIBRIA_BACKUP_API = 'https://api.anilibria.app/api/v1';
+
+    async function fetchAniLibriaJson(path, timeoutMs = 4500) {
+      for (const base of [ANILIBRIA_API, ANILIBRIA_BACKUP_API]) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+        try {
+          const res = await fetch(`${base}${path}`, { signal: ctrl.signal });
+          clearTimeout(timer);
+          if (res.ok) return await res.json();
+        } catch (e) {
+          clearTimeout(timer);
+        }
+      }
+      return null;
+    }
+
+    const FALLBACK_CATALOG = [
+      { id: 'fb_solo', releaseId: 9651, alias: 'ore-dake-level-up-na-ken', title: 'Поднятие уровня в одиночку', altTitle: 'Solo Leveling', year: 2024, type: 'TV', episodes: 12, rating: '9.1', genres: ['Экшен', 'Фэнтези', 'Приключения'], poster: 'https://anilibria.top/storage/releases/posters/9651/poster.jpg', desc: 'Десять лет назад открылись Врата, соединившие реальный мир с измерением монстров.' },
+      { id: 'fb_frieren', releaseId: 9544, alias: 'sousou-no-frieren', title: 'Провожающая в последний путь Фрирен', altTitle: 'Sousou no Frieren', year: 2023, type: 'TV', episodes: 28, rating: '9.4', genres: ['Фэнтези', 'Приключения', 'Драма'], poster: 'https://anilibria.top/storage/releases/posters/9544/poster.jpg', desc: 'Эльфийка-маг Фрирен отправляется в новое путешествие, чтобы лучше понять людей.' },
+      { id: 'fb_chainsaw', releaseId: 9186, alias: 'chainsaw-man', title: 'Человек-бензопила', altTitle: 'Chainsaw Man', year: 2022, type: 'TV', episodes: 12, rating: '8.9', genres: ['Экшен', 'Фэнтези', 'Ужасы'], poster: 'https://anilibria.top/storage/releases/posters/9186/poster.jpg', desc: 'Дэндзи становится Человеком-бензопилой и вступает в бюро безопасности.' },
+      { id: 'fb_apothecary', releaseId: 9569, alias: 'kusuriya-no-hitorigoto', title: 'Монолог фармацевта', altTitle: 'Kusuriya no Hitorigoto', year: 2023, type: 'TV', episodes: 24, rating: '9.2', genres: ['Драма', 'Детектив', 'Исторический'], poster: 'https://anilibria.top/storage/releases/posters/9569/poster.jpg', desc: 'Травница Маомао распутывает тайны во внутреннем дворце императора.' },
+      { id: 'fb_jujutsu', releaseId: 9468, alias: 'jujutsu-kaisen-2nd-season', title: 'Магическая битва 2', altTitle: 'Jujutsu Kaisen 2nd Season', year: 2023, type: 'TV', episodes: 23, rating: '9.0', genres: ['Экшен', 'Сверхъестественное', 'Сёнен'], poster: 'https://anilibria.top/storage/releases/posters/9468/poster.jpg', desc: 'Масштабный инцидент в Сибуе, который навсегда изменит мир магов.' }
+    ];
+
+    const DESIGN_THEMES = {
+      default: { name: 'Багровый неон', short: 'Неон', dot: '#f43f5e', bg: '#07080b', glow: 'rgba(244, 63, 94, 0.16)', secondary: 'rgba(99, 102, 241, 0.08)', b300: '#fda4af', b400: '#fb7185', b500: '#f43f5e', b600: '#e11d48' },
+      cat: { name: 'Манэки-нэко', short: 'Кот', isCat: true, dot: '#f59e0b', bg: '#0e0b12', glow: 'rgba(251, 191, 36, 0.20)', secondary: 'rgba(244, 114, 182, 0.12)', b300: '#fde68a', b400: '#fbbf24', b500: '#f59e0b', b600: '#d97706' },
+      sunset: { name: 'Кибер-Закат', short: 'Закат', dot: '#ec4899', bg: '#110711', glow: 'rgba(236, 72, 153, 0.24)', secondary: 'rgba(249, 115, 22, 0.14)', b300: '#f9a8d4', b400: '#f472b6', b500: '#ec4899', b600: '#db2777' },
+      abyss: { name: 'Бездна Океана', short: 'Океан', dot: '#06b6d4', bg: '#040c12', glow: 'rgba(6, 182, 212, 0.22)', secondary: 'rgba(59, 130, 246, 0.12)', b300: '#67e8f9', b400: '#22d3ee', b500: '#06b6d4', b600: '#0891b2' },
+      sakura_night: { name: 'Ночной Киото', short: 'Киото', dot: '#a855f7', bg: '#080612', glow: 'rgba(168, 85, 247, 0.22)', secondary: 'rgba(99, 102, 241, 0.14)', b300: '#d8b4fe', b400: '#c084fc', b500: '#a855f7', b600: '#9333ea' },
+      spring: { name: 'Сакура', short: 'Сакура', dot: '#f472b6', bg: '#0d0810', glow: 'rgba(244, 114, 182, 0.22)', secondary: 'rgba(232, 121, 249, 0.10)', b300: '#fbcfe8', b400: '#f472b6', b500: '#ec4899', b600: '#db2777' },
+      summer: { name: 'Токио Голд', short: 'Токио', dot: '#eab308', bg: '#0e0b07', glow: 'rgba(234, 179, 8, 0.20)', secondary: 'rgba(239, 68, 68, 0.09)', b300: '#fef08a', b400: '#facc15', b500: '#eab308', b600: '#ca8a04' },
+      autumn: { name: 'Момидзи', short: 'Момидзи', dot: '#f97316', bg: '#0f0806', glow: 'rgba(234, 88, 12, 0.22)', secondary: 'rgba(217, 119, 6, 0.10)', b300: '#fed7aa', b400: '#fb923c', b500: '#f97316', b600: '#ea580c' },
+      winter: { name: 'Хоккайдо', short: 'Лёд', dot: '#38bdf8', bg: '#060b12', glow: 'rgba(56, 189, 248, 0.22)', secondary: 'rgba(99, 102, 241, 0.11)', b300: '#bae6fd', b400: '#38bdf8', b500: '#0ea5e9', b600: '#0284c7' },
+      emerald: { name: 'Изумрудный дзен', short: 'Дзен', dot: '#10b981', bg: '#060d0a', glow: 'rgba(16, 185, 129, 0.20)', secondary: 'rgba(20, 184, 166, 0.10)', b300: '#a7f3d0', b400: '#34d399', b500: '#10b981', b600: '#059669' }
+    };
+
+    const state = {
+      lang: localStorage.getItem('kitsune_lang') || 'ru',
+      activePage: 'home',
+      feedTab: 'popular',
+      myListSubfilter: 'all',
+      selectedGenre: '',
+      catalog: [...FALLBACK_CATALOG],
+      loadedPage: 1,
+      isFetchingMore: false,
+      hasMorePages: true,
+      heroIndex: 0,
+      heroPaused: false,
+      heroTimer: null,
+      accountsDb: JSON.parse(localStorage.getItem('kitsune_accounts_db') || '{}'),
+      user: JSON.parse(localStorage.getItem('kitsune_user') || 'null'),
+      authMode: 'register',
+      myList: {},
+      watchHistory: {},
+      collectionNotes: {},
+      collectionShowcase: [],
+      collectionGenreFilter: '',
+      tierList: { S: [], A: [], B: [], C: [] },
+      tierPoolExtra: [],
+      siteSettings: Object.assign({
+        smoothAnim: true,
+        gridDensity: '5',
+        seasonTheme: 'default',
+        defaultQuality: '720',
+        seekStep: 5,
+        autoSkipOp: false,
+        ambilight: true,
+        avatarFrame: ''
+      }, JSON.parse(localStorage.getItem('kitsune_settings') || '{}')),
+      currentAnime: null,
+      currentEpisode: 1,
+      anilibriaEpisodes: [],
+      hlsInstance: null,
+      noteModalAnimeId: null
+    };
+
+    function getStoragePrefix() {
+      return state.user?.email ? `kitsune_acc_${state.user.email.toLowerCase()}` : 'kitsune_guest';
+    }
+
+    function loadUserScopedData() {
+      const prefix = getStoragePrefix();
+      state.myList = JSON.parse(localStorage.getItem(`${prefix}_mylist`) || localStorage.getItem('kitsune_mylist') || '{}');
+      state.watchHistory = JSON.parse(localStorage.getItem(`${prefix}_history`) || localStorage.getItem('kitsune_history') || '{}');
+      state.tierList = JSON.parse(localStorage.getItem(`${prefix}_tierlist`) || localStorage.getItem('kitsune_tierlist') || '{"S":[],"A":[],"B":[],"C":[]}');
+      state.collectionNotes = JSON.parse(localStorage.getItem(`${prefix}_collection_notes`) || '{}');
+      state.collectionShowcase = JSON.parse(localStorage.getItem(`${prefix}_collection_showcase`) || '[]');
+    }
+
+    function saveUserScopedData() {
+      const prefix = getStoragePrefix();
+      localStorage.setItem(`${prefix}_mylist`, JSON.stringify(state.myList));
+      localStorage.setItem(`${prefix}_history`, JSON.stringify(state.watchHistory));
+      localStorage.setItem(`${prefix}_tierlist`, JSON.stringify(state.tierList));
+      localStorage.setItem(`${prefix}_collection_notes`, JSON.stringify(state.collectionNotes));
+      localStorage.setItem(`${prefix}_collection_showcase`, JSON.stringify(state.collectionShowcase));
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toastMessage');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      clearTimeout(window._kitsuneToastTimer);
+      window._kitsuneToastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 2800);
+    }
+
+    function getAnimeDisplayTitle(anime) {
+      if (!anime) return '';
+      return state.lang === 'en' && anime.altTitle ? anime.altTitle : anime.title;
+    }
+
+    function navigateTo(pageName, pushHash = true) {
+      state.activePage = pageName;
+      document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(`page-${pageName}`);
+      if (target) target.classList.remove('hidden');
+
+      const isMyList = pageName === 'home' && state.feedTab === 'mylist';
+      const activeKey = isMyList ? 'mylist' : pageName;
+
+      document.querySelectorAll('.top-nav-pill').forEach(pill => {
+        const active = pill.getAttribute('data-top-nav') === activeKey;
+        pill.classList.toggle('bg-brand-600', active);
+        pill.classList.toggle('text-white', active);
+        pill.classList.toggle('font-bold', active);
+        pill.classList.toggle('text-zinc-300', !active);
+      });
+
+      if (pushHash && location.hash !== `#${pageName}`) {
+        history.pushState({ page: pageName }, '', `#${pageName}`);
+      }
+
+      if (pageName === 'tierlist') renderTierListPage();
+      if (pageName === 'calendar') renderCalendarPage();
+      if (pageName === 'profile') {
+        syncProfileUI();
+        renderUserCollection();
+        renderUserShowcase();
+      }
+      if (pageName === 'settings') syncSettingsUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchProfileTab(tab) {
+      document.getElementById('profileContent-collection').classList.toggle('hidden', tab !== 'collection');
+      document.getElementById('profileContent-showcase').classList.toggle('hidden', tab !== 'showcase');
+      document.getElementById('profileContent-auth').classList.toggle('hidden', tab !== 'auth');
+
+      document.getElementById('profileTab-collection').className = tab === 'collection' ? 'px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer' : 'px-4 py-2 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer';
+      document.getElementById('profileTab-showcase').className = tab === 'showcase' ? 'px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer' : 'px-4 py-2 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer';
+      document.getElementById('profileTab-auth').className = tab === 'auth' ? 'px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer' : 'px-4 py-2 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer';
+
+      if (tab === 'collection') renderUserCollection();
+      if (tab === 'showcase') renderUserShowcase();
+    }
+
+    // --- КОЛЛЕКЦИЯ ТРОФЕЕВ (ПРОФИЛЬ) ---
+    function getCompletedCollectionItems() {
+      const completed = [];
+      const seen = new Set();
+      // Тайтлы со статусом completed в mylist или те, что в S/A/B/C тир-листе
+      Object.values(state.myList).forEach(a => {
+        if (a.userStatus === 'completed' && !seen.has(a.id)) {
+          seen.add(a.id);
+          completed.push(a);
+        }
+      });
+      Object.values(state.tierList).forEach(arr => {
+        arr.forEach(a => {
+          if (!seen.has(a.id)) {
+            seen.add(a.id);
+            completed.push(a);
+          }
+        });
+      });
+      // Если у пользователя пока пусто, для демонстрации галереи подтягиваем парочку из каталога
+      if (!completed.length && state.catalog.length) {
+        return state.catalog.slice(0, 3);
+      }
+      return completed;
+    }
+
+    function renderUserCollection() {
+      const grid = document.getElementById('userCollectionGrid');
+      const badge = document.getElementById('collectionCountBadge');
+      const genreSlot = document.getElementById('collectionGenreFilterSlot');
+      if (!grid) return;
+
+      let items = getCompletedCollectionItems();
+      if (badge) badge.textContent = items.length;
+
+      // Жанры для фильтрации внутри коллекции
+      const genreSet = new Set();
+      items.forEach(i => (i.genres || []).forEach(g => genreSet.add(g)));
+      const genres = Array.from(genreSet).sort();
+
+      if (genreSlot) {
+        genreSlot.innerHTML = `<button type="button" onclick="setCollectionGenreFilter('')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold ${!state.collectionGenreFilter ? 'bg-brand-600 text-white' : 'bg-dark-900 text-zinc-400 hover:text-white'}">Все жанры</button>` +
+          genres.map(g => `<button type="button" onclick="setCollectionGenreFilter('${g.replace(/'/g, "\\'")}')" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold ${state.collectionGenreFilter === g ? 'bg-brand-600 text-white' : 'bg-dark-900 text-zinc-400 hover:text-white'}">${g}</button>`).join('');
+      }
+
+      if (state.collectionGenreFilter) {
+        items = items.filter(i => (i.genres || []).includes(state.collectionGenreFilter));
+      }
+
+      const sortMode = document.getElementById('collectionSortSelect')?.value || 'default';
+      items.sort((a, b) => {
+        if (sortMode === 'alpha') return getAnimeDisplayTitle(a).localeCompare(getAnimeDisplayTitle(b));
+        if (sortMode === 'alpha_rev') return getAnimeDisplayTitle(b).localeCompare(getAnimeDisplayTitle(a));
+        if (sortMode === 'year') return (b.year || 0) - (a.year || 0);
+        if (sortMode === 'rating') return parseFloat(b.rating || 0) - parseFloat(a.rating || 0);
+        return 0;
+      });
+
+      if (!items.length) {
+        grid.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-zinc-400 bg-dark-800/60 rounded-2xl border border-white/10">В вашей коллекции пока нет трофеев. Отметьте аниме как «Просмотрено» в каталоге!</div>`;
+        return;
+      }
+
+      grid.innerHTML = items.map(a => {
+        const note = state.collectionNotes[a.id] || '';
+        const inShowcase = state.collectionShowcase.includes(a.id);
+        const safeJson = JSON.stringify(a).replace(/'/g, '&#39;');
+        return `
+          <div class="bg-dark-800 border border-white/10 rounded-2xl overflow-hidden flex flex-col relative group">
+            <div class="relative aspect-[3/4] bg-dark-900 overflow-hidden">
+              <img src="${a.poster}" onerror="this.src='https://placehold.co/300x420/131620/f43f5e?text=TROPHY'" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div class="absolute top-2 right-2 px-2 py-0.5 rounded-lg bg-black/80 text-amber-400 text-[11px] font-bold">★ ${a.rating}</div>
+              <div class="hanko-stamp absolute bottom-3 right-3 px-1.5 py-1 text-rose-400 bg-black/80 text-[10px] font-black tracking-widest">完</div>
+              <button type="button" title="На витрину" onclick="toggleShowcase('${a.id}')" class="absolute top-2 left-2 w-7 h-7 rounded-xl ${inShowcase ? 'bg-amber-500 text-zinc-950' : 'bg-black/80 text-zinc-300 hover:text-white'} flex items-center justify-center text-xs cursor-pointer shadow-md">👑</button>
+            </div>
+            <div class="p-3 flex-1 flex flex-col justify-between space-y-2">
+              <div>
+                <h4 class="font-display font-bold text-xs text-white line-clamp-1">${getAnimeDisplayTitle(a)}</h4>
+                <div class="text-[10px] text-zinc-400">${a.year || '2024'} • ${a.type || 'TV'}</div>
+              </div>
+              <div class="space-y-1.5 pt-1 border-t border-white/5">
+                <p onclick="openNoteModal('${a.id}')" class="text-[11px] text-zinc-300 italic line-clamp-2 cursor-pointer hover:text-brand-300" title="Нажми, чтобы изменить заметку">${note ? `«${note}»` : '+ Добавить рецензию/заметку'}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setCollectionGenreFilter(g) {
+      state.collectionGenreFilter = g;
+      renderUserCollection();
+    }
+
+    function toggleShowcase(id) {
+      const idx = state.collectionShowcase.indexOf(id);
+      if (idx >= 0) {
+        state.collectionShowcase.splice(idx, 1);
+        showToast('Тайтл убран с витрины');
+      } else {
+        if (state.collectionShowcase.length >= 3) {
+          showToast('На витрине может быть максимум 3 тайтла');
+          return;
+        }
+        state.collectionShowcase.push(id);
+        showToast('Тайтл закреплен на витрине!');
+      }
+      saveUserScopedData();
+      renderUserCollection();
+      renderUserShowcase();
+    }
+
+    function renderUserShowcase() {
+      const grid = document.getElementById('userShowcaseGrid');
+      if (!grid) return;
+      const allItems = getCompletedCollectionItems();
+      const map = new Map(allItems.map(x => [x.id, x]));
+
+      const slots = [0, 1, 2].map(i => map.get(state.collectionShowcase[i]) || null);
+
+      grid.innerHTML = slots.map((item, idx) => {
+        if (!item) {
+          return `
+            <div class="p-5 rounded-2xl bg-dark-800/50 border border-dashed border-white/15 flex flex-col items-center justify-center text-center space-y-2 min-h-[220px]">
+              <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-zinc-500 text-lg">👑</div>
+              <div class="text-xs font-semibold text-zinc-400">Слот витрины #${idx + 1} пуст</div>
+              <div class="text-[10px] text-zinc-500">Нажмите корону на карточке в коллекции</div>
+            </div>
+          `;
+        }
+        return `
+          <div class="p-4 rounded-2xl bg-dark-800 border border-brand-500/40 shadow-xl flex items-center gap-3.5 relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 text-6xl opacity-10 select-none">👑</div>
+            <img src="${item.poster}" class="w-16 h-22 rounded-xl object-cover shrink-0 shadow-md" />
+            <div class="min-w-0 flex-1 space-y-1">
+              <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-bold">ТОП ВИРИНА #${idx + 1}</span>
+              <h4 class="font-display font-bold text-sm text-white truncate">${getAnimeDisplayTitle(item)}</h4>
+              <div class="text-[11px] text-zinc-400">★ ${item.rating} • ${item.year}</div>
+              <button type="button" onclick="toggleShowcase('${item.id}')" class="text-[10px] text-rose-400 hover:text-rose-300 cursor-pointer pt-1">Убрать с витрины</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    let activeNoteAnimeId = null;
+    function openNoteModal(id) {
+      activeNoteAnimeId = id;
+      const modal = document.getElementById('noteModal');
+      const textarea = document.getElementById('noteTextarea');
+      if (!modal || !textarea) return;
+      textarea.value = state.collectionNotes[id] || '';
+      modal.classList.remove('hidden');
+    }
+
+    function closeNoteModal() {
+      const modal = document.getElementById('noteModal');
+      if (modal) modal.classList.add('hidden');
+      activeNoteAnimeId = null;
+    }
+
+    function saveNoteModal() {
+      if (!activeNoteAnimeId) return;
+      const val = document.getElementById('noteTextarea').value.trim();
+      if (!val) delete state.collectionNotes[activeNoteAnimeId];
+      else state.collectionNotes[activeNoteAnimeId] = val;
+      saveUserScopedData();
+      closeNoteModal();
+      renderUserCollection();
+      showToast('Заметка сохранена!');
+    }
+
+    function exportCollectionPng() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 900;
+      canvas.height = 480;
+      const ctx = canvas.getContext('2d');
+      const theme = DESIGN_THEMES[state.siteSettings.seasonTheme] || DESIGN_THEMES.default;
+
+      ctx.fillStyle = theme.bg;
+      ctx.fillRect(0, 0, 900, 480);
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(24, 24, 852, 432, 28);
+      ctx.stroke();
+
+      ctx.fillStyle = theme.b400;
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillText('KITSUNE // ANIME — TROPHY PASSPORT', 56, 72);
+
+      const userName = state.user?.name || 'Гость KITSUNE';
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 38px sans-serif';
+      ctx.fillText(userName, 56, 128);
+
+      const items = getCompletedCollectionItems();
+      ctx.fillStyle = theme.b300;
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillText(`Собрано трофеев в коллекции: ${items.length}`, 56, 162);
+
+      const showcaseItems = state.collectionShowcase.map(id => items.find(x => x.id === id)).filter(Boolean);
+      ctx.fillStyle = '#a1a1aa';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.fillText('ВИТРИНА ТОП-3:', 56, 220);
+
+      ctx.fillStyle = '#f4f4f5';
+      ctx.font = '600 16px sans-serif';
+      const showcaseText = showcaseItems.length ? showcaseItems.map(x => getAnimeDisplayTitle(x)).join('   •   ') : 'Витрина пуста';
+      ctx.fillText(showcaseText.slice(0, 75), 56, 252);
+
+      const link = document.createElement('a');
+      link.download = `kitsune-trophies-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('Паспорт коллекции сохранен в PNG!');
+    }
+
+    // --- ШАПКА, ПОИСК, КАТАЛОГ, ПЛЕЕР, ТИР-ЛИСТ, ТЕМЫ И АККАУНТЫ ---
+    function toggleHeaderMiniMenu(e) {
+      e.stopPropagation();
+      const dd = document.getElementById('headerMiniMenuDropdown');
+      const btn = document.getElementById('headerMiniMenuBtn');
+      const themeDd = document.getElementById('themeMiniMenuDropdown');
+      if (themeDd) themeDd.classList.add('hidden');
+      if (dd) {
+        const opened = !dd.classList.toggle('hidden');
+        if (btn) btn.classList.toggle('gear-open', opened);
+      }
+    }
+
+    function closeHeaderMiniMenu() {
+      const dd = document.getElementById('headerMiniMenuDropdown');
+      const btn = document.getElementById('headerMiniMenuBtn');
+      if (dd) dd.classList.add('hidden');
+      if (btn) btn.classList.remove('gear-open');
+    }
+
+    function toggleThemeMiniMenu(e) {
+      e.stopPropagation();
+      closeHeaderMiniMenu();
+      const dd = document.getElementById('themeMiniMenuDropdown');
+      if (dd) dd.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('headerMiniMenuDropdown');
+      const btn = document.getElementById('headerMiniMenuBtn');
+      if (menu && !menu.contains(e.target) && btn && !btn.contains(e.target)) closeHeaderMiniMenu();
+      const tMenu = document.getElementById('themeMiniMenuDropdown');
+      const tBtn = document.getElementById('themeQuickBtn');
+      if (tMenu && !tMenu.contains(e.target) && tBtn && !tBtn.contains(e.target)) tMenu.classList.add('hidden');
+      const searchDd = document.getElementById('liveSearchDropdown');
+      const searchInput = document.getElementById('searchInput');
+      if (searchDd && !searchDd.contains(e.target) && e.target !== searchInput) searchDd.classList.add('hidden');
+    });
+
+    function startHeroSlider() {
+      clearInterval(state.heroTimer);
+      state.heroTimer = setInterval(() => {
+        if (state.heroPaused || state.activePage !== 'home') return;
+        const slides = state.catalog.slice(0, 5);
+        if (!slides.length) return;
+        state.heroIndex = (state.heroIndex + 1) % slides.length;
+        updateHeroBanner(slides[state.heroIndex]);
+      }, 6500);
+    }
+
+    function selectHeroSlide(idx) {
+      const slides = state.catalog.slice(0, 5);
+      if (!slides[idx]) return;
+      state.heroIndex = idx;
+      updateHeroBanner(slides[idx]);
+    }
+
+    function updateHeroBanner(anime) {
+      if (!anime) return;
+      state.heroAnime = anime;
+      const bg = document.getElementById('heroPosterBg');
+      const title = document.getElementById('heroTitle');
+      const desc = document.getElementById('heroDesc');
+      const rating = document.getElementById('heroRatingBadge');
+      const dots = document.getElementById('heroDotsBar');
+
+      if (bg) bg.src = anime.poster;
+      if (title) title.textContent = getAnimeDisplayTitle(anime);
+      if (desc) desc.textContent = anime.desc;
+      if (rating) {
+        rating.innerHTML = `<svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>${anime.rating}</span>`;
+      }
+      if (dots) {
+        const slides = state.catalog.slice(0, 5);
+        dots.innerHTML = slides.map((_, idx) => `
+          <button
+            type="button"
+            onclick="selectHeroSlide(${idx})"
+            class="h-1.5 rounded-full transition-all cursor-pointer ${idx === state.heroIndex ? 'w-8 bg-brand-500' : 'w-2.5 bg-white/25 hover:bg-white/50'}"
+          ></button>
+        `).join('');
+      }
+    }
+
+    function openHeroAnime() {
+      openAnimePlayer(state.heroAnime || state.catalog[0]);
+    }
+
+    function normalizeRelease(r) {
+      const posterPath = r.poster?.optimized?.src || r.poster?.src || '';
+      const posterUrl = posterPath
+        ? (posterPath.startsWith('http') ? posterPath : `https://anilibria.top${posterPath}`)
+        : 'https://placehold.co/400x560/131620/f43f5e?text=KITSUNE';
+
+      const genres = Array.isArray(r.genres)
+        ? r.genres.map(g => (typeof g === 'string' ? g : g.name)).filter(Boolean)
+        : ['Аниме'];
+
+      return {
+        id: `al_${r.id}`,
+        releaseId: r.id,
+        alias: r.alias || '',
+        title: r.name?.main || 'Без названия',
+        altTitle: r.name?.english || '',
+        year: r.year || 2024,
+        type: r.type?.description || r.type?.value || 'TV',
+        episodes: r.episodes_total || r.latest_episode?.ordinal || 12,
+        rating: (8.2 + ((r.id || 1) % 15) * 0.1).toFixed(1),
+        genres: genres.length ? genres : ['Экшен'],
+        poster: posterUrl,
+        desc: r.description || 'Описание загружается из базы AniLibria...',
+        isOngoing: Boolean(r.is_ongoing)
+      };
+    }
+
+    async function fetchAniLibriaCatalog(page = 1, append = false) {
+      if (state.isFetchingMore) return;
+      state.isFetchingMore = true;
+
+      const spinner = document.getElementById('catalogSpinner');
+      const statusTxt = document.getElementById('catalogStatusText');
+      if (spinner) spinner.classList.remove('hidden');
+      if (statusTxt) statusTxt.textContent = `Загружаем страницу ${page}...`;
+
+      try {
+        const data = await fetchAniLibriaJson(`/anime/catalog/releases?page=${page}&limit=15`, 5000);
+        if (data) {
+          const items = Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []);
+          const normalized = items.map(normalizeRelease);
+          if (normalized.length > 0) {
+            if (append) {
+              const existingIds = new Set(state.catalog.map(x => x.id));
+              normalized.forEach(item => {
+                if (!existingIds.has(item.id)) state.catalog.push(item);
+              });
+            } else {
+              state.catalog = normalized;
+              updateHeroBanner(normalized[0]);
+            }
+            state.loadedPage = page;
+            state.hasMorePages = normalized.length >= 10;
+          } else {
+            state.hasMorePages = false;
+          }
+        } else {
+          state.hasMorePages = false;
+        }
+      } catch (e) {
+        state.hasMorePages = false;
+      }
+
+      state.isFetchingMore = false;
+      if (spinner) spinner.classList.add('hidden');
+      if (statusTxt) {
+        statusTxt.textContent = state.hasMorePages
+          ? `Загружено релизов: ${state.catalog.length} • Листайте ниже для подгрузки`
+          : `В каталоге показано ${state.catalog.length} релизов`;
+      }
+      populateGenreSelect();
+      renderCatalogGrid();
+    }
+
+    function populateGenreSelect() {
+      const sel = document.getElementById('genreFilterSelect');
+      if (!sel) return;
+      const current = sel.value;
+      const set = new Set();
+      state.catalog.forEach(a => (a.genres || []).forEach(g => set.add(g)));
+      sel.innerHTML = `<option value="">Все жанры</option>` +
+        Array.from(set).sort().map(g => `<option value="${g}">${g}</option>`).join('');
+      sel.value = current;
+    }
+
+    function switchFeedTab(tab) {
+      state.feedTab = tab;
+      document.querySelectorAll('.feed-tab').forEach(btn => {
+        btn.classList.remove('bg-brand-600', 'text-white', 'font-bold');
+        btn.classList.add('text-zinc-400', 'font-semibold');
+      });
+      const active = document.getElementById(`tab-${tab}`);
+      if (active) {
+        active.classList.add('bg-brand-600', 'text-white', 'font-bold');
+        active.classList.remove('text-zinc-400', 'font-semibold');
+      }
+      const subBar = document.getElementById('myListSubfilters');
+      if (subBar) subBar.classList.toggle('hidden', tab !== 'mylist');
+      renderCatalogGrid();
+    }
+
+    function setMyListSubfilter(sub) {
+      state.myListSubfilter = sub;
+      document.querySelectorAll('.mylist-sub-btn').forEach(btn => {
+        const active = btn.getAttribute('data-list-sub') === sub;
+        btn.classList.toggle('bg-brand-600', active);
+        btn.classList.toggle('text-white', active);
+        btn.classList.toggle('font-bold', active);
+        btn.classList.toggle('bg-white/5', !active);
+        btn.classList.toggle('text-zinc-300', !active);
+      });
+      renderCatalogGrid();
+    }
+
+    function applyGenreFilter(genre) {
+      state.selectedGenre = genre;
+      renderCatalogGrid();
+    }
+
+    function cycleCardBookmark(e, anime) {
+      e.stopPropagation();
+      const order = ['', 'watching', 'planned', 'completed'];
+      const labels = {
+        '': 'Удалено из списка',
+        watching: 'Добавлено в «Смотрю»',
+        planned: 'Добавлено в «В планах»',
+        completed: 'Добавлено в Коллекцию трофеев!'
+      };
+      const cur = state.myList[anime.id]?.userStatus || '';
+      const next = order[(order.indexOf(cur) + 1) % order.length];
+      if (!next) delete state.myList[anime.id];
+      else state.myList[anime.id] = { ...anime, userStatus: next, addedAt: Date.now() };
+      saveUserScopedData();
+      syncMyListBadge();
+      renderCatalogGrid();
+      showToast(labels[next]);
+    }
+
+    function handleCardTilt(e, card) {
+      if (state.siteSettings.smoothAnim === false) return;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rx = ((y / rect.height) - 0.5) * -9;
+      const ry = ((x / rect.width) - 0.5) * 9;
+      card.style.transform = `perspective(700px) rotateX(${rx.toFixed(1)}deg) rotateY(${ry.toFixed(1)}deg) translate3d(0, -4px, 0)`;
+      card.style.setProperty('--mx', `${Math.round((x / rect.width) * 100)}%`);
+      card.style.setProperty('--my', `${Math.round((y / rect.height) * 100)}%`);
+    }
+
+    function resetCardTilt(card) {
+      card.style.transform = '';
+    }
+
+    function renderCatalogGrid() {
+      const grid = document.getElementById('animeCatalogGrid');
+      if (!grid) return;
+
+      let list = [...state.catalog];
+      if (state.feedTab === 'ongoing') {
+        list = list.filter(a => a.isOngoing);
+      } else if (state.feedTab === 'top') {
+        list.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+      } else if (state.feedTab === 'mylist') {
+        list = Object.values(state.myList);
+        if (state.myListSubfilter !== 'all') {
+          list = list.filter(a => a.userStatus === state.myListSubfilter);
+        }
+      }
+
+      if (state.selectedGenre) {
+        list = list.filter(a => (a.genres || []).includes(state.selectedGenre));
+      }
+
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-12 text-center text-sm text-zinc-400 bg-dark-900 rounded-3xl border border-white/10">Список пуст. Нажми «+» на любой карточке каталога, чтобы добавить аниме в закладки или коллекцию!</div>`;
+        return;
+      }
+
+      const sTierIds = new Set((state.tierList.S || []).map(x => x.id));
+      const statusSvgs = {
+        watching: `<svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
+        planned: `<svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`,
+        completed: `<svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`,
+        '': `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`
+      };
+
+      grid.innerHTML = list.map((anime, idx) => {
+        const savedStatus = state.myList[anime.id]?.userStatus || '';
+        const statusIcon = statusSvgs[savedStatus] || statusSvgs[''];
+        const hist = state.watchHistory[anime.id];
+        const progressPct = hist ? Math.min(100, Math.round(((hist.time || 0) / (hist.duration || 1440)) * 100)) : 0;
+        const isCompleted = savedStatus === 'completed';
+        const isSTier = sTierIds.has(anime.id);
+        const safeJson = JSON.stringify(anime).replace(/'/g, '&#39;');
+
+        return `
+          <article
+            onclick='openAnimePlayer(${safeJson})'
+            onmousemove="handleCardTilt(event, this)"
+            onmouseleave="resetCardTilt(this)"
+            style="--stagger: ${Math.min(idx * 25, 300)}ms"
+            class="anime-card group bg-dark-900 border border-white/10 rounded-2xl overflow-hidden cursor-pointer flex flex-col relative"
+          >
+            <div class="relative aspect-[3/4] bg-dark-800 overflow-hidden">
+              <img
+                src="${anime.poster}"
+                onerror="this.src='https://placehold.co/400x560/131620/f43f5e?text=KITSUNE'"
+                alt="${getAnimeDisplayTitle(anime)}"
+                loading="lazy"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div class="card-glare pointer-events-none absolute inset-0"></div>
+
+              <button
+                type="button"
+                title="Сменить статус в списке / В коллекцию"
+                onclick='cycleCardBookmark(event, ${safeJson})'
+                class="absolute top-2.5 left-2.5 w-7 h-7 rounded-xl bg-black/80 hover:bg-brand-600 border border-white/15 text-white flex items-center justify-center transition z-10 cursor-pointer"
+              >
+                ${statusIcon}
+              </button>
+
+              <div class="absolute top-2.5 right-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-black/75 backdrop-blur-md text-amber-400 text-[11px] font-bold">
+                <span>★ ${anime.rating}</span>
+              </div>
+
+              ${isSTier ? `<div class="hanko-stamp absolute bottom-10 right-2.5 px-1 py-1 text-amber-300 bg-black/75 text-xs font-black tracking-widest">神</div>` : ''}
+              ${isCompleted ? `<div class="hanko-stamp absolute bottom-10 left-2.5 px-1 py-1 text-rose-400 bg-black/75 text-xs font-black tracking-widest">完</div>` : ''}
+
+              <div class="absolute bottom-2.5 inset-x-2.5 flex items-center justify-between text-[11px] font-semibold text-white">
+                <span class="px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-md">${hist ? `Серия ${hist.episode}` : `${anime.type} • ${anime.year}`}</span>
+                <span class="px-2 py-0.5 rounded-md bg-brand-600/90">${anime.episodes} эп.</span>
+              </div>
+
+              ${hist ? `<div class="absolute bottom-0 inset-x-0 h-1 bg-white/15"><div class="h-full bg-brand-500" style="width:${progressPct}%"></div></div>` : ''}
+            </div>
+            <div class="p-3.5 flex-1 flex flex-col justify-between space-y-1.5">
+              <h3 class="font-display font-bold text-xs sm:text-sm text-white line-clamp-2 group-hover:text-brand-400 transition-colors">
+                ${getAnimeDisplayTitle(anime)}
+              </h3>
+              <div class="text-[11px] text-zinc-400 truncate">
+                ${(anime.genres || []).slice(0, 2).join(' • ')}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    let searchDebounceTimer = null;
+    function handleSearchInput(query) {
+      const q = (query || '').trim();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      const dd = document.getElementById('liveSearchDropdown');
+      if (clearBtn) clearBtn.classList.toggle('hidden', !q);
+      if (!q) {
+        if (dd) dd.classList.add('hidden');
+        return;
+      }
+
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(async () => {
+        if (!dd) return;
+        dd.classList.remove('hidden');
+        dd.innerHTML = `<div class="p-4 text-xs text-zinc-400">Ищем «${q}» в базе AniLibria...</div>`;
+        try {
+          const raw = await fetchAniLibriaJson(`/app/search/releases?query=${encodeURIComponent(q)}`, 4500);
+          const list = (Array.isArray(raw) ? raw : (raw?.data || [])).slice(0, 8).map(normalizeRelease);
+          if (!list.length) {
+            dd.innerHTML = `<div class="p-4 text-xs text-zinc-400">Ничего не найдено по запросу «${q}»</div>`;
+            return;
+          }
+          dd.innerHTML = list.map(a => `
+            <button
+              type="button"
+              onclick='openAnimePlayer(${JSON.stringify(a).replace(/'/g, "&#39;")}); document.getElementById("liveSearchDropdown").classList.add("hidden");'
+              class="w-full flex items-center gap-3 p-2.5 hover:bg-white/10 text-left border-b border-white/5 last:border-0 cursor-pointer"
+            >
+              <img src="${a.poster}" onerror="this.src='https://placehold.co/80x110/131620/f43f5e?text=TV'" class="w-10 h-14 rounded-lg object-cover shrink-0" />
+              <div class="min-w-0 flex-1">
+                <div class="text-xs font-bold text-white truncate">${getAnimeDisplayTitle(a)}</div>
+                <div class="text-[11px] text-zinc-400">${a.year} • ${a.episodes} эп. • ${(a.genres || []).slice(0, 2).join(', ')}</div>
+              </div>
+            </button>
+          `).join('');
+        } catch (e) {
+          dd.innerHTML = `<div class="p-4 text-xs text-rose-400">Ошибка соединения с API</div>`;
+        }
+      }, 280);
+    }
+
+    function clearSearch() {
+      const inp = document.getElementById('searchInput');
+      const dd = document.getElementById('liveSearchDropdown');
+      const btn = document.getElementById('clearSearchBtn');
+      if (inp) inp.value = '';
+      if (dd) dd.classList.add('hidden');
+      if (btn) btn.classList.add('hidden');
+    }
+
+    async function openAnimePlayer(anime, startEp = null, resumeSec = 0) {
+      if (!anime) return;
+      state.currentAnime = anime;
+      state.anilibriaEpisodes = [];
+
+      const modal = document.getElementById('playerModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      document.getElementById('modalAnimeTitle').textContent = getAnimeDisplayTitle(anime);
+      document.getElementById('modalAnimeDesc').textContent = anime.desc || 'Описание отсутствует.';
+      document.getElementById('modalStatusSelect').value = state.myList[anime.id]?.userStatus || '';
+      const qSel = document.getElementById('hlsQualitySelect');
+      if (qSel) qSel.value = state.siteSettings.defaultQuality || '720';
+
+      const savedHist = state.watchHistory[anime.id];
+      const epToPlay = startEp || savedHist?.episode || 1;
+      const secToResume = resumeSec || (startEp ? 0 : (savedHist?.time || 0));
+
+      renderEpisodesRibbon(anime.episodes || 12, epToPlay);
+
+      try {
+        const key = anime.releaseId || anime.alias;
+        if (key) {
+          const full = await fetchAniLibriaJson(`/anime/releases/${encodeURIComponent(key)}`, 4000);
+          if (full) {
+            if (Array.isArray(full.episodes)) {
+              state.anilibriaEpisodes = full.episodes;
+              anime.episodes = full.episodes.length || anime.episodes;
+            }
+            if (full.description) document.getElementById('modalAnimeDesc').textContent = full.description;
+          }
+        }
+      } catch (e) {}
+
+      selectEpisode(epToPlay, secToResume);
+    }
+
+    function closePlayerModal() {
+      saveCurrentWatchProgress(true);
+      const container = document.getElementById('playerVideoContainer');
+      const modal = document.getElementById('playerModal');
+      if (container) container.classList.remove('pseudo-fullscreen');
+      if (modal) modal.classList.remove('fs-active');
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        (document.exitFullscreen || document.webkitExitFullscreen)?.call(document).catch?.(() => {});
+      }
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      const video = document.getElementById('animeVideoElement');
+      if (video) video.pause();
+      if (state.hlsInstance) {
+        state.hlsInstance.destroy();
+        state.hlsInstance = null;
+      }
+    }
+
+    function isPlayerInFullscreen() {
+      const container = document.getElementById('playerVideoContainer');
+      const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      return Boolean(fsEl || (container && container.classList.contains('pseudo-fullscreen')));
+    }
+
+    function syncFullscreenButtonState() {
+      const btn = document.getElementById('fsToggleBtnLabel');
+      const active = isPlayerInFullscreen();
+      if (btn) {
+        btn.textContent = active ? 'Выйти из полного экрана (Esc)' : 'Полный экран (F)';
+      }
+    }
+
+    function revealFullscreenOverlay() {
+      const bar = document.getElementById('fullscreenEpisodeBar');
+      const container = document.getElementById('playerVideoContainer');
+      if (!bar) return;
+      bar.classList.remove('opacity-0');
+      bar.classList.add('opacity-100');
+      if (container) container.style.cursor = 'default';
+      clearTimeout(window._fsBarTimer);
+      window._fsBarTimer = setTimeout(() => {
+        const list = document.getElementById('fsEpisodeDropdownList');
+        if (list && !list.classList.contains('hidden')) return;
+        bar.classList.remove('opacity-100');
+        bar.classList.add('opacity-0');
+        if (container && isPlayerInFullscreen()) {
+          container.style.cursor = 'none';
+        }
+      }, 2300);
+    }
+
+    function toggleFullscreenEpDropdown() {
+      const list = document.getElementById('fsEpisodeDropdownList');
+      if (!list) return;
+      list.classList.toggle('hidden');
+      revealFullscreenOverlay();
+    }
+
+    function stepEpisode(delta) {
+      if (!state.currentAnime) return;
+      const total = Math.max(state.currentAnime.episodes || 1, state.anilibriaEpisodes.length || 1);
+      const next = state.currentEpisode + delta;
+      if (next >= 1 && next <= total) {
+        selectEpisode(next, 0);
+        triggerPlayerHud(`Серия ${next} / ${total}`);
+        revealFullscreenOverlay();
+      }
+    }
+
+    function syncFullscreenEpisodeControls() {
+      const total = Math.max(state.currentAnime?.episodes || 1, state.anilibriaEpisodes?.length || 1);
+      const cur = state.currentEpisode || 1;
+      const label = document.getElementById('fsCurrentEpLabel');
+      const prevBtn = document.getElementById('fsPrevEpBtn');
+      const nextBtn = document.getElementById('fsNextEpBtn');
+      const list = document.getElementById('fsEpisodeDropdownList');
+
+      if (label) label.textContent = `Серия ${cur} / ${total}`;
+      if (prevBtn) prevBtn.disabled = cur <= 1;
+      if (nextBtn) nextBtn.disabled = cur >= total;
+      if (list) {
+        let html = '';
+        for (let i = 1; i <= total; i++) {
+          const active = i === cur;
+          html += `<button type="button" onclick="selectEpisode(${i}, 0); document.getElementById('fsEpisodeDropdownList').classList.add('hidden');" class="w-full text-left px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${active ? 'bg-brand-600 text-white' : 'text-zinc-200 hover:bg-white/10'}">Серия ${i}</button>`;
+        }
+        list.innerHTML = html;
+      }
+      syncFullscreenButtonState();
+    }
+
+    function enterPseudoFullscreen() {
+      const container = document.getElementById('playerVideoContainer');
+      const modal = document.getElementById('playerModal');
+      if (!container) return;
+      if (modal) modal.classList.add('fs-active');
+      container.classList.add('pseudo-fullscreen');
+      syncFullscreenButtonState();
+      revealFullscreenOverlay();
+    }
+
+    function exitPseudoFullscreen() {
+      const container = document.getElementById('playerVideoContainer');
+      const modal = document.getElementById('playerModal');
+      if (container) {
+        container.classList.remove('pseudo-fullscreen');
+        container.style.cursor = 'default';
+      }
+      if (modal) modal.classList.remove('fs-active');
+      syncFullscreenButtonState();
+    }
+
+    async function togglePlayerFullscreen(e) {
+      if (e && e.target && ['BUTTON', 'SELECT', 'OPTION'].includes(e.target.tagName) && e.type === 'dblclick') {
+        return;
+      }
+      const container = document.getElementById('playerVideoContainer');
+      const video = document.getElementById('animeVideoElement');
+      if (!container) return;
+
+      const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      const isPseudo = container.classList.contains('pseudo-fullscreen');
+
+      if (fsEl || isPseudo) {
+        exitPseudoFullscreen();
+        if (fsEl) {
+          if (document.exitFullscreen) {
+            await document.exitFullscreen().catch(() => {});
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          }
+        }
+        syncFullscreenButtonState();
+        triggerPlayerHud('Обычный экран');
+        return;
+      }
+
+      let nativeEntered = false;
+      try {
+        if (container.requestFullscreen) {
+          await container.requestFullscreen();
+          nativeEntered = Boolean(document.fullscreenElement);
+        } else if (container.webkitRequestFullscreen) {
+          container.webkitRequestFullscreen();
+          nativeEntered = Boolean(document.webkitFullscreenElement);
+        }
+      } catch (err) {
+        nativeEntered = false;
+      }
+
+      if (!nativeEntered) {
+        enterPseudoFullscreen();
+      } else {
+        syncFullscreenButtonState();
+        revealFullscreenOverlay();
+      }
+      triggerPlayerHud('Полный экран');
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      const container = document.getElementById('playerVideoContainer');
+      const video = document.getElementById('animeVideoElement');
+      // Если пользователь нажал нативную кнопку полного экрана прямо на теге <video>, переключаем полноэкранный режим на контейнер с панелью серий
+      if (fsEl === video && container && container.requestFullscreen) {
+        document.exitFullscreen?.().then(() => {
+          container.requestFullscreen().catch(() => enterPseudoFullscreen());
+        }).catch(() => {});
+        return;
+      }
+      if (!fsEl && container) {
+        container.style.cursor = 'default';
+      }
+      syncFullscreenButtonState();
+      revealFullscreenOverlay();
+    });
+
+    function handleVideoSurfaceClick(e) {
+      const video = document.getElementById('animeVideoElement');
+      if (!video) return;
+      const rect = video.getBoundingClientRect();
+      if (e.clientY > rect.bottom - 48) return;
+      revealFullscreenOverlay();
+    }
+
+    window.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('playerModal');
+      if (!modal || modal.classList.contains('hidden')) return;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+
+      const video = document.getElementById('animeVideoElement');
+      if (!video) return;
+      const key = e.key.toLowerCase();
+      const step = Number(state.siteSettings.seekStep) || 5;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (video.paused) { video.play().catch(() => {}); triggerPlayerHud('Воспроизведение'); }
+        else { video.pause(); triggerPlayerHud('Пауза'); }
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        video.currentTime = Math.min(video.duration || 9999, video.currentTime + step);
+        triggerPlayerHud(`+${step} сек`);
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        video.currentTime = Math.max(0, video.currentTime - step);
+        triggerPlayerHud(`-${step} сек`);
+      } else if (key === 'f' || key === 'а') {
+        e.preventDefault();
+        togglePlayerFullscreen();
+      } else if (key === 'n' || key === 'т') {
+        e.preventDefault();
+        stepEpisode(1);
+      } else if (key === 'p' || key === 'з') {
+        e.preventDefault();
+        stepEpisode(-1);
+      } else if (e.key === 'Escape') {
+        const container = document.getElementById('playerVideoContainer');
+        if (container?.classList.contains('pseudo-fullscreen')) {
+          e.preventDefault();
+          exitPseudoFullscreen();
+          triggerPlayerHud('Обычный экран');
+        }
+      }
+    });
+
+    function renderEpisodesRibbon(total, activeEp) {
+      const ribbon = document.getElementById('episodesRibbon');
+      if (!ribbon) return;
+      const count = Math.max(total || 1, state.anilibriaEpisodes.length || 1);
+      let html = '';
+      for (let i = 1; i <= count; i++) {
+        const isCurrent = i === activeEp;
+        html += `
+          <button
+            type="button"
+            onclick="selectEpisode(${i}); this.blur();"
+            class="px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 transition cursor-pointer ${isCurrent ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30' : 'bg-dark-800 hover:bg-dark-700 text-zinc-300 border border-white/10'}"
+          >
+            Серия ${i}
+          </button>
+        `;
+      }
+      ribbon.innerHTML = html;
+    }
+
+    function selectEpisode(ep, resumeSec = 0) {
+      saveCurrentWatchProgress(true);
+      state.currentEpisode = ep;
+      renderEpisodesRibbon(state.currentAnime?.episodes || 12, ep);
+      syncFullscreenEpisodeControls();
+
+      const epObj = state.anilibriaEpisodes.find(e => e.ordinal === ep) || state.anilibriaEpisodes[ep - 1];
+      const q = document.getElementById('hlsQualitySelect')?.value || state.siteSettings.defaultQuality || '720';
+
+      const candidates = [];
+      if (epObj) {
+        if (q === '1080') {
+          if (epObj.hls_1080) candidates.push({ url: epObj.hls_1080, label: '1080p' });
+          if (epObj.hls_720) candidates.push({ url: epObj.hls_720, label: '720p' });
+          if (epObj.hls_480) candidates.push({ url: epObj.hls_480, label: '480p' });
+        } else if (q === '480') {
+          if (epObj.hls_480) candidates.push({ url: epObj.hls_480, label: '480p' });
+          if (epObj.hls_720) candidates.push({ url: epObj.hls_720, label: '720p' });
+          if (epObj.hls_1080) candidates.push({ url: epObj.hls_1080, label: '1080p' });
+        } else {
+          if (epObj.hls_720) candidates.push({ url: epObj.hls_720, label: '720p' });
+          if (epObj.hls_1080) candidates.push({ url: epObj.hls_1080, label: '1080p' });
+          if (epObj.hls_480) candidates.push({ url: epObj.hls_480, label: '480p' });
+        }
+      }
+      candidates.push({ url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8', label: `${q}p` });
+
+      const chosen = candidates[0];
+      const badge = document.getElementById('playerStreamBadge');
+      if (badge) badge.textContent = `Серия ${ep} • ${chosen.label} HLS`;
+
+      attachVideoSource(candidates.map(c => c.url), resumeSec);
+    }
+
+    function releaseVideoControlsBar(video) {
+      if (document.activeElement && document.activeElement !== document.body) {
+        document.activeElement.blur?.();
+      }
+      if (video) video.blur?.();
+    }
+
+    function attachVideoSource(urlOrList, resumeSec = 0, candidateIdx = 0) {
+      const urls = Array.isArray(urlOrList) ? urlOrList : [urlOrList];
+      const url = urls[candidateIdx] || 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+      const video = document.getElementById('animeVideoElement');
+      if (!video) return;
+
+      if (state.hlsInstance) {
+        state.hlsInstance.destroy();
+        state.hlsInstance = null;
+      }
+
+      const startPlayback = () => {
+        if (resumeSec > 1 && Math.abs((video.currentTime || 0) - resumeSec) > 2) {
+          try { video.currentTime = resumeSec; } catch (e) {}
+        }
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise.then(() => releaseVideoControlsBar(video)).catch(() => {});
+        } else {
+          releaseVideoControlsBar(video);
+        }
+      };
+
+      if (window.Hls && Hls.isSupported() && url.includes('.m3u8')) {
+        const hls = new Hls({
+          enableWorker: false,
+          startPosition: resumeSec > 1 ? resumeSec : -1
+        });
+        state.hlsInstance = hls;
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, startPlayback);
+        hls.on(Hls.Events.ERROR, (_, data) => {
+          if (data.fatal) {
+            if (candidateIdx + 1 < urls.length) {
+              attachVideoSource(urls, resumeSec, candidateIdx + 1);
+            } else {
+              hls.destroy();
+            }
+          }
+        });
+      } else {
+        video.src = url;
+        video.onloadedmetadata = startPlayback;
+        video.onerror = () => {
+          if (candidateIdx + 1 < urls.length) {
+            attachVideoSource(urls, resumeSec, candidateIdx + 1);
+          }
+        };
+      }
+    }
+
+    function triggerPlayerHud(label) {
+      const hud = document.getElementById('playerHudFeedback');
+      const txt = document.getElementById('playerHudText');
+      if (!hud || !txt) return;
+      txt.textContent = label;
+      hud.classList.remove('hidden');
+      clearTimeout(window._hudTimer);
+      window._hudTimer = setTimeout(() => hud.classList.add('hidden'), 850);
+    }
+
+    function changeHlsQuality(quality) {
+      const q = quality || document.getElementById('hlsQualitySelect')?.value || '720';
+      state.siteSettings.defaultQuality = q;
+      localStorage.setItem('kitsune_settings', JSON.stringify(state.siteSettings));
+      const video = document.getElementById('animeVideoElement');
+      const currentSec = video ? Math.floor(video.currentTime || 0) : 0;
+      selectEpisode(state.currentEpisode, currentSec);
+      releaseVideoControlsBar(video);
+      triggerPlayerHud(`Качество: ${q}p`);
+    }
+
+    function changePlaybackSpeed(rate) {
+      const video = document.getElementById('animeVideoElement');
+      if (video) {
+        video.playbackRate = parseFloat(rate) || 1;
+        releaseVideoControlsBar(video);
+        triggerPlayerHud(`Скорость ${rate}x`);
+      }
+    }
+
+    function toggleAmbilight() {
+      state.siteSettings.ambilight = !state.siteSettings.ambilight;
+      localStorage.setItem('kitsune_settings', JSON.stringify(state.siteSettings));
+    }
+
+    function toggleTheaterMode(force) {
+      state.theaterMode = typeof force === 'boolean' ? force : !state.theaterMode;
+      const modal = document.getElementById('playerModal');
+      if (modal) modal.classList.toggle('bg-black', state.theaterMode);
+    }
+
+    function saveCurrentWatchProgress(force = false) {
+      const video = document.getElementById('animeVideoElement');
+      if (!video || !state.currentAnime) return;
+      const t = Math.floor(video.currentTime || 0);
+      if (!force && t < 2) return;
+      state.watchHistory[state.currentAnime.id] = {
+        anime: state.currentAnime,
+        episode: state.currentEpisode,
+        time: t,
+        duration: Math.floor(video.duration || 1440),
+        updatedAt: Date.now()
+      };
+      saveUserScopedData();
+      renderContinueWatching();
+    }
+
+    function handlePlayerTimeUpdate() {
+      saveCurrentWatchProgress(false);
+    }
+
+    function handleEpisodeEnded() {
+      const total = Math.max(state.currentAnime?.episodes || 12, state.anilibriaEpisodes.length || 1);
+      if (state.currentEpisode < total) selectEpisode(state.currentEpisode + 1, 0);
+    }
+
+    function setAnimeUserStatus(status) {
+      if (!state.currentAnime) return;
+      if (!status) {
+        delete state.myList[state.currentAnime.id];
+        showToast('Удалено из списка');
+      } else {
+        state.myList[state.currentAnime.id] = { ...state.currentAnime, userStatus: status, addedAt: Date.now() };
+        showToast(status === 'completed' ? 'Добавлено в Коллекцию трофеев!' : 'Статус в списке обновлён!');
+      }
+      saveUserScopedData();
+      syncMyListBadge();
+      renderCatalogGrid();
+    }
+
+    function syncMyListBadge() {
+      const badge = document.getElementById('myListCountBadge');
+      if (badge) badge.textContent = Object.keys(state.myList).length;
+    }
+
+    function renderContinueWatching() {
+      const sec = document.getElementById('continueWatchingSection');
+      const grid = document.getElementById('continueWatchingGrid');
+      const ownerTag = document.getElementById('historyOwnerTag');
+      const items = Object.values(state.watchHistory).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)).slice(0, 4);
+      if (!sec || !grid) return;
+      if (!items.length) {
+        sec.classList.add('hidden');
+        return;
+      }
+      sec.classList.remove('hidden');
+      if (ownerTag) ownerTag.textContent = state.user ? `Профиль: ${state.user.name}` : 'Локально';
+      grid.innerHTML = items.map(h => {
+        const pct = Math.min(100, Math.round(((h.time || 0) / (h.duration || 1440)) * 100));
+        return `
+          <div
+            onclick='openAnimePlayer(${JSON.stringify(h.anime).replace(/'/g, "&#39;")}, ${h.episode}, ${h.time})'
+            class="flex items-center gap-3 p-3 rounded-2xl bg-dark-900 hover:bg-dark-800 border border-white/10 cursor-pointer transition"
+          >
+            <img src="${h.anime.poster}" class="w-12 h-16 rounded-xl object-cover shrink-0" />
+            <div class="min-w-0 flex-1 space-y-1.5">
+              <div class="text-xs font-bold text-white truncate">${getAnimeDisplayTitle(h.anime)}</div>
+              <div class="text-[11px] text-brand-400 font-semibold">Серия ${h.episode} • ${Math.floor(h.time / 60)}:${String(h.time % 60).padStart(2, '0')}</div>
+              <div class="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div class="h-full bg-brand-500" style="width:${pct}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function clearWatchHistory() {
+      state.watchHistory = {};
+      saveUserScopedData();
+      renderContinueWatching();
+      renderCatalogGrid();
+      showToast('История просмотра очищена');
+    }
+
+    function renderTierListPage() {
+      const rowsEl = document.getElementById('tierRowsContainer');
+      const poolEl = document.getElementById('tierPoolGrid');
+      if (!rowsEl || !poolEl) return;
+
+      const tiers = [
+        { key: 'S', label: 'S — Шедевры', color: 'bg-rose-600' },
+        { key: 'A', label: 'A — Топ', color: 'bg-amber-500' },
+        { key: 'B', label: 'B — Хорошо', color: 'bg-emerald-600' },
+        { key: 'C', label: 'C — На один раз', color: 'bg-sky-600' }
+      ];
+
+      const assignedIds = new Set();
+      Object.values(state.tierList).forEach(arr => arr.forEach(a => assignedIds.add(a.id)));
+
+      rowsEl.innerHTML = tiers.map(t => {
+        const items = state.tierList[t.key] || [];
+        return `
+          <div class="flex flex-col sm:flex-row bg-dark-900 border border-white/10 rounded-2xl overflow-hidden">
+            <div class="${t.color} sm:w-36 p-3 flex items-center justify-center text-center font-display font-black text-sm text-white shrink-0">
+              ${t.label}
+            </div>
+            <div class="flex-1 p-3 flex flex-wrap gap-2.5 min-h-[96px]">
+              ${items.length ? items.map(a => `
+                <div class="relative group w-16 sm:w-20 rounded-xl overflow-hidden border border-white/15">
+                  <img src="${a.poster}" title="${getAnimeDisplayTitle(a)}" class="w-full aspect-[3/4] object-cover" />
+                  <button type="button" onclick="removeFromTier('${t.key}', '${a.id}')" class="absolute top-1 right-1 w-5 h-5 rounded-md bg-black/80 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer">✕</button>
+                </div>
+              `).join('') : `<div class="text-xs text-zinc-500 self-center px-2">Пусто — выбери ранг у карточки снизу</div>`}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const allPool = [...state.tierPoolExtra, ...state.catalog, ...Object.values(state.myList)];
+      const uniquePool = [];
+      const seen = new Set();
+      allPool.forEach(a => {
+        if (!seen.has(a.id) && !assignedIds.has(a.id)) {
+          seen.add(a.id);
+          uniquePool.push(a);
+        }
+      });
+
+      poolEl.innerHTML = uniquePool.slice(0, 28).map(a => `
+        <div class="bg-dark-800 border border-white/10 rounded-xl overflow-hidden flex flex-col">
+          <img src="${a.poster}" class="w-full aspect-[3/4] object-cover" />
+          <div class="p-2 space-y-1.5 flex-1 flex flex-col justify-between">
+            <div class="text-[11px] font-bold text-white line-clamp-2">${getAnimeDisplayTitle(a)}</div>
+            <div class="grid grid-cols-4 gap-1">
+              ${['S', 'A', 'B', 'C'].map(rank => `
+                <button type="button" onclick='assignToTier("${rank}", ${JSON.stringify(a).replace(/'/g, "&#39;")})' class="py-1 rounded bg-white/10 hover:bg-brand-600 text-[10px] font-black text-white cursor-pointer">${rank}</button>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    let tierSearchTimer = null;
+    function handleTierSearch(query) {
+      const q = (query || '').trim();
+      clearTimeout(tierSearchTimer);
+      if (!q) return;
+      tierSearchTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(`${ANILIBRIA_API}/app/search/releases?query=${encodeURIComponent(q)}`);
+          if (!res.ok) return;
+          const raw = await res.json();
+          state.tierPoolExtra = (Array.isArray(raw) ? raw : (raw.data || [])).map(normalizeRelease);
+          renderTierListPage();
+        } catch (e) {}
+      }, 300);
+    }
+
+    function assignToTier(rank, anime) {
+      ['S', 'A', 'B', 'C'].forEach(r => {
+        state.tierList[r] = (state.tierList[r] || []).filter(x => x.id !== anime.id);
+      });
+      state.tierList[rank].push(anime);
+      saveUserScopedData();
+      renderTierListPage();
+      renderCatalogGrid();
+    }
+
+    function removeFromTier(rank, id) {
+      state.tierList[rank] = (state.tierList[rank] || []).filter(x => x.id !== id);
+      saveUserScopedData();
+      renderTierListPage();
+      renderCatalogGrid();
+    }
+
+    function resetTierList() {
+      state.tierList = { S: [], A: [], B: [], C: [] };
+      saveUserScopedData();
+      renderTierListPage();
+      renderCatalogGrid();
+    }
+
+    function copyTierListSummary() {
+      const lines = ['Мой Тир-лист KITSUNE // ANIME:'];
+      ['S', 'A', 'B', 'C'].forEach(r => {
+        const names = (state.tierList[r] || []).map(a => getAnimeDisplayTitle(a)).join(', ');
+        lines.push(`${r}: ${names || '—'}`);
+      });
+      const temp = document.createElement('textarea');
+      temp.value = lines.join('\n');
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      showToast('Тир-лист скопирован!');
+    }
+
+    function renderCalendarPage() {
+      const grid = document.getElementById('calendarDaysGrid');
+      if (!grid) return;
+      const days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+      grid.innerHTML = days.map((day, i) => {
+        const subset = state.catalog.filter((_, idx) => idx % 7 === i).slice(0, 3);
+        return `
+          <div class="bg-dark-900 border border-white/10 rounded-2xl p-4 space-y-3">
+            <div class="font-display font-bold text-sm text-brand-400">${day}</div>
+            <div class="space-y-2">
+              ${(subset.length ? subset : state.catalog.slice(0, 2)).map(a => `
+                <div onclick='openAnimePlayer(${JSON.stringify(a).replace(/'/g, "&#39;")})' class="flex items-center gap-2.5 p-2 rounded-xl bg-dark-800 hover:bg-dark-700 cursor-pointer">
+                  <img src="${a.poster}" class="w-10 h-14 rounded-lg object-cover shrink-0" />
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold text-white truncate">${getAnimeDisplayTitle(a)}</div>
+                    <div class="text-[11px] text-zinc-400">Новая серия • 19:00 МСК</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function runAiMoodPick(preset) {
+      const inp = document.getElementById('aiMoodInput');
+      if (preset && inp) inp.value = preset;
+      const query = (inp?.value || preset || '').toLowerCase();
+      const resEl = document.getElementById('aiRecommendationsResult');
+      if (!resEl) return;
+
+      let matches = state.catalog.filter(a => {
+        const hay = `${a.title} ${a.desc} ${(a.genres || []).join(' ')}`.toLowerCase();
+        return query.split(/\s+/).some(w => w.length > 3 && hay.includes(w));
+      });
+      if (matches.length < 3) matches = state.catalog.slice(0, 3);
+
+      resEl.innerHTML = matches.slice(0, 3).map(a => `
+        <div onclick='openAnimePlayer(${JSON.stringify(a).replace(/'/g, "&#39;")})' class="bg-dark-800 border border-white/10 rounded-2xl overflow-hidden cursor-pointer hover:border-brand-500/50 transition">
+          <img src="${a.poster}" class="w-full h-44 object-cover" />
+          <div class="p-3 space-y-1">
+            <div class="text-xs font-bold text-white truncate">${getAnimeDisplayTitle(a)}</div>
+            <div class="text-[11px] text-brand-400">★ ${a.rating} • ${(a.genres || []).slice(0, 2).join(', ')}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderThemeSelectors() {
+      const miniGrid = document.getElementById('themeMiniMenuGrid');
+      const settingsGrid = document.getElementById('settingsThemeCardsGrid');
+      const entries = Object.entries(DESIGN_THEMES);
+
+      if (miniGrid) {
+        miniGrid.innerHTML = entries.map(([key, t]) => `
+          <button
+            type="button"
+            data-mini-theme="${key}"
+            onclick="applySeasonTheme('${key}'); document.getElementById('themeMiniMenuDropdown').classList.add('hidden');"
+            class="mini-theme-pill flex items-center gap-2 px-2.5 py-2 rounded-xl bg-dark-800 hover:bg-dark-700 border border-white/10 text-left text-xs font-semibold text-zinc-200 transition cursor-pointer"
+          >
+            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${t.dot}"></span>
+            <span class="truncate">${t.name}</span>
+          </button>
+        `).join('');
+      }
+
+      if (settingsGrid) {
+        settingsGrid.innerHTML = entries.map(([key, t]) => `
+          <button
+            type="button"
+            data-theme-card="${key}"
+            onclick="applySeasonTheme('${key}')"
+            style="background:${t.bg}"
+            class="theme-preset-btn p-3 rounded-xl border border-white/10 text-left transition hover:scale-[1.02] cursor-pointer"
+          >
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-bold text-white truncate">${t.name}</span>
+              <span class="w-3 h-3 rounded-full shrink-0" style="background:${t.dot}"></span>
+            </div>
+            <div class="text-[10px] text-zinc-400">Нажми для выбора</div>
+          </button>
+        `).join('');
+      }
+    }
+
+    function renderSeasonParticles(season) {
+      const layer = document.getElementById('seasonParticlesLayer');
+      if (!layer) return;
+      if (state.siteSettings.smoothAnim === false) {
+        layer.innerHTML = '';
+        return;
+      }
+      const svg = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1L10.2 5.8L15 8L10.2 10.2L8 15L5.8 10.2L1 8L5.8 5.8L8 1Z" fill="var(--brand-400)" fill-opacity="0.65"/></svg>`;
+      let html = '';
+      for (let i = 0; i < 16; i++) {
+        const left = ((i * 37) % 98) + 1;
+        const dur = (10 + (i % 8) * 1.6).toFixed(1);
+        const delay = (-1 * (i * 1.3)).toFixed(1);
+        const sway = ((i % 2 === 0 ? 1 : -1) * (24 + (i % 5) * 10)) + 'px';
+        const scale = (0.65 + (i % 4) * 0.2).toFixed(2);
+        const maxOp = (0.45 + (i % 4) * 0.12).toFixed(2);
+        html += `<div class="season-particle" style="--x:${left}%;--dur:${dur}s;--delay:${delay}s;--sway:${sway};--scale:${scale};--max-op:${maxOp}">${svg}</div>`;
+      }
+      layer.innerHTML = html;
+    }
+
+    function applySeasonTheme(season, notify = true) {
+      const theme = DESIGN_THEMES[season] || DESIGN_THEMES.default;
+      state.siteSettings.seasonTheme = season in DESIGN_THEMES ? season : 'default';
+      localStorage.setItem('kitsune_settings', JSON.stringify(state.siteSettings));
+
+      const root = document.documentElement.style;
+      root.setProperty('--season-bg', theme.bg);
+      root.setProperty('--season-glow', theme.glow);
+      root.setProperty('--season-secondary', theme.secondary);
+      root.setProperty('--season-accent', theme.b500);
+      root.setProperty('--brand-300', theme.b300);
+      root.setProperty('--brand-400', theme.b400);
+      root.setProperty('--brand-500', theme.b500);
+      root.setProperty('--brand-600', theme.b600);
+
+      document.body.style.backgroundColor = theme.bg;
+      const brandTitle = document.getElementById('headerBrandTitle');
+      const headerBadge = document.getElementById('headerThemeBadge');
+      if (brandTitle) brandTitle.textContent = theme.isCat ? 'NEKO' : 'KITSUNE';
+      if (headerBadge) headerBadge.textContent = theme.short;
+
+      document.querySelectorAll('.theme-preset-btn, .mini-theme-pill').forEach(btn => {
+        const key = btn.getAttribute('data-theme-card') || btn.getAttribute('data-mini-theme');
+        const isCurrent = key === state.siteSettings.seasonTheme;
+        btn.classList.toggle('ring-2', isCurrent);
+        btn.classList.toggle('ring-brand-500', isCurrent);
+      });
+
+      renderSeasonParticles(state.siteSettings.seasonTheme);
+      if (notify) showToast(`Дизайн: ${theme.name}`);
+    }
+
+    function syncSettingsUI() {}
+
+    function toggleLofiRadio() {
+      const badge = document.getElementById('radioStatusBadge');
+      const eq = document.getElementById('headerRadioEq');
+      if (state.radioActive) {
+        state.radioActive = false;
+        clearInterval(state.radioInterval);
+        if (state.radioCtx) state.radioCtx.close().catch(() => {});
+        if (badge) badge.textContent = 'ВЫКЛ';
+        if (eq) eq.classList.add('hidden');
+        showToast('Lo-Fi радио выключено');
+        return;
+      }
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        state.radioCtx = ctx;
+        state.radioActive = true;
+        const notes = [261.63, 329.63, 392.0, 493.88, 349.23, 440.0];
+        let step = 0;
+        const playChord = () => {
+          if (!state.radioActive) return;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = notes[step % notes.length];
+          gain.gain.setValueAtTime(0.001, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.035, ctx.currentTime + 0.3);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.6);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 1.65);
+          step++;
+        };
+        playChord();
+        state.radioInterval = setInterval(playChord, 1800);
+        if (badge) badge.textContent = 'ON AIR';
+        if (eq) eq.classList.remove('hidden');
+        showToast('KITSUNE Lo-Fi Radio запущено');
+      } catch (e) {}
+    }
+
+    function switchAuthMode(mode) {
+      state.authMode = mode;
+      const isReg = mode === 'register';
+      const regBtn = document.getElementById('authModeRegBtn');
+      const logBtn = document.getElementById('authModeLoginBtn');
+      const nickInp = document.getElementById('authNickInput');
+      if (regBtn) regBtn.className = isReg ? 'flex-1 py-1.5 rounded-lg bg-brand-600 text-white text-xs font-bold cursor-pointer' : 'flex-1 py-1.5 rounded-lg text-zinc-400 text-xs font-semibold cursor-pointer';
+      if (logBtn) logBtn.className = !isReg ? 'flex-1 py-1.5 rounded-lg bg-brand-600 text-white text-xs font-bold cursor-pointer' : 'flex-1 py-1.5 rounded-lg text-zinc-400 text-xs font-semibold cursor-pointer';
+      if (nickInp) nickInp.classList.toggle('hidden', !isReg);
+    }
+
+    async function handleEmailAuth(e) {
+      e.preventDefault();
+      const nick = document.getElementById('authNickInput').value.trim();
+      const email = document.getElementById('authEmailInput').value.trim().toLowerCase();
+      const pass = document.getElementById('authPassInput').value;
+      if (!email || !pass) return;
+
+      if (state.authMode === 'register') {
+        const newAcc = { name: nick || email.split('@')[0], email, passHash: pass, createdAt: Date.now() };
+        state.accountsDb[email] = newAcc;
+        localStorage.setItem('kitsune_accounts_db', JSON.stringify(state.accountsDb));
+        state.user = { name: newAcc.name, email: newAcc.email };
+        localStorage.setItem('kitsune_user', JSON.stringify(state.user));
+        saveUserScopedData();
+        syncProfileUI();
+        renderUserCollection();
+        renderUserShowcase();
+        showToast(`Аккаунт ${state.user.name} создан!`);
+      } else {
+        const existing = state.accountsDb[email];
+        if (!existing || existing.passHash !== pass) {
+          showToast('Неверный Email или пароль');
+          return;
+        }
+        state.user = { name: existing.name, email: existing.email };
+        localStorage.setItem('kitsune_user', JSON.stringify(state.user));
+        loadUserScopedData();
+        syncProfileUI();
+        syncMyListBadge();
+        renderContinueWatching();
+        renderCatalogGrid();
+        renderUserCollection();
+        renderUserShowcase();
+        showToast(`С возвращением, ${state.user.name}!`);
+      }
+    }
+
+    function quickSwitchAccount(email) {
+      const acc = state.accountsDb[email];
+      if (!acc) return;
+      state.user = { name: acc.name, email: acc.email };
+      localStorage.setItem('kitsune_user', JSON.stringify(state.user));
+      loadUserScopedData();
+      syncProfileUI();
+      syncMyListBadge();
+      renderContinueWatching();
+      renderCatalogGrid();
+      renderUserCollection();
+      renderUserShowcase();
+      showToast(`Активный профиль: ${acc.name}`);
+    }
+
+    function setAvatarFrame(frameClass) {
+      state.siteSettings.avatarFrame = frameClass;
+      localStorage.setItem('kitsune_settings', JSON.stringify(state.siteSettings));
+      syncProfileUI();
+      showToast('Рамка профиля обновлена!');
+    }
+
+    function logoutAccount() {
+      state.user = null;
+      localStorage.removeItem('kitsune_user');
+      loadUserScopedData();
+      syncProfileUI();
+      syncMyListBadge();
+      renderContinueWatching();
+      renderCatalogGrid();
+      renderUserCollection();
+      renderUserShowcase();
+      showToast('Вы вышли из аккаунта');
+    }
+
+    function syncProfileUI() {
+      const u = state.user;
+      const frame = state.siteSettings.avatarFrame || '';
+      const headerName = document.getElementById('headerProfileName');
+      const headerAvatar = document.getElementById('headerAvatarCircle');
+      const bigAvatar = document.getElementById('profileBigAvatar');
+      const dispName = document.getElementById('profileDisplayName');
+      const dispEmail = document.getElementById('profileDisplayEmail');
+      const authBox = document.getElementById('authSectionBox');
+      const outBar = document.getElementById('loggedOutBar');
+      const switcher = document.getElementById('savedAccountsSwitcher');
+      const listEl = document.getElementById('savedAccountsList');
+
+      if (headerName) headerName.textContent = u ? u.name : 'Войти';
+      if (headerAvatar) {
+        headerAvatar.className = `w-6 h-6 rounded-lg bg-black/25 flex items-center justify-center text-[11px] font-black overflow-hidden ${frame}`;
+        headerAvatar.innerHTML = u ? u.name.slice(0, 1).toUpperCase() : '🦊';
+      }
+      if (bigAvatar) {
+        bigAvatar.className = `w-16 h-16 rounded-2xl bg-brand-600 text-white flex items-center justify-center font-display font-black text-2xl overflow-hidden ${frame}`;
+        bigAvatar.textContent = u ? u.name.slice(0, 1).toUpperCase() : '🦊';
+      }
+      if (dispName) dispName.textContent = u ? u.name : 'Гость KITSUNE';
+      if (dispEmail) dispEmail.textContent = u ? u.email : 'Личный кабинет и галерея трофеев';
+      if (authBox) authBox.classList.toggle('hidden', Boolean(u));
+      if (outBar) outBar.classList.toggle('hidden', !u);
+
+      if (switcher && listEl) {
+        const accs = Object.values(state.accountsDb);
+        switcher.classList.toggle('hidden', accs.length === 0);
+        listEl.innerHTML = accs.map(a => `
+          <button type="button" onclick="quickSwitchAccount('${a.email}')" class="px-3 py-1.5 rounded-xl border text-xs font-semibold cursor-pointer ${u?.email === a.email ? 'bg-brand-600 border-brand-500 text-white' : 'bg-dark-900 border-white/10 text-zinc-300 hover:border-brand-500'}">${a.name}</button>
+        `).join('');
+      }
+    }
+
+    // --- РУЛЕТКА / ОРАКУЛ ---
+    function spinPlannedRoulette() {
+      const pool = state.catalog;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      if (pick) {
+        showToast(`Рулетка выбрала: ${getAnimeDisplayTitle(pick)}`);
+        openAnimePlayer(pick);
+      }
+    }
+
+    // --- ИНИЦИАЛИЗАЦИЯ ---
+    window.addEventListener('DOMContentLoaded', () => {
+      loadUserScopedData();
+      renderThemeSelectors();
+      document.body.classList.toggle('anim-60fps', state.siteSettings.smoothAnim !== false);
+      applySeasonTheme(state.siteSettings.seasonTheme || 'default', false);
+      syncMyListBadge();
+      syncProfileUI();
+      syncSettingsUI();
+      renderContinueWatching();
+      populateGenreSelect();
+      renderCatalogGrid();
+      startHeroSlider();
+      fetchAniLibriaCatalog(1, false);
+      setupInfiniteScroll();
+    });
+
+    function setupInfiniteScroll() {
+      const sentinel = document.getElementById('infiniteScrollSentinel');
+      if (!sentinel || !('IntersectionObserver' in window)) return;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && state.activePage === 'home' && state.feedTab !== 'mylist' && state.hasMorePages && !state.isFetchingMore) {
+            fetchAniLibriaCatalog(state.loadedPage + 1, true);
+          }
+        });
+      }, { rootMargin: '400px 0px' });
+      observer.observe(sentinel);
+    }
+  </script>
+</body>
+</html>
