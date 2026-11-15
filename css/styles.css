@@ -1767,3 +1767,258 @@ body[data-ui-morph="kintsugi"] #heroThemeWatermark {
   color: transparent !important;
   -webkit-text-stroke: 1px rgba(212, 169, 55, 0.35);
 }
+
+
+/* ---------- ЛУННЫЙ САД ---------- */
+body[data-ui-morph="tsuki"] #headerBrandTitle {
+  background: linear-gradient(90deg, #e3f6ee, #7de3c8);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent !important; letter-spacing: 0.06em;
+}
+body[data-ui-morph="tsuki"] header {
+  background: rgba(3, 16, 15, 0.72) !important;
+  border-bottom: 1px solid rgba(125, 227, 200, 0.28) !important;
+  backdrop-filter: blur(18px) saturate(1.3);
+}
+body[data-ui-morph="tsuki"] .anime-card {
+  border-radius: 1.1rem !important;
+  background: linear-gradient(165deg, rgba(13, 47, 43, 0.62), rgba(3, 16, 15, 0.82)) !important;
+  border: 1px solid rgba(125, 227, 200, 0.3) !important;
+  box-shadow: 0 18px 44px -20px rgba(79, 209, 176, 0.4), inset 0 1px 0 rgba(232, 245, 238, 0.14) !important;
+}
+body[data-ui-morph="tsuki"] .anime-card:hover {
+  border-color: rgba(233, 255, 168, 0.65) !important;
+  box-shadow: 0 0 40px -10px rgba(233, 255, 168, 0.4), 0 18px 44px -20px rgba(79, 209, 176, 0.5) !important;
+}
+body[data-ui-morph="tsuki"] #heroBannerSection {
+  border-radius: 1.8rem !important;
+  border: 1px solid rgba(125, 227, 200, 0.5) !important;
+  box-shadow: 0 0 90px -24px rgba(125, 227, 200, 0.5), 0 40px 90px -40px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* ---------- ТОКИО 1985 / СИТИ-ПОП ---------- */
+body[data-ui-morph="citypop"] #headerBrandTitle {
+  background: linear-gradient(90deg, #ffe45e, #ff3cac 55%, #2de2e6);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent !important; letter-spacing: 0.08em; font-style: italic;
+}
+body[data-ui-morph="citypop"] header {
+  background: rgba(13, 2, 33, 0.82) !important;
+  border-bottom: 2px solid #2de2e6 !important;
+  box-shadow: 0 4px 0 rgba(255, 60, 172, 0.7), 0 10px 40px -10px rgba(255, 60, 172, 0.5);
+}
+body[data-ui-morph="citypop"] .anime-card {
+  border-radius: 0.5rem !important;
+  background: #170536 !important;
+  border: 2px solid #2de2e6 !important;
+  box-shadow: 6px 6px 0 rgba(255, 60, 172, 0.7) !important;
+}
+body[data-ui-morph="citypop"] .anime-card:hover {
+  border-color: #ffe45e !important;
+  box-shadow: 8px 8px 0 #ff3cac, 0 0 36px -6px rgba(255, 228, 94, 0.5) !important;
+}
+body[data-ui-morph="citypop"] #heroBannerSection {
+  border-radius: 0.8rem !important;
+  border: 2px solid #2de2e6 !important;
+  box-shadow: 10px 10px 0 rgba(255, 60, 172, 0.65), 0 0 80px -20px rgba(255, 60, 172, 0.5) !important;
+}
+body[data-ui-morph="citypop"] #heroThemeWatermark {
+  color: transparent !important;
+  -webkit-text-stroke: 1.5px rgba(45, 226, 230, 0.5);
+}
+
+
+/* ---------- ТЫСЯЧА ВРАТ / ИНАРИ ---------- */
+body[data-ui-morph="inari"] #headerBrandTitle {
+  background: linear-gradient(100deg, #ffd69a, #e8452c);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent !important; letter-spacing: 0.12em;
+}
+body[data-ui-morph="inari"] header {
+  background: rgba(11, 6, 5, 0.85) !important;
+  border-bottom: 2px solid #b92d17 !important;
+  box-shadow: 0 6px 30px -10px rgba(232, 69, 44, 0.5);
+}
+body[data-ui-morph="inari"] .anime-card {
+  border-radius: 0.5rem !important;
+  background: linear-gradient(170deg, #22110c, #120806) !important;
+  border: 1px solid rgba(232, 69, 44, 0.55) !important;
+  border-top: 4px solid #e8452c !important;
+  box-shadow: 0 20px 44px -20px rgba(0, 0, 0, 0.95), 0 0 26px -12px rgba(232, 69, 44, 0.5) !important;
+}
+body[data-ui-morph="inari"] .anime-card:hover {
+  border-color: #ffcf7a !important;
+  box-shadow: 0 0 40px -8px rgba(255, 207, 122, 0.5), 0 20px 44px -20px rgba(0, 0, 0, 0.95) !important;
+}
+body[data-ui-morph="inari"] #heroBannerSection {
+  border-radius: 0.9rem !important;
+  border: 1px solid rgba(232, 69, 44, 0.6) !important;
+  box-shadow: 0 0 90px -20px rgba(232, 69, 44, 0.55), 0 40px 90px -40px rgba(0, 0, 0, 0.95) !important;
+}
+body[data-ui-morph="inari"] #heroThemeWatermark {
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(255, 207, 122, 0.35);
+}
+
+/* ---------- СЕВЕРНОЕ СИЯНИЕ ---------- */
+body[data-ui-morph="aurora"] #headerBrandTitle {
+  background: linear-gradient(90deg, #b9f6ea, #5eead4 45%, #c084fc);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent !important; letter-spacing: 0.06em;
+}
+body[data-ui-morph="aurora"] header {
+  background: rgba(3, 10, 20, 0.7) !important;
+  border-bottom: 1px solid transparent !important;
+  border-image: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.7), rgba(192, 132, 252, 0.7), transparent) 1 !important;
+  backdrop-filter: blur(20px) saturate(1.4);
+}
+body[data-ui-morph="aurora"] .anime-card {
+  border-radius: 1.2rem !important;
+  background: linear-gradient(165deg, rgba(13, 32, 64, 0.62), rgba(3, 10, 20, 0.82)) !important;
+  border: 1px solid rgba(94, 234, 212, 0.3) !important;
+  box-shadow: 0 18px 44px -20px rgba(94, 234, 212, 0.4), inset 0 1px 0 rgba(185, 246, 234, 0.16) !important;
+}
+body[data-ui-morph="aurora"] .anime-card:hover {
+  border-color: rgba(192, 132, 252, 0.7) !important;
+  box-shadow: 0 0 44px -10px rgba(192, 132, 252, 0.5), 0 18px 44px -20px rgba(94, 234, 212, 0.45) !important;
+}
+body[data-ui-morph="aurora"] #heroBannerSection {
+  border-radius: 1.9rem !important;
+  border: 1px solid rgba(94, 234, 212, 0.5) !important;
+  box-shadow: 0 0 90px -22px rgba(94, 234, 212, 0.5), 0 0 120px -40px rgba(192, 132, 252, 0.45) !important;
+}
+
+
+/* ---------- ОБЩЕЕ: ПРОИЗВОДИТЕЛЬНОСТЬ ФОНОВ ---------- */
+#animeUniverseBgLayer { contain: layout paint; pointer-events: none; }
+#animeUniverseBgLayer svg { pointer-events: none; }
+
+/* ---------- ДОЖДЬ / ВАН ГОГ / ФУДЗИ (общие правила, цвета через переменные) ---------- */
+body[data-ui-morph="rain"]    { --tx: #5b8cff; --tx2: #ff9f43; --txbg: rgba(10, 14, 32, 0.78);  --txr: 0.6rem; }
+body[data-ui-morph="vangogh"] { --tx: #f4c542; --tx2: #6fa3ff; --txbg: rgba(8, 22, 66, 0.74);   --txr: 0.9rem; }
+body[data-ui-morph="fuji"]    { --tx: #ff9ec0; --tx2: #ffd9a0; --txbg: rgba(26, 16, 52, 0.72);  --txr: 1.3rem; }
+body:is([data-ui-morph="rain"], [data-ui-morph="vangogh"], [data-ui-morph="fuji"]) #headerBrandTitle {
+  background: linear-gradient(95deg, var(--tx), var(--tx2));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent !important; letter-spacing: 0.07em;
+}
+body:is([data-ui-morph="rain"], [data-ui-morph="vangogh"], [data-ui-morph="fuji"]) header {
+  background: var(--txbg) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--tx) 45%, transparent) !important;
+  backdrop-filter: blur(14px);
+}
+body:is([data-ui-morph="rain"], [data-ui-morph="vangogh"], [data-ui-morph="fuji"]) .anime-card {
+  border-radius: var(--txr) !important;
+  background: var(--txbg) !important;
+  border: 1px solid color-mix(in srgb, var(--tx) 42%, transparent) !important;
+  box-shadow: 0 16px 40px -20px color-mix(in srgb, var(--tx) 55%, transparent) !important;
+}
+body:is([data-ui-morph="rain"], [data-ui-morph="vangogh"], [data-ui-morph="fuji"]) .anime-card:hover {
+  border-color: var(--tx2) !important;
+  box-shadow: 0 0 36px -8px color-mix(in srgb, var(--tx2) 60%, transparent) !important;
+}
+body:is([data-ui-morph="rain"], [data-ui-morph="vangogh"], [data-ui-morph="fuji"]) #heroBannerSection {
+  border: 1px solid color-mix(in srgb, var(--tx) 60%, transparent) !important;
+  box-shadow: 0 0 80px -24px color-mix(in srgb, var(--tx) 60%, transparent) !important;
+}
+body[data-ui-morph="rain"] .anime-card { border-left: 3px solid var(--tx2) !important; }
+body[data-ui-morph="vangogh"] #heroBannerSection { border-radius: 1.4rem !important; outline: 2px solid color-mix(in srgb, var(--tx) 25%, transparent); outline-offset: 5px; }
+body[data-ui-morph="fuji"] #heroBannerSection { border-radius: 2rem !important; }
+
+
+/* ---------- МАКИ-Э: ЧЁРНЫЙ ЛАК И ЗОЛОТО ---------- */
+body[data-ui-morph="makie"] h1, body[data-ui-morph="makie"] h2, body[data-ui-morph="makie"] h3, body[data-ui-morph="makie"] #heroTitle {
+  font-family: 'Playfair Display', 'Outfit', serif !important;
+}
+body[data-ui-morph="makie"] #headerBrandTitle {
+  background: linear-gradient(100deg, #f8e8b4, #e2b44a 55%, #a67c1c);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent !important; font-family: 'Playfair Display', serif !important; letter-spacing: 0.14em;
+}
+body[data-ui-morph="makie"] header {
+  background: linear-gradient(180deg, rgba(26, 20, 16, 0.92), rgba(8, 6, 5, 0.88)) !important;
+  border-bottom: 1px solid rgba(226, 180, 74, 0.55) !important;
+  box-shadow: 0 1px 0 rgba(248, 232, 180, 0.12) inset;
+}
+body[data-ui-morph="makie"] .anime-card {
+  border-radius: 0.7rem !important;
+  background: linear-gradient(155deg, #221a14 0%, #0d0907 58%) !important;
+  border: 1px solid rgba(226, 180, 74, 0.5) !important;
+  outline: 1px solid rgba(226, 180, 74, 0.18); outline-offset: 3px;
+  box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(248, 232, 180, 0.14) !important;
+}
+body[data-ui-morph="makie"] .anime-card:hover {
+  border-color: #f8e8b4 !important; outline-color: rgba(248, 232, 180, 0.5);
+  box-shadow: 0 0 40px -8px rgba(226, 180, 74, 0.55), 0 22px 44px -22px rgba(0, 0, 0, 0.95) !important;
+}
+body[data-ui-morph="makie"] #heroBannerSection {
+  border-radius: 0.8rem !important;
+  border: 1px solid rgba(226, 180, 74, 0.65) !important;
+  outline: 1px solid rgba(226, 180, 74, 0.25); outline-offset: 6px;
+  box-shadow: 0 0 80px -26px rgba(226, 180, 74, 0.55), 0 40px 90px -40px #000 !important;
+}
+body[data-ui-morph="makie"] #heroThemeWatermark { color: transparent !important; -webkit-text-stroke: 1px rgba(226, 180, 74, 0.35); }
+
+/* ---------- ТЁМНЫЙ ХРАМ: ПРОКЛЯТЫЙ ДОМЕН ---------- */
+body[data-ui-morph="shrine"] #headerBrandTitle {
+  background: linear-gradient(95deg, #fff, #ff6b75 50%, #ef2b3a);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent !important; letter-spacing: 0.16em; font-weight: 900;
+}
+body[data-ui-morph="shrine"] header {
+  background: rgba(6, 2, 4, 0.86) !important;
+  border-bottom: 1px solid rgba(239, 43, 58, 0.6) !important;
+  box-shadow: 0 6px 40px -12px rgba(239, 43, 58, 0.55);
+}
+body[data-ui-morph="shrine"] .anime-card {
+  border-radius: 0 !important;
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  background: linear-gradient(160deg, #1e0910, #0a0306) !important;
+  border: 1px solid rgba(239, 43, 58, 0.6) !important;
+  box-shadow: inset 0 0 22px rgba(239, 43, 58, 0.14) !important;
+}
+body[data-ui-morph="shrine"] .anime-card:hover {
+  border-color: #ff6b75 !important;
+  box-shadow: inset 0 0 30px rgba(239, 43, 58, 0.32) !important;
+}
+body[data-ui-morph="shrine"] #heroBannerSection {
+  border-radius: 0 !important;
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+  border: 2px solid #ef2b3a !important;
+  box-shadow: inset 0 0 40px rgba(239, 43, 58, 0.22) !important;
+}
+body[data-ui-morph="shrine"] #heroThemeWatermark { color: transparent !important; -webkit-text-stroke: 1px rgba(239, 43, 58, 0.45); }
+
+
+/* ---------- ШЕЙДЕРНЫЕ ТЕМЫ: КОСМОС / ЖИДКОЕ ЗОЛОТО / ПРОКЛЯТИЕ / БИО ---------- */
+body[data-ui-morph="cosmos"]     { --tx: #f26aae; --tx2: #ffc86b; --txbg: rgba(13, 8, 32, 0.66); --txr: 0.9rem; }
+body[data-ui-morph="liquidgold"] { --tx: #e0b441; --tx2: #fbeab0; --txbg: rgba(12, 9, 5, 0.70);  --txr: 0.5rem; }
+body[data-ui-morph="curse"]      { --tx: #e0243d; --tx2: #c084fc; --txbg: rgba(10, 3, 18, 0.68); --txr: 0.4rem; }
+body[data-ui-morph="biolum"]     { --tx: #35e0f0; --tx2: #8ff5e6; --txbg: rgba(3, 18, 31, 0.64); --txr: 1rem; }
+body:is([data-ui-morph="cosmos"], [data-ui-morph="liquidgold"], [data-ui-morph="curse"], [data-ui-morph="biolum"]) #headerBrandTitle {
+  background: linear-gradient(95deg, var(--tx2), var(--tx));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent !important; letter-spacing: 0.08em;
+}
+body:is([data-ui-morph="cosmos"], [data-ui-morph="liquidgold"], [data-ui-morph="curse"], [data-ui-morph="biolum"]) header {
+  background: var(--txbg) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--tx) 45%, transparent) !important;
+  backdrop-filter: blur(14px);
+}
+body:is([data-ui-morph="cosmos"], [data-ui-morph="liquidgold"], [data-ui-morph="curse"], [data-ui-morph="biolum"]) .anime-card {
+  border-radius: var(--txr) !important;
+  background: var(--txbg) !important;
+  border: 1px solid color-mix(in srgb, var(--tx) 42%, transparent) !important;
+  box-shadow: 0 16px 40px -20px color-mix(in srgb, var(--tx) 55%, transparent) !important;
+}
+body:is([data-ui-morph="cosmos"], [data-ui-morph="liquidgold"], [data-ui-morph="curse"], [data-ui-morph="biolum"]) .anime-card:hover {
+  border-color: var(--tx2) !important;
+  box-shadow: 0 0 36px -8px color-mix(in srgb, var(--tx2) 60%, transparent) !important;
+}
+body:is([data-ui-morph="cosmos"], [data-ui-morph="liquidgold"], [data-ui-morph="curse"], [data-ui-morph="biolum"]) #heroBannerSection {
+  border-radius: calc(var(--txr) * 1.5) !important;
+  border: 1px solid color-mix(in srgb, var(--tx) 60%, transparent) !important;
+  box-shadow: 0 0 80px -24px color-mix(in srgb, var(--tx) 60%, transparent) !important;
+}
+body[data-ui-morph="liquidgold"] #heroBannerSection { outline: 1px solid rgba(224, 180, 65, 0.25); outline-offset: 6px; }
+body[data-ui-morph="curse"] .anime-card { clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); border-radius: 0 !important; }

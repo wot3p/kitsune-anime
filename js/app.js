@@ -319,6 +319,305 @@ const ANILIBRIA_API = 'https://anilibria.top/api/v1';
         patternSize: '100% 100%',
         b300: '#fbcfe8', b400: '#f472b6', b500: '#ec4899', b600: '#db2777'
       },
+      tsuki: {
+        name: 'Лунный сад // Бамбук',
+        short: 'Луна',
+        desc: 'Полная луна, бамбуковая роща и светлячки над водой',
+        watermark: '月 // TSUKI',
+        badgeText: 'MOON GARDEN • FIREFLY NIGHT',
+        arch: 'soft',
+        morph: 'tsuki',
+        dot: '#7de3c8',
+        bg: '#03100f',
+        surface: '#07201e',
+        surface2: '#0d2f2b',
+        glow: 'rgba(125, 227, 200, 0.26)',
+        secondary: 'rgba(56, 189, 248, 0.16)',
+        cardRadius: '1.1rem',
+        panelRadius: '1.8rem',
+        btnRadius: '9999px',
+        border: 'rgba(125, 227, 200, 0.36)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 60% 40% at 70% 8%, rgba(232, 245, 238, 0.10), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#d2f7ea', b400: '#a1eed6', b500: '#4fd1b0', b600: '#1fa386'
+      },
+      citypop: {
+        name: 'Токио 1985 // Сити-поп',
+        short: 'Сити-поп',
+        desc: 'Полосатое солнце, неоновая сетка и пальмы',
+        watermark: '東京 // 1985',
+        badgeText: 'CITY POP • MIDNIGHT CRUISE',
+        arch: 'cyber',
+        morph: 'citypop',
+        dot: '#ff3cac',
+        bg: '#0d0221',
+        surface: '#170536',
+        surface2: '#240a4d',
+        glow: 'rgba(255, 60, 172, 0.34)',
+        secondary: 'rgba(45, 226, 230, 0.22)',
+        cardRadius: '0.5rem',
+        panelRadius: '0.8rem',
+        btnRadius: '0.4rem',
+        border: 'rgba(45, 226, 230, 0.6)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(255, 60, 172, 0.20), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#ffc2e6', b400: '#ff7cc8', b500: '#ff3cac', b600: '#d11a85'
+      },
+      inari: {
+        name: 'Тысяча врат // Инари',
+        short: 'Тории',
+        desc: 'Алые врата Фусими Инари уходят в золотой туман',
+        watermark: '千本鳥居 // INARI',
+        badgeText: 'SENBON TORII • LANTERN PATH',
+        arch: 'zen',
+        morph: 'inari',
+        dot: '#e8452c',
+        bg: '#0b0605',
+        surface: '#160b08',
+        surface2: '#22110c',
+        glow: 'rgba(232, 69, 44, 0.30)',
+        secondary: 'rgba(251, 191, 36, 0.18)',
+        cardRadius: '0.5rem',
+        panelRadius: '0.9rem',
+        btnRadius: '0.4rem',
+        border: 'rgba(232, 69, 44, 0.5)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 60% 40% at 50% 45%, rgba(251, 191, 36, 0.10), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#ffb4a2', b400: '#f2765c', b500: '#e8452c', b600: '#b92d17'
+      },
+      aurora: {
+        name: 'Северное сияние // Аврора',
+        short: 'Аврора',
+        desc: 'Танцующее сияние над ледяным озером',
+        watermark: 'オーロラ // AURORA',
+        badgeText: 'POLAR NIGHT • AURORA BOREALIS',
+        arch: 'soft',
+        morph: 'aurora',
+        dot: '#5eead4',
+        bg: '#030a14',
+        surface: '#07142a',
+        surface2: '#0d2040',
+        glow: 'rgba(94, 234, 212, 0.28)',
+        secondary: 'rgba(167, 139, 250, 0.26)',
+        cardRadius: '1.2rem',
+        panelRadius: '1.9rem',
+        btnRadius: '9999px',
+        border: 'rgba(94, 234, 212, 0.34)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 90% 40% at 40% 0%, rgba(94, 234, 212, 0.14), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#b9f6ea', b400: '#7ee8d3', b500: '#34d3b8', b600: '#14a58f'
+      },
+      rain: {
+        name: 'Токио под дождём // Неон',
+        short: 'Дождь',
+        desc: 'Мокрые улицы, неоновые вывески и боке',
+        watermark: '雨 // NEON RAIN',
+        badgeText: 'RAINY NIGHT • WET NEON',
+        arch: 'cyber',
+        morph: 'rain',
+        dot: '#5b8cff',
+        bg: '#060912',
+        surface: '#0c1226',
+        surface2: '#141c3a',
+        glow: 'rgba(91, 140, 255, 0.30)',
+        secondary: 'rgba(255, 159, 67, 0.18)',
+        cardRadius: '0.6rem',
+        panelRadius: '1rem',
+        btnRadius: '0.5rem',
+        border: 'rgba(91, 140, 255, 0.5)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(91, 140, 255, 0.30), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#c7d8ff', b400: '#8fb0ff', b500: '#5b8cff', b600: '#3a64d8'
+      },
+      vangogh: {
+        name: 'Звёздная ночь // Ван Гог',
+        short: 'Ван Гог',
+        desc: 'Вихри неба, жёлтые звёзды и кипарис',
+        watermark: '星月夜 // VAN GOGH',
+        badgeText: 'STARRY NIGHT • OIL STROKES',
+        arch: 'soft',
+        morph: 'vangogh',
+        dot: '#f4c542',
+        bg: '#07122e',
+        surface: '#0c1c4a',
+        surface2: '#142a68',
+        glow: 'rgba(244, 197, 66, 0.26)',
+        secondary: 'rgba(111, 163, 255, 0.26)',
+        cardRadius: '0.9rem',
+        panelRadius: '1.4rem',
+        btnRadius: '0.7rem',
+        border: 'rgba(244, 197, 66, 0.45)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(244, 197, 66, 0.26), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#fdf0b8', b400: '#f9d96a', b500: '#f4c542', b600: '#c99a1c'
+      },
+      fuji: {
+        name: 'Фудзи на рассвете',
+        short: 'Фудзи',
+        desc: 'Розовый рассвет над горой и зеркальным озером',
+        watermark: '富士 // DAWN',
+        badgeText: 'FUJI DAWN • SAKURA PETALS',
+        arch: 'soft',
+        morph: 'fuji',
+        dot: '#ff9ec0',
+        bg: '#0d0a24',
+        surface: '#1a1238',
+        surface2: '#281a4c',
+        glow: 'rgba(255, 158, 192, 0.30)',
+        secondary: 'rgba(255, 217, 160, 0.20)',
+        cardRadius: '1.3rem',
+        panelRadius: '2rem',
+        btnRadius: '9999px',
+        border: 'rgba(255, 158, 192, 0.42)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(255, 158, 192, 0.30), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#ffe0ec', b400: '#ffc0d8', b500: '#ff9ec0', b600: '#e0679a'
+      },
+      makie: {
+        name: 'Маки-э // Чёрный лак',
+        short: 'Маки-э',
+        desc: 'Золотые волны и слива на чёрном лаке',
+        watermark: '蒔絵 // MAKI-E',
+        badgeText: 'BLACK LACQUER • GOLD DUST',
+        arch: 'zen',
+        morph: 'makie',
+        dot: '#e2b44a',
+        bg: '#080605',
+        surface: '#120d0a',
+        surface2: '#1c140f',
+        glow: 'rgba(226, 180, 74, 0.22)',
+        secondary: 'rgba(190, 40, 30, 0.18)',
+        cardRadius: '0.7rem',
+        panelRadius: '1rem',
+        btnRadius: '0.5rem',
+        border: 'rgba(226, 180, 74, 0.5)',
+        font: "'Playfair Display', 'Outfit', serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(226, 180, 74, 0.22), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#f8e8b4', b400: '#ecc968', b500: '#e2b44a', b600: '#a67c1c'
+      },
+      shrine: {
+        name: 'Тёмный храм // Проклятый домен',
+        short: 'Храм',
+        desc: 'Кровавая луна, храм-призрак и алые разрезы',
+        watermark: '呪 // DOMAIN',
+        badgeText: 'MALEVOLENT SHRINE • CURSED EMBERS',
+        arch: 'crystal',
+        morph: 'shrine',
+        dot: '#ef2b3a',
+        bg: '#060204',
+        surface: '#12050a',
+        surface2: '#1e0910',
+        glow: 'rgba(239, 43, 58, 0.34)',
+        secondary: 'rgba(120, 20, 60, 0.28)',
+        cardRadius: '0.4rem',
+        panelRadius: '0.8rem',
+        btnRadius: '0.3rem',
+        border: 'rgba(239, 43, 58, 0.55)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(239, 43, 58, 0.34), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#ffc2c6', b400: '#ff6b75', b500: '#ef2b3a', b600: '#b3121f'
+      },
+      cosmos: {
+        name: 'Космос // Туманность',
+        short: 'Космос',
+        desc: 'Живая туманность: пурпур, малина и золото',
+        watermark: '星雲 // COSMOS',
+        badgeText: 'LIVE NEBULA • DEEP SPACE',
+        arch: 'crystal',
+        morph: 'cosmos',
+        dot: '#d6338a',
+        bg: '#05030f',
+        surface: '#0d0820',
+        surface2: '#170f35',
+        glow: 'rgba(214, 51, 138, 0.32)',
+        secondary: 'rgba(255, 200, 107, 0.18)',
+        cardRadius: '0.9rem',
+        panelRadius: '1.4rem',
+        btnRadius: '0.7rem',
+        border: 'rgba(242, 106, 174, 0.45)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(214, 51, 138, 0.32), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#ffc2e0', b400: '#f26aae', b500: '#d6338a', b600: '#a31d66'
+      },
+      liquidgold: {
+        name: 'Жидкое золото',
+        short: 'Золото',
+        desc: 'Золотые жилы текут в чёрном мраморе',
+        watermark: '金 // LIQUID GOLD',
+        badgeText: 'BLACK MARBLE • FLOWING GOLD',
+        arch: 'zen',
+        morph: 'liquidgold',
+        dot: '#e0b441',
+        bg: '#050403',
+        surface: '#100c07',
+        surface2: '#1a140b',
+        glow: 'rgba(243, 210, 122, 0.22)',
+        secondary: 'rgba(160, 110, 30, 0.20)',
+        cardRadius: '0.5rem',
+        panelRadius: '0.9rem',
+        btnRadius: '0.4rem',
+        border: 'rgba(224, 180, 65, 0.5)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(243, 210, 122, 0.22), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#fbeab0', b400: '#f3d27a', b500: '#e0b441', b600: '#a67c1c'
+      },
+      curse: {
+        name: 'Проклятая энергия',
+        short: 'Проклятие',
+        desc: 'Багровая и фиолетовая энергия в движении',
+        watermark: '呪力 // CURSE',
+        badgeText: 'CURSED ENERGY • LIVE FLOW',
+        arch: 'crystal',
+        morph: 'curse',
+        dot: '#e0243d',
+        bg: '#04010a',
+        surface: '#0d0418',
+        surface2: '#170826',
+        glow: 'rgba(224, 36, 61, 0.34)',
+        secondary: 'rgba(120, 40, 200, 0.26)',
+        cardRadius: '0.4rem',
+        panelRadius: '0.8rem',
+        btnRadius: '0.3rem',
+        border: 'rgba(224, 36, 61, 0.55)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(224, 36, 61, 0.34), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#ffc0c8', b400: '#ff6b7e', b500: '#e0243d', b600: '#a3122a'
+      },
+      biolum: {
+        name: 'Био-свечение',
+        short: 'Био',
+        desc: 'Глубина, светящаяся бирюзой',
+        watermark: '光 // BIOLUM',
+        badgeText: 'DEEP SEA • BIOLUMINESCENCE',
+        arch: 'soft',
+        morph: 'biolum',
+        dot: '#35e0f0',
+        bg: '#00060f',
+        surface: '#03121f',
+        surface2: '#071e30',
+        glow: 'rgba(53, 224, 240, 0.28)',
+        secondary: 'rgba(94, 234, 212, 0.20)',
+        cardRadius: '1rem',
+        panelRadius: '1.6rem',
+        btnRadius: '9999px',
+        border: 'rgba(53, 224, 240, 0.42)',
+        font: "'Outfit', 'Inter', sans-serif",
+        pattern: 'radial-gradient(ellipse 80% 40% at 50% 100%, rgba(53, 224, 240, 0.28), transparent 70%)',
+        patternSize: '100% 100%',
+        b300: '#c2f8ff', b400: '#76eaf7', b500: '#35e0f0', b600: '#13a9bd'
+      },
       kimi: {
         name: 'Твоё имя // Комета',
         short: 'Комета',
@@ -4227,6 +4526,97 @@ const ANILIBRIA_API = 'https://anilibria.top/api/v1';
     }
 
     // Отрисовка уникального живого фона и синхронизация статуса сферы Омикудзи
+    // ---------- ШЕЙДЕРНЫЕ ФОНЫ (WebGL, лёгкие: половинное разрешение, 30 fps, пауза в фоне) ----------
+    const SHADER_LOOKS = {
+      cosmos:    { c: ['#05030f', '#3b1a7a', '#d6338a', '#ffc86b'], vein: 0.30, stars: 1, speed: 1.0 },
+      liquidgold:{ c: ['#050403', '#14100a', '#2a1f0d', '#f3d27a'], vein: 1.00, stars: 0, speed: 0.8 },
+      curse:     { c: ['#04010a', '#2a0a4a', '#c4122c', '#ff6b7e'], vein: 0.65, stars: 0, speed: 1.3 },
+      biolum:    { c: ['#00060f', '#04304a', '#0a8f9e', '#8ff5e6'], vein: 0.45, stars: 1, speed: 0.9 }
+    };
+    let shaderBgState = null;
+
+    function stopShaderBg() {
+      if (!shaderBgState) return;
+      cancelAnimationFrame(shaderBgState.raf);
+      document.removeEventListener('visibilitychange', shaderBgState.onVis);
+      window.removeEventListener('resize', shaderBgState.onResize);
+      try { const ext = shaderBgState.gl.getExtension('WEBGL_lose_context'); if (ext) ext.loseContext(); } catch (e) {}
+      shaderBgState = null;
+    }
+
+    function startShaderBg(stage, key) {
+      const look = SHADER_LOOKS[key];
+      const hex = (h) => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+      stage.innerHTML = `
+        <div style="position:absolute;inset:0;background:linear-gradient(160deg,${look.c[0]},${look.c[1]} 55%,${look.c[2]});"></div>
+        <canvas id="shaderBgCanvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 80% at 50% 45%, transparent 50%, rgba(0,0,0,.45) 100%);"></div>`;
+      const cv = stage.querySelector('#shaderBgCanvas');
+      const gl = cv.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
+      if (!gl) return;
+      const vs = 'attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }';
+      const fs = `
+        #ifdef GL_FRAGMENT_PRECISION_HIGH
+        precision highp float;
+        #else
+        precision mediump float;
+        #endif
+        uniform vec2 uRes; uniform float uT; uniform float uVein; uniform float uStars;
+        uniform vec3 c0; uniform vec3 c1; uniform vec3 c2; uniform vec3 c3;
+        float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+        float n(vec2 p){ vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+          return mix(mix(h(i), h(i + vec2(1.0, 0.0)), f.x), mix(h(i + vec2(0.0, 1.0)), h(i + vec2(1.0, 1.0)), f.x), f.y); }
+        float fbm(vec2 p){ float v = 0.0; float a = 0.5; for (int i = 0; i < 4; i++) { v += a * n(p); p = p * 2.03 + vec2(1.7, 9.2); a *= 0.5; } return v; }
+        void main(){
+          vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
+          float tt = uT * 0.06;
+          vec2 q = vec2(fbm(uv * 1.4 + tt), fbm(uv * 1.4 + vec2(5.2, 1.3) - tt));
+          vec2 w = vec2(fbm(uv * 1.6 + 2.0 * q + vec2(1.7, 9.2) + tt * 1.3), fbm(uv * 1.6 + 2.0 * q + vec2(8.3, 2.8) - tt));
+          float f = fbm(uv * 1.5 + 2.5 * w);
+          vec3 col = mix(c0, c1, smoothstep(0.15, 0.75, f));
+          col = mix(col, c2, smoothstep(0.3, 1.0, length(q)) * 0.75 * (1.0 - uVein * 0.6));
+          float vein = pow(max(0.0, 1.0 - abs(f - 0.52) * 2.2), mix(2.0, 7.0, uVein));
+          col += c3 * vein * (0.35 + uVein * 0.9);
+          col += c3 * pow(f, 4.0) * 0.25 * (1.0 - uVein);
+          float s = step(0.997, h(floor(gl_FragCoord.xy * 0.5)));
+          col += s * uStars * (0.5 + 0.5 * sin(uT * 2.0 + h(floor(gl_FragCoord.xy * 0.5) + 3.0) * 30.0)) * 0.8;
+          float vg = smoothstep(1.25, 0.3, length(uv * vec2(0.8, 1.0)));
+          col *= mix(0.45, 1.0, vg) * 0.9;
+          gl_FragColor = vec4(col, 1.0);
+        }`;
+      const mk = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : (console.warn('shader:', gl.getShaderInfoLog(s)), null); };
+      const v = mk(gl.VERTEX_SHADER, vs), f = mk(gl.FRAGMENT_SHADER, fs);
+      if (!v || !f) { cv.remove(); return; }
+      const prog = gl.createProgram(); gl.attachShader(prog, v); gl.attachShader(prog, f); gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { cv.remove(); return; }
+      gl.useProgram(prog);
+      const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      const U = (n) => gl.getUniformLocation(prog, n);
+      look.c.forEach((c, i) => gl.uniform3fv(U('c' + i), hex(c)));
+      gl.uniform1f(U('uVein'), look.vein); gl.uniform1f(U('uStars'), look.stars);
+      const SCALE = 0.5;
+      const resize = () => { cv.width = Math.max(2, Math.round(cv.clientWidth * SCALE)); cv.height = Math.max(2, Math.round(cv.clientHeight * SCALE)); gl.viewport(0, 0, cv.width, cv.height); gl.uniform2f(U('uRes'), cv.width, cv.height); };
+      resize();
+      const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const st = { gl, raf: 0, last: 0, t0: performance.now() };
+      const draw = (now) => {
+        if (!document.hidden && now - st.last >= 33) {
+          st.last = now;
+          gl.uniform1f(U('uT'), 20 + (now - st.t0) / 1000 * look.speed);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+        }
+        if (!still) st.raf = requestAnimationFrame(draw);
+      };
+      st.onVis = () => { if (!document.hidden && !still) { cancelAnimationFrame(st.raf); st.raf = requestAnimationFrame(draw); } };
+      st.onResize = () => { resize(); if (still) draw(performance.now() + 100); };
+      document.addEventListener('visibilitychange', st.onVis);
+      window.addEventListener('resize', st.onResize);
+      shaderBgState = st;
+      draw(performance.now() + 100);
+    }
+
     function renderAnimeUniverseBackdropAndEmblem(themeKey, morphKey) {
       const stage = document.getElementById('animeUniverseBgLayer');
       const topStatus = document.getElementById('omikujiTopStatus');
@@ -4250,6 +4640,7 @@ const ANILIBRIA_API = 'https://anilibria.top/api/v1';
       }
 
       if (!stage) return;
+      stopShaderBg();
 
       // Полноценные детализированные аниме-сцены на заднем плане
       if (activeKey === 'netflix' || themeKey === 'netflix') {
@@ -4910,6 +5301,328 @@ const ANILIBRIA_API = 'https://anilibria.top/api/v1';
             <circle cx="720" cy="450" r="380" fill="none" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.5"/>
           </svg>
         `;
+      } else if (activeKey === 'abyss' || themeKey === 'abyss') {
+        stage.innerHTML = `
+          <style>
+            @keyframes abFloat { from { transform: translateY(0); } to { transform: translateY(-26px); } }
+            @keyframes abBubble { from { transform: translateY(0); opacity: .0; } 15% { opacity: .7; } to { transform: translateY(-340px); opacity: 0; } }
+            .ab-jelly { animation: abFloat 7s ease-in-out infinite alternate; }
+            .ab-bub { animation: abBubble 9s linear infinite; }
+            @media (prefers-reduced-motion: reduce) { .ab-jelly, .ab-bub { animation: none; } }
+          </style>
+          <div style="position:absolute;inset:0;background:
+            radial-gradient(ellipse 80% 50% at 50% -5%, rgba(56,189,248,.45), transparent 65%),
+            linear-gradient(180deg,#05324a 0%,#03233a 30%,#021626 65%,#010910 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              <linearGradient id="abRay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bae6fd" stop-opacity=".38"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></linearGradient>
+              <radialGradient id="abJ"><stop offset="0" stop-color="#e0fffb" stop-opacity=".95"/><stop offset=".55" stop-color="#22d3ee" stop-opacity=".55"/><stop offset="1" stop-color="#0891b2" stop-opacity=".1"/></radialGradient>
+              <filter id="abBlur"><feGaussianBlur stdDeviation="9"/></filter>
+              <filter id="abGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <g filter="url(#abBlur)">
+              <polygon points="300,0 420,0 700,760 420,760" fill="url(#abRay)"/>
+              <polygon points="640,0 720,0 980,800 760,800" fill="url(#abRay)" opacity=".8"/>
+              <polygon points="1000,0 1120,0 1320,720 1080,720" fill="url(#abRay)" opacity=".7"/>
+            </g>
+            ${[[260,520,1,0],[1130,400,1.4,-2],[760,640,.75,-4]].map(([x,y,s,d]) => `
+              <g class="ab-jelly" style="animation-delay:${d}s" transform="translate(${x},${y}) scale(${s})">
+                <path d="M-34,0 Q-34,-58 0,-58 Q34,-58 34,0 Q0,10 -34,0 Z" fill="url(#abJ)"/>
+                ${[-22,-11,0,11,22].map((dx,k) => `<path d="M${dx},4 q${k % 2 ? 9 : -9},24 -3,48 t4,52" fill="none" stroke="#67e8f9" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/>`).join('')}
+              </g>`).join('')}
+            ${Array.from({length: 14}, (_, i) => `<circle class="ab-bub" style="animation-delay:${-(i % 9)}s;animation-duration:${8 + (i % 5)}s" cx="${(i * 173) % 1440}" cy="${620 + (i * 59) % 260}" r="${1.5 + (i % 4)}" fill="none" stroke="#bae6fd" stroke-opacity=".6"/>`).join('')}
+            <path d="M0,810 Q180,740 360,800 T760,790 T1120,810 T1440,770 L1440,900 L0,900 Z" fill="#010a12"/>
+            <path d="M0,860 Q260,820 520,858 T1040,850 T1440,840 L1440,900 L0,900 Z" fill="#00050a"/>
+          </svg>
+        `;
+      } else if (activeKey === 'summer' || themeKey === 'summer') {
+        const bursts = [[420,260,170,'#ffd36b',0],[960,190,210,'#ff6fa5',.9],[1230,360,140,'#ffffff',1.7],[700,380,120,'#7dd3fc',2.4]];
+        stage.innerHTML = `
+          <style>
+            @keyframes hanabi { from { opacity: 0; transform: scale(.15); } 35% { opacity: 1; } to { opacity: .8; transform: scale(1); } }
+            .hanabi { transform-box: fill-box; transform-origin: center; animation: hanabi 1.9s cubic-bezier(.12,.8,.3,1) both; }
+            @media (prefers-reduced-motion: reduce) { .hanabi { animation: none; } }
+          </style>
+          <div style="position:absolute;inset:0;background:
+            radial-gradient(ellipse 110% 36% at 50% 104%, rgba(251,191,36,.55), rgba(244,114,60,.25) 45%, transparent 72%),
+            linear-gradient(180deg,#050719 0%,#0f1236 38%,#3a1b52 70%,#8a3a5a 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs><filter id="hbGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+            ${bursts.map(([cx,cy,R,c,d]) => `
+              <g class="hanabi" style="animation-delay:${d}s" filter="url(#hbGlow)" stroke="${c}" stroke-linecap="round" fill="${c}">
+                ${Array.from({length: 32}, (_, k) => { const a = k * Math.PI / 16, r1 = R * .3, r2 = R * (k % 2 ? .78 : 1);
+                  return `<line x1="${(cx + Math.cos(a) * r1).toFixed(0)}" y1="${(cy + Math.sin(a) * r1).toFixed(0)}" x2="${(cx + Math.cos(a) * r2).toFixed(0)}" y2="${(cy + Math.sin(a) * r2).toFixed(0)}" stroke-width="2" stroke-opacity=".75"/><circle cx="${(cx + Math.cos(a) * (r2 + 8)).toFixed(0)}" cy="${(cy + Math.sin(a) * (r2 + 8)).toFixed(0)}" r="2.6" stroke="none"/>`; }).join('')}
+                <circle cx="${cx}" cy="${cy}" r="${R * .12}" stroke="none" fill-opacity=".5"/>
+              </g>`).join('')}
+            <path d="M0,700 Q360,660 720,690 T1440,670 L1440,900 L0,900 Z" fill="#1a0c33" fill-opacity=".6"/>
+            <g fill="#06030f" fill-opacity=".95">
+              ${Array.from({length: 48}, (_, i) => { const h = 50 + ((i * 41) % 6) * 24; return `<rect x="${i * 30}" y="${900 - h}" width="${25 + (i % 3) * 4}" height="${h}"/>`; }).join('')}
+              <polygon points="1010,900 1040,560 1052,420 1060,330 1068,420 1080,560 1110,900"/>
+              <rect x="1040" y="520" width="40" height="8"/><rect x="1049" y="410" width="22" height="6"/>
+            </g>
+            <g fill="#ffc977">${Array.from({length: 90}, (_, i) => { const col = (i * 7) % 48, row = i % 4, h = 50 + ((col * 41) % 6) * 24; if (row * 18 + 20 > h - 8) return ''; return `<rect x="${col * 30 + 5 + (i % 2) * 9}" y="${900 - h + 10 + row * 18}" width="4" height="6" fill-opacity="${(.3 + (i % 4) * .18).toFixed(2)}"/>`; }).join('')}</g>
+          </svg>
+        `;
+      } else if (activeKey === 'tsuki' || themeKey === 'tsuki') {
+        stage.innerHTML = `
+          <style>
+            @keyframes tkFly { 0%,100% { opacity: .15; transform: translate(0,0); } 50% { opacity: 1; transform: translate(14px,-18px); } }
+            .tk-fly { animation: tkFly 5s ease-in-out infinite; }
+            @media (prefers-reduced-motion: reduce) { .tk-fly { animation: none; opacity: .6; } }
+          </style>
+          <div style="position:absolute;inset:0;background:
+            radial-gradient(circle at 72% 24%, rgba(232,245,238,.22) 0%, rgba(125,227,200,.12) 26%, transparent 55%),
+            linear-gradient(180deg,#020a0c 0%,#04181a 50%,#03100f 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              <radialGradient id="tkMoon"><stop offset="0" stop-color="#fbfffd"/><stop offset=".7" stop-color="#e3f6ee"/><stop offset="1" stop-color="#b9e8d8"/></radialGradient>
+              <filter id="tkHalo" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="26"/></filter>
+              <filter id="tkGlow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <radialGradient id="tkFl"><stop offset="0" stop-color="#f4ffb8"/><stop offset=".25" stop-color="#e9ffa8" stop-opacity=".6"/><stop offset="1" stop-color="#e9ffa8" stop-opacity="0"/></radialGradient><linearGradient id="tkMist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a1eed6" stop-opacity="0"/><stop offset="1" stop-color="#a1eed6" stop-opacity=".22"/></linearGradient>
+            </defs>
+            <circle cx="1040" cy="216" r="150" fill="#9fe9d2" opacity=".5" filter="url(#tkHalo)"/>
+            <circle cx="1040" cy="216" r="104" fill="url(#tkMoon)"/>
+            <circle cx="1010" cy="190" r="14" fill="#b9e8d8" opacity=".55"/><circle cx="1072" cy="244" r="20" fill="#b9e8d8" opacity=".4"/><circle cx="1058" cy="168" r="8" fill="#b9e8d8" opacity=".5"/>
+            <rect x="0" y="470" width="1440" height="260" fill="url(#tkMist)"/>
+            ${Array.from({length: 22}, (_, i) => { const x = 20 + i * 66 + (i % 3) * 14, w = 10 + (i % 4) * 4, far = i % 2, top = far ? 120 : -20, op = far ? .55 : .96;
+              return `<g fill="${far ? '#06231f' : '#020b0a'}" fill-opacity="${op}"><rect x="${x}" y="${top}" width="${w}" height="${900 - top}"/>${Array.from({length: 9}, (_, k) => `<rect x="${x - 2}" y="${top + 80 + k * 95 + (i % 5) * 9}" width="${w + 4}" height="4" fill-opacity=".8"/>`).join('')}${i % 3 === 0 ? `<path d="M${x + w},${top + 210} q60,-20 96,18 q-54,-8 -96,2 Z M${x},${top + 350} q-70,-18 -104,22 q58,-10 104,0 Z"/>` : ''}</g>`; }).join('')}
+            <rect x="0" y="760" width="1440" height="140" fill="#010605"/>
+            <ellipse cx="1040" cy="800" rx="90" ry="9" fill="#e3f6ee" opacity=".35"/><ellipse cx="1040" cy="822" rx="54" ry="5" fill="#e3f6ee" opacity=".22"/><ellipse cx="1040" cy="842" rx="26" ry="3" fill="#e3f6ee" opacity=".14"/>
+            <g fill="url(#tkFl)">${Array.from({length: 34}, (_, i) => `<circle class="tk-fly" style="animation-delay:${-(i % 9) * .7}s;animation-duration:${4 + (i % 5)}s" cx="${(i * 227) % 1440}" cy="${380 + (i * 83) % 420}" r="${(1.6 + (i % 3) * .6) * 4}"/>`).join('')}</g>
+          </svg>
+        `;
+      } else if (activeKey === 'citypop' || themeKey === 'citypop') {
+        stage.innerHTML = `
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,#0d0221 0%,#2a0a5e 44%,#8a1b78 66%,#ff5f9e 80%,#ffb36b 86%,#130326 86.2%,#0d0221 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              <linearGradient id="cpSun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe45e"/><stop offset=".5" stop-color="#ff6fa5"/><stop offset="1" stop-color="#d11a85"/></linearGradient>
+              <clipPath id="cpCut">${Array.from({length: 9}, (_, k) => `<rect x="480" y="${190 + k * 38 + k * k * 1.6}" width="480" height="${34 - k * 2.6}"/>`).join('')}<rect x="480" y="150" width="480" height="40"/></clipPath>
+              <filter id="cpGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
+            </defs>
+            <circle cx="720" cy="360" r="210" fill="#ff3cac" opacity=".5" filter="url(#cpGlow)"/>
+            <circle cx="720" cy="360" r="190" fill="url(#cpSun)" clip-path="url(#cpCut)"/>
+            <g fill="#12032a">${Array.from({length: 32}, (_, i) => { const h = 70 + ((i * 59) % 7) * 30; return `<rect x="${i * 46}" y="${776 - h}" width="${36 + (i % 3) * 5}" height="${h}"/>`; }).join('')}</g>
+            <g fill="#2de2e6" fill-opacity=".8">${Array.from({length: 70}, (_, i) => { const col = (i * 5) % 32, h = 70 + ((col * 59) % 7) * 30, row = i % 5; if (row * 22 + 24 > h - 8) return ''; return `<rect x="${col * 46 + 6 + (i % 3) * 9}" y="${776 - h + 10 + row * 22}" width="5" height="7" fill-opacity="${(.3 + (i % 3) * .25).toFixed(2)}"/>`; }).join('')}</g>
+            <g fill="#06010f"><path d="M110,776 Q104,640 126,560" stroke="#06010f" stroke-width="9" fill="none"/><path d="M126,560 q-70,-10 -96,30 q50,-24 96,-14 M126,560 q60,-30 110,6 q-52,-12 -110,2 M126,560 q-20,-56 -74,-60 q54,6 74,60 M126,560 q18,-60 78,-64 q-58,10 -78,64"/><path d="M1330,776 Q1338,660 1318,590" stroke="#06010f" stroke-width="8" fill="none"/><path d="M1318,590 q-66,-12 -92,26 q46,-22 92,-12 M1318,590 q58,-28 104,8 q-48,-12 -104,0 M1318,590 q-16,-52 -68,-56 q50,6 68,56 M1318,590 q16,-56 72,-60 q-54,10 -72,60"/></g>
+            <rect x="0" y="776" width="1440" height="124" fill="#0d0221"/>
+            <g stroke="#ff3cac" stroke-width="1.6" stroke-opacity=".75" fill="none">
+              ${Array.from({length: 17}, (_, i) => `<line x1="720" y1="776" x2="${-1400 + i * 280}" y2="900"/>`).join('')}
+              ${[784,796,812,834,864].map(y => `<line x1="0" y1="${y}" x2="1440" y2="${y}"/>`).join('')}
+            </g>
+          </svg>
+        `;
+      } else if (activeKey === 'inari' || themeKey === 'inari') {
+        const gate = (i) => { const s = 1 / (1 + 0.5 * i), X = (x) => (720 + (x - 720) * s).toFixed(1), Y = (y) => (430 + (y - 430) * s).toFixed(1), w = (v) => (v * s).toFixed(1);
+          const shade = Math.max(0.28, 1 - i * 0.085), col = `rgb(${Math.round(222 * shade)},${Math.round(56 * shade)},${Math.round(30 * shade)})`;
+          return `<g>
+            <rect x="${X(300)}" y="${Y(-60)}" width="${w(54)}" height="${w(980)}" fill="${col}"/><rect x="${X(1086)}" y="${Y(-60)}" width="${w(54)}" height="${w(980)}" fill="${col}"/>
+            <rect x="${X(330)}" y="${Y(205)}" width="${w(780)}" height="${w(34)}" fill="${col}"/>
+            <path d="M${X(190)},${Y(70)} Q${X(720)},${Y(100)} ${X(1250)},${Y(70)} L${X(1270)},${Y(40)} Q${X(720)},${Y(72)} ${X(170)},${Y(40)} Z" fill="#14090a"/>
+            <rect x="${X(210)}" y="${Y(76)}" width="${w(1020)}" height="${w(58)}" fill="${col}"/>
+            <rect x="${X(300)}" y="${Y(820)}" width="${w(54)}" height="${w(36)}" fill="#14090a" fill-opacity=".85"/><rect x="${X(1086)}" y="${Y(820)}" width="${w(54)}" height="${w(36)}" fill="#14090a" fill-opacity=".85"/>
+          </g><rect width="1440" height="900" fill="#1a0c08" fill-opacity="${i === 0 ? 0 : 0.07}"/>`; };
+        stage.innerHTML = `
+          <style>
+            @keyframes inEmber { from { transform: translateY(0); opacity: 0; } 20% { opacity: .9; } to { transform: translateY(-260px); opacity: 0; } }
+            .in-ember { animation: inEmber 8s linear infinite; }
+            @media (prefers-reduced-motion: reduce) { .in-ember { animation: none; opacity: .5; } }
+          </style>
+          <div style="position:absolute;inset:0;background:
+            radial-gradient(circle at 50% 48%, rgba(255,214,140,.55) 0%, rgba(240,120,60,.22) 18%, transparent 46%),
+            linear-gradient(180deg,#0a0504 0%,#1a0b07 55%,#0a0504 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              <radialGradient id="inEm"><stop offset="0" stop-color="#fff0c0"/><stop offset=".25" stop-color="#ffb55a" stop-opacity=".7"/><stop offset="1" stop-color="#ff8a3a" stop-opacity="0"/></radialGradient><linearGradient id="inFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd69a" stop-opacity=".5"/><stop offset=".25" stop-color="#6b2a14" stop-opacity=".9"/><stop offset="1" stop-color="#120705"/></linearGradient>
+              <filter id="inGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <polygon points="700,430 740,430 1400,900 40,900" fill="url(#inFloor)"/>
+            ${Array.from({length: 9}, (_, k) => 9 - k).map(gate).join('')}
+            <g filter="url(#inGlow)" fill="#ffcf7a">${[1, 2, 3, 4, 5].map(i => { const s = 1 / (1 + .5 * i), y = 430 + (239 - 430) * s;
+              return [330, 1110].map(x => { const cx = 720 + (x - 720) * s; return `<ellipse cx="${cx.toFixed(0)}" cy="${(y + 36 * s).toFixed(0)}" rx="${(15 * s).toFixed(1)}" ry="${(24 * s).toFixed(1)}"/>`; }).join(''); }).join('')}</g>
+            ${Array.from({length: 30}, (_, i) => `<circle class="in-ember" style="animation-delay:${-(i % 8)}s;animation-duration:${6 + (i % 5)}s" cx="${340 + (i * 97) % 760}" cy="${500 + (i * 61) % 380}" r="${(1.2 + (i % 3) * .6) * 4}" fill="url(#inEm)"/>`).join('')}
+          </svg>
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(5,2,2,.7) 100%);"></div>
+        `;
+      } else if (activeKey === 'aurora' || themeKey === 'aurora') {
+        const ribbon = (hue, amp, off, y0) => Array.from({length: 72}, (_, i) => { const x = i * 20.5 - 20, top = y0 + Math.sin(i * .16 + off) * amp + Math.sin(i * .05 + off * 2) * amp * .8, len = 190 + Math.sin(i * .27 + off) * 70;
+          return `<line x1="${x.toFixed(0)}" y1="${top.toFixed(0)}" x2="${(x + 14 + Math.sin(i * .11) * 18).toFixed(0)}" y2="${(top + len).toFixed(0)}" stroke="url(#${hue})" stroke-width="24" stroke-opacity="${(.42 + .3 * Math.sin(i * .21 + off)).toFixed(2)}"/>`; }).join('');
+        const layer = (cls, body) => `<svg class="au-l ${cls}" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;left:-3%;top:0;width:106%;height:100%;"><g filter="url(#auBlur)">${body}</g></svg>`;
+        stage.innerHTML = `
+          <style>
+            @keyframes auSway { from { transform: translate3d(-22px,0,0); opacity: .75; } to { transform: translate3d(26px,0,0); opacity: 1; } }
+            .au-l { will-change: transform, opacity; }
+            .au-a { animation: auSway 18s ease-in-out infinite alternate; }
+            .au-b { animation: auSway 26s ease-in-out infinite alternate-reverse; }
+            @media (prefers-reduced-motion: reduce) { .au-a, .au-b { animation: none; } }
+          </style>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,#02060f 0%,#051428 48%,#0a2436 74%,#04101c 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              <linearGradient id="auG" gradientUnits="userSpaceOnUse" x1="0" y1="60" x2="0" y2="520"><stop offset="0" stop-color="#5eead4" stop-opacity="0"/><stop offset=".25" stop-color="#4ade80" stop-opacity=".95"/><stop offset=".6" stop-color="#2dd4bf" stop-opacity=".6"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></linearGradient>
+              <linearGradient id="auV" gradientUnits="userSpaceOnUse" x1="0" y1="40" x2="0" y2="480"><stop offset="0" stop-color="#a78bfa" stop-opacity="0"/><stop offset=".3" stop-color="#c084fc" stop-opacity=".85"/><stop offset=".7" stop-color="#e879f9" stop-opacity=".4"/><stop offset="1" stop-color="#818cf8" stop-opacity="0"/></linearGradient>
+              <filter id="auBlur" x="-5%" y="-10%" width="110%" height="130%"><feGaussianBlur stdDeviation="9"/></filter>
+            </defs>
+            ${Array.from({length: 90}, (_, i) => `<circle cx="${(i * 233.1) % 1440}" cy="${(i * 79.7) % 560}" r="${(.5 + (i % 4) * .4).toFixed(1)}" fill="#fff" fill-opacity="${(.3 + (i % 5) * .13).toFixed(2)}"/>`).join('')}
+          </svg>
+          ${layer('au-a', ribbon('auG', 60, 0, 150))}
+          ${layer('au-b', `<g opacity=".8">${ribbon('auV', 50, 2.4, 110)}</g>`)}
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs><linearGradient id="auFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5eead4" stop-opacity=".22"/><stop offset="1" stop-color="#5eead4" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,690 L90,640 L170,670 L300,560 L380,620 L470,590 L600,660 L720,610 L860,670 L980,570 L1090,640 L1210,600 L1330,650 L1440,610 L1440,900 L0,900 Z" fill="#050d1a"/>
+            <path d="M300,560 L270,610 L300,596 L326,614 Z M980,570 L954,618 L982,604 L1008,622 Z" fill="#cfeaf5" fill-opacity=".55"/>
+            <rect x="0" y="690" width="1440" height="210" fill="#06182a"/>
+            <rect x="0" y="690" width="1440" height="210" fill="url(#auFade)"/>
+            <g stroke="#bff3ea" stroke-opacity=".12">${[720, 750, 790, 840].map(y => `<line x1="0" y1="${y}" x2="1440" y2="${y}"/>`).join('')}</g>
+          </svg>
+        `;
+      } else if (activeKey === 'rain' || themeKey === 'rain') {
+        const signs = [[210,'#ff4d8d',70,210],[470,'#38e1ff',46,300],[760,'#ffb347',90,250],[1040,'#a78bfa',56,330],[1250,'#ff4d8d',64,230]];
+        stage.innerHTML = `
+          <style>
+            @keyframes rnFall { from { transform: translate3d(0,0,0); } to { transform: translate3d(-34px,240px,0); } }
+            .rn-rain { will-change: transform; animation: rnFall .8s linear infinite; }
+            @media (prefers-reduced-motion: reduce) { .rn-rain { animation: none; } }
+          </style>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,#05070f 0%,#0b1230 52%,#161a44 78%,#0a0d22 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              ${['ff4d8d','38e1ff','ffb347','a78bfa'].map(c => `<radialGradient id="rnB${c}"><stop offset="0" stop-color="#${c}" stop-opacity=".75"/><stop offset=".6" stop-color="#${c}" stop-opacity=".25"/><stop offset="1" stop-color="#${c}" stop-opacity="0"/></radialGradient>`).join('')}
+              <linearGradient id="rnBld" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2150"/><stop offset="1" stop-color="#090c20"/></linearGradient>
+              <linearGradient id="rnRef" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            </defs>
+            <g fill="url(#rnBld)">${Array.from({length: 24}, (_, i) => { const h = 220 + ((i * 83) % 8) * 52; return `<rect x="${i * 62 - 10}" y="${780 - h}" width="${50 + (i % 3) * 8}" height="${h}" opacity="${(.55 + (i % 3) * .2).toFixed(2)}"/>`; }).join('')}</g>
+            <g fill="#ffd9a0">${Array.from({length: 110}, (_, i) => `<rect x="${((i * 67) % 1440)}" y="${260 + (i * 47) % 480}" width="5" height="7" fill-opacity="${(.12 + (i % 5) * .08).toFixed(2)}"/>`).join('')}</g>
+            ${signs.map(([x,c,w,y]) => `<rect x="${x}" y="${y}" width="${w * .16}" height="${w * 2.2}" rx="4" fill="${c}" fill-opacity=".9"/><circle cx="${x + w * .08}" cy="${y + w}" r="${w * 1.6}" fill="url(#rnB${c.slice(1)})"/>`).join('')}
+            ${Array.from({length: 34}, (_, i) => `<circle cx="${(i * 197) % 1440}" cy="${300 + (i * 131) % 460}" r="${14 + (i % 5) * 9}" fill="url(#rnB${['ff4d8d','38e1ff','ffb347','a78bfa'][i % 4]})" opacity="${(.35 + (i % 3) * .2).toFixed(2)}"/>`).join('')}
+            <rect x="0" y="780" width="1440" height="120" fill="#080b1c"/>
+            ${signs.map(([x,c,w]) => `<rect x="${x - w * .3}" y="780" width="${w * .76}" height="120" fill="${c}" fill-opacity=".22"/>`).join('')}
+            <rect x="0" y="780" width="1440" height="120" fill="url(#rnRef)" opacity=".18"/>
+          </svg>
+          <svg class="rn-rain" style="position:absolute;left:0;top:-240px;width:100%;height:calc(100% + 240px);" preserveAspectRatio="none">
+            <defs><pattern id="rnPat" width="170" height="240" patternUnits="userSpaceOnUse"><g stroke="#bcd0ff" stroke-linecap="round" stroke-width="1.1"><line x1="20" y1="10" x2="14" y2="62" stroke-opacity=".30"/><line x1="70" y1="120" x2="64" y2="190" stroke-opacity=".22"/><line x1="118" y1="40" x2="112" y2="110" stroke-opacity=".36"/><line x1="150" y1="170" x2="145" y2="226" stroke-opacity=".2"/></g></pattern></defs>
+            <rect width="100%" height="100%" fill="url(#rnPat)"/>
+          </svg>
+        `;
+      } else if (activeKey === 'vangogh' || themeKey === 'vangogh') {
+        const swirl = (cx, cy, sc) => Array.from({length: 8}, (_, i) => { const r = (34 + i * 30) * sc;
+          return Array.from({length: 14}, (_, j) => { const a0 = j * (2 * Math.PI / 14) + i * .5, a1 = a0 + .38, r0 = r + j * 1.8 * sc, r1 = r + (j + 1) * 1.8 * sc;
+            return `<path d="M${(cx + Math.cos(a0) * r0).toFixed(0)},${(cy + Math.sin(a0) * r0 * .8).toFixed(0)} A${r1.toFixed(0)},${(r1 * .8).toFixed(0)} 0 0 1 ${(cx + Math.cos(a1) * r1).toFixed(0)},${(cy + Math.sin(a1) * r1 * .8).toFixed(0)}" stroke="${['#1d3f9a','#3b6fd8','#9cc4ff','#f4c542'][(i + j) % 4]}" stroke-width="${7 + (i % 3) * 3}" stroke-linecap="round" fill="none" stroke-opacity=".8"/>`; }).join(''); }).join('');
+        const stars = [[200,150,22],[470,90,26],[700,200,20],[880,110,28],[1330,300,18],[1120,60,20],[340,330,16],[1230,140,22]];
+        stage.innerHTML = `
+          <style>
+            @keyframes vgSway { from { transform: rotate(-2.2deg) scale(1.12); } to { transform: rotate(2.2deg) scale(1.12); } }
+            .vg-sw { will-change: transform; animation: vgSway 40s ease-in-out infinite alternate; }
+            @media (prefers-reduced-motion: reduce) { .vg-sw { animation: none; } }
+          </style>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,#060f33 0%,#0b2166 45%,#12337f 72%,#0a1a4c 100%);"></div>
+          <svg class="vg-sw" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">${swirl(520, 300, 1.15)}${swirl(1050, 380, .85)}
+            <path d="M0,330 C300,260 420,420 720,350 S1180,230 1440,320" stroke="#5f8fe6" stroke-width="30" fill="none" stroke-opacity=".35" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs><radialGradient id="vgS"><stop offset="0" stop-color="#fff6c2"/><stop offset=".3" stop-color="#f4c542" stop-opacity=".85"/><stop offset="1" stop-color="#f4c542" stop-opacity="0"/></radialGradient></defs>
+            ${stars.map(([x,y,r]) => `<circle cx="${x}" cy="${y}" r="${r * 2.6}" fill="url(#vgS)"/><circle cx="${x}" cy="${y}" r="${r * .45}" fill="#fff6c2"/>`).join('')}
+            <circle cx="1240" cy="170" r="92" fill="url(#vgS)" opacity=".7"/><path d="M1262,110 A58,58 0 1 0 1262,226 A44,48 0 1 1 1262,110 Z" fill="#fde68a"/>
+            <path d="M0,720 Q200,660 420,712 T820,700 T1180,720 T1440,690 L1440,900 L0,900 Z" fill="#071538"/>
+            <path d="M0,790 Q260,745 560,790 T1100,780 T1440,770 L1440,900 L0,900 Z" fill="#040c24"/>
+            <path d="M210,900 C150,780 190,640 176,480 C168,380 206,300 214,230 C222,310 262,400 252,520 C246,640 286,790 260,900 Z" fill="#030a1c"/>
+            <path d="M214,230 C186,300 168,400 176,480 M214,230 C240,330 262,420 252,520" stroke="#0d1d4a" stroke-width="3" fill="none"/>
+            <g fill="#f4c542">${Array.from({length: 14}, (_, i) => `<rect x="${620 + (i * 53) % 640}" y="${735 + (i * 17) % 40}" width="7" height="9" fill-opacity=".85"/>`).join('')}</g>
+          </svg>
+        `;
+      } else if (activeKey === 'fuji' || themeKey === 'fuji') {
+        stage.innerHTML = `
+          <style>
+            @keyframes fjFall { from { transform: translate3d(0,-40px,0) rotate(0deg); opacity: 0; } 10% { opacity: .9; } to { transform: translate3d(var(--dx),105vh,0) rotate(320deg); opacity: .6; } }
+            .fj-p { position: absolute; top: 0; width: 10px; height: 14px; border-radius: 80% 0 80% 0; background: linear-gradient(135deg,#ffe0ec,#ff9ec0); will-change: transform; animation: fjFall 16s linear infinite; }
+            @media (prefers-reduced-motion: reduce) { .fj-p { display: none; } }
+          </style>
+          <div style="position:absolute;inset:0;background:
+            radial-gradient(ellipse 60% 34% at 50% 70%, rgba(255,196,150,.75) 0%, rgba(255,140,170,.38) 40%, transparent 72%),
+            linear-gradient(180deg,#0a0824 0%,#241553 30%,#6a2c78 56%,#d0598a 74%,#ffa98a 84%,#1b1038 84.2%,#0d0a24 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              <linearGradient id="fjM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a78"/><stop offset=".55" stop-color="#1f1650"/><stop offset="1" stop-color="#140d38"/></linearGradient>
+              <linearGradient id="fjS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3f8"/><stop offset="1" stop-color="#ffb3cf"/></linearGradient>
+              <linearGradient id="fjMist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd3df" stop-opacity="0"/><stop offset="1" stop-color="#ffd3df" stop-opacity=".28"/></linearGradient>
+              <clipPath id="fjLake"><rect x="0" y="756" width="1440" height="144"/></clipPath>
+            </defs>
+            ${Array.from({length: 60}, (_, i) => `<circle cx="${(i * 241) % 1440}" cy="${(i * 67) % 330}" r="${(.5 + (i % 3) * .45).toFixed(1)}" fill="#fff" fill-opacity="${(.25 + (i % 4) * .15).toFixed(2)}"/>`).join('')}
+            <g id="fjMt"><path d="M150,756 C380,700 540,520 640,380 L690,330 L760,330 L810,380 C910,520 1070,700 1300,756 Z" fill="url(#fjM)"/>
+            <path d="M640,380 L690,330 L760,330 L810,380 L782,398 L762,376 L736,418 L712,384 L690,422 L668,392 Z" fill="url(#fjS)"/></g>
+            <path d="M0,756 L0,690 Q180,640 360,700 Q520,740 640,716 L640,756 Z M900,756 L900,712 Q1080,650 1240,702 Q1360,730 1440,690 L1440,756 Z" fill="#120b30"/>
+            <rect x="0" y="560" width="1440" height="196" fill="url(#fjMist)"/>
+            <rect x="0" y="756" width="1440" height="144" fill="#1b1038"/>
+            <g clip-path="url(#fjLake)" opacity=".3" transform="translate(0,1512) scale(1,-1)"><use href="#fjMt"/></g>
+            <rect x="0" y="756" width="1440" height="144" fill="#ffa98a" fill-opacity=".1"/>
+            <g stroke="#ffd3df" stroke-opacity=".16">${[780, 806, 840, 880].map(y => `<line x1="${260 + (y % 7) * 20}" y1="${y}" x2="${1180 - (y % 5) * 30}" y2="${y}"/>`).join('')}</g>
+          </svg>
+          ${Array.from({length: 14}, (_, i) => `<i class="fj-p" style="left:${(i * 73) % 100}%;--dx:${(i % 2 ? 1 : -1) * (80 + (i % 4) * 40)}px;animation-delay:${-(i * 1.9).toFixed(1)}s;animation-duration:${13 + (i % 5) * 2}s;transform:scale(${(.7 + (i % 3) * .3).toFixed(1)})"></i>`).join('')}
+        `;
+      } else if (activeKey === 'makie' || themeKey === 'makie') {
+        const blossom = (x, y, s) => Array.from({length: 5}, (_, k) => { const a = k * 1.2566 - 1.57; return `<circle cx="${(x + Math.cos(a) * 9 * s).toFixed(1)}" cy="${(y + Math.sin(a) * 9 * s).toFixed(1)}" r="${(8 * s).toFixed(1)}" fill="url(#mkGold)" fill-opacity=".92"/>`; }).join('') + `<circle cx="${x}" cy="${y}" r="${(3.4 * s).toFixed(1)}" fill="#b81e18"/>`;
+        stage.innerHTML = `
+          <div style="position:absolute;inset:0;background:
+            radial-gradient(ellipse 60% 50% at 76% 26%, rgba(226,180,74,.20), transparent 68%),
+            linear-gradient(165deg,#15100d 0%,#0a0706 45%,#060403 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              <linearGradient id="mkGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8e8b4"/><stop offset=".5" stop-color="#e2b44a"/><stop offset="1" stop-color="#9a6f16"/></linearGradient>
+              <pattern id="mkWave" width="80" height="40" patternUnits="userSpaceOnUse">
+                <g fill="none" stroke="url(#mkGold)" stroke-width="1.6">${[34, 26, 18, 10].map(r => `<circle cx="40" cy="40" r="${r}"/><circle cx="0" cy="20" r="${r}"/><circle cx="80" cy="20" r="${r}"/>`).join('')}</g>
+              </pattern>
+              <linearGradient id="mkFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".55" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity=".95"/></linearGradient>
+              <mask id="mkMask"><rect x="0" y="540" width="1440" height="360" fill="url(#mkFade)"/></mask>
+              <radialGradient id="mkMoon" cx=".4" cy=".35"><stop offset="0" stop-color="#fff3c4"/><stop offset=".6" stop-color="#e8c264"/><stop offset="1" stop-color="#b8892a"/></radialGradient>
+            </defs>
+            <circle cx="1090" cy="240" r="150" fill="none" stroke="url(#mkGold)" stroke-width="1.5" stroke-opacity=".35"/>
+            <circle cx="1090" cy="240" r="118" fill="url(#mkMoon)" fill-opacity=".92"/>
+            <g fill="url(#mkGold)" fill-opacity=".16"><path d="M0,360 Q120,330 240,356 T480,350 T720,364 L720,392 Q600,372 480,386 T240,388 T0,396 Z"/><path d="M820,520 Q960,492 1100,516 T1440,508 L1440,540 Q1300,522 1100,546 T820,548 Z"/></g>
+            <g fill="none" stroke="url(#mkGold)" stroke-linecap="round" stroke-width="5"><path d="M-30,210 C120,196 190,120 330,152 S520,96 610,36"/><path d="M190,150 C210,200 250,230 300,236" stroke-width="3"/><path d="M420,118 C440,170 470,196 520,206" stroke-width="3"/></g>
+            ${[[150,176,1],[240,134,1.15],[330,152,1.3],[420,116,1],[520,98,1.2],[600,44,.95],[300,236,.85],[520,206,.8],[110,150,.7]].map(([x,y,s]) => blossom(x,y,s)).join('')}
+            <rect x="0" y="540" width="1440" height="360" fill="url(#mkWave)" mask="url(#mkMask)" opacity=".62"/>
+            <path d="M-100,0 L520,0 L-100,640 Z" fill="#fff" fill-opacity=".018"/>
+            ${Array.from({length: 44}, (_, i) => `<circle cx="${(i * 331) % 1440}" cy="${(i * 163) % 900}" r="${(.8 + (i % 3) * .6).toFixed(1)}" fill="#ecc968" fill-opacity="${(.12 + (i % 5) * .06).toFixed(2)}"/>`).join('')}
+          </svg>
+        `;
+      } else if (activeKey === 'shrine' || themeKey === 'shrine') {
+        const roof = (cx, y, w, h) => `<path d="M${cx - w},${y + h} Q${cx - w * .62},${y + h * .72} ${cx - w * .3},${y} L${cx + w * .3},${y} Q${cx + w * .62},${y + h * .72} ${cx + w},${y + h} Q${cx},${y + h * .5} ${cx - w},${y + h} Z"/>`;
+        const slashes = [[140,120,1010,420,0],[1300,90,420,640,.12],[260,700,1180,300,.24]];
+        stage.innerHTML = `
+          <style>
+            @keyframes shCut { from { transform: scaleX(0); opacity: 0; } 12% { opacity: 1; } to { transform: scaleX(1); opacity: .85; } }
+            @keyframes shRise { from { transform: translate3d(0,0,0); opacity: 0; } 20% { opacity: .9; } to { transform: translate3d(var(--dx),-420px,0); opacity: 0; } }
+            .sh-cut { transform-box: fill-box; transform-origin: left center; animation: shCut .45s cubic-bezier(.2,.9,.2,1) both; }
+            .sh-em { position: absolute; bottom: -10px; width: 5px; height: 5px; border-radius: 50%; background: radial-gradient(circle,#ffd0d0,#ef2b3a 60%,transparent 70%); will-change: transform; animation: shRise 9s linear infinite; }
+            @media (prefers-reduced-motion: reduce) { .sh-cut { animation: none; } .sh-em { display: none; } }
+          </style>
+          <div style="position:absolute;inset:0;background:
+            radial-gradient(ellipse 70% 45% at 50% 100%, rgba(190,18,40,.55), transparent 70%),
+            linear-gradient(180deg,#030103 0%,#12040a 52%,#2a0610 80%,#080204 100%);"></div>
+          <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;">
+            <defs>
+              <radialGradient id="shMoon"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".55" stop-color="#c0142a"/><stop offset="1" stop-color="#5a0614"/></radialGradient>
+              <radialGradient id="shHalo"><stop offset="0" stop-color="#ef2b3a" stop-opacity=".5"/><stop offset="1" stop-color="#ef2b3a" stop-opacity="0"/></radialGradient>
+              <linearGradient id="shCut" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".15" stop-color="#ffe3e3"/><stop offset=".6" stop-color="#ef2b3a"/><stop offset="1" stop-color="#ef2b3a" stop-opacity="0"/></linearGradient>
+            </defs>
+            ${Array.from({length: 50}, (_, i) => `<circle cx="${(i * 277) % 1440}" cy="${(i * 71) % 420}" r="${(.5 + (i % 3) * .4).toFixed(1)}" fill="#ffd0d0" fill-opacity="${(.2 + (i % 4) * .12).toFixed(2)}"/>`).join('')}
+            <circle cx="720" cy="300" r="330" fill="url(#shHalo)"/>
+            <circle cx="720" cy="300" r="170" fill="url(#shMoon)"/>
+            <circle cx="760" cy="280" r="150" fill="#12040a" fill-opacity=".72"/>
+            <g fill="#050103">
+              ${roof(720, 250, 190, 56)}${roof(720, 330, 250, 66)}${roof(720, 430, 320, 78)}
+              <rect x="640" y="306" width="160" height="24"/><rect x="600" y="396" width="240" height="34"/><rect x="540" y="508" width="360" height="40"/>
+              ${[560, 620, 680, 760, 820, 880].map(x => `<rect x="${x}" y="540" width="14" height="130"/>`).join('')}
+              <path d="M0,700 L180,660 L360,690 L540,640 L900,640 L1080,690 L1260,656 L1440,700 L1440,900 L0,900 Z"/>
+            </g>
+            <g fill="#ef2b3a" fill-opacity=".85">${[570, 630, 690, 770, 830, 890].map(x => `<rect x="${x + 3}" y="548" width="3" height="110"/>`).join('')}</g>
+            <g stroke="#ef2b3a" stroke-width="2" fill="none" stroke-opacity=".8"><path d="M300,900 L340,760 L318,730 L372,690"/><path d="M1130,900 L1090,780 L1120,744 L1070,700"/><path d="M720,900 L704,820 L730,790"/></g>
+            ${slashes.map(([x1,y1,x2,y2,d]) => { const len = Math.hypot(x2 - x1, y2 - y1), ang = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI; return `<g transform="translate(${x1},${y1}) rotate(${ang.toFixed(1)})"><rect class="sh-cut" style="animation-delay:${d}s" x="0" y="-1.6" width="${len.toFixed(0)}" height="3.2" fill="url(#shCut)"/></g>`; }).join('')}
+          </svg>
+          ${Array.from({length: 16}, (_, i) => `<i class="sh-em" style="left:${(i * 61) % 100}%;--dx:${(i % 2 ? 1 : -1) * (20 + (i % 4) * 18)}px;animation-delay:${-(i * 0.6).toFixed(1)}s;animation-duration:${7 + (i % 5) * 1.5}s"></i>`).join('')}
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 80% at 50% 45%, transparent 45%, rgba(3,1,3,.7) 100%);"></div>
+        `;
+      } else if (SHADER_LOOKS[activeKey] || SHADER_LOOKS[themeKey]) {
+        startShaderBg(stage, SHADER_LOOKS[activeKey] ? activeKey : themeKey);
       } else if (activeKey === 'kimi' || themeKey === 'kimi') {
         stage.innerHTML = `
           <style>
@@ -5072,7 +5785,7 @@ const ANILIBRIA_API = 'https://anilibria.top/api/v1';
       if (theme.morph) {
         state.siteSettings.uiMorph = theme.morph;
         document.body.setAttribute('data-ui-morph', theme.morph);
-      } else if (['haikyuu', 'horimiya', 'jjk', 'sao', 'netflix', 'crunchyroll', 'kimi', 'kintsugi'].includes(state.siteSettings.uiMorph)) {
+      } else if (['haikyuu', 'horimiya', 'jjk', 'sao', 'netflix', 'crunchyroll', 'kimi', 'kintsugi', 'tsuki', 'citypop', 'inari', 'aurora', 'rain', 'vangogh', 'fuji', 'makie', 'shrine', 'cosmos', 'liquidgold', 'curse', 'biolum'].includes(state.siteSettings.uiMorph)) {
         state.siteSettings.uiMorph = 'spatial';
         document.body.removeAttribute('data-ui-morph');
       }
@@ -5165,6 +5878,97 @@ const ANILIBRIA_API = 'https://anilibria.top/api/v1';
         bgMode: 'nebula',
         watermark: 'ホリミヤ // 青春',
         pill: 'HORI × MIYAMURA • SWEET SODA'
+      },
+      tsuki: {
+        name: 'Лунный сад // Moon Bamboo',
+        themeKey: 'tsuki',
+        bgMode: 'minimal',
+        watermark: '月 // TSUKI',
+        pill: 'MOON GARDEN • FIREFLY NIGHT'
+      },
+      citypop: {
+        name: 'Токио 1985 // City Pop',
+        themeKey: 'citypop',
+        bgMode: 'minimal',
+        watermark: '東京 // 1985',
+        pill: 'CITY POP • MIDNIGHT CRUISE'
+      },
+      inari: {
+        name: 'Тысяча врат // Inari',
+        themeKey: 'inari',
+        bgMode: 'minimal',
+        watermark: '千本鳥居 // INARI',
+        pill: 'SENBON TORII • LANTERN PATH'
+      },
+      aurora: {
+        name: 'Аврора // Polar Night',
+        themeKey: 'aurora',
+        bgMode: 'minimal',
+        watermark: 'オーロラ // AURORA',
+        pill: 'POLAR NIGHT • AURORA BOREALIS'
+      },
+      rain: {
+        name: 'Токио под дождём // Neon Rain',
+        themeKey: 'rain',
+        bgMode: 'minimal',
+        watermark: '雨 // NEON RAIN',
+        pill: 'RAINY NIGHT • WET NEON'
+      },
+      vangogh: {
+        name: 'Звёздная ночь // Van Gogh',
+        themeKey: 'vangogh',
+        bgMode: 'minimal',
+        watermark: '星月夜 // VAN GOGH',
+        pill: 'STARRY NIGHT • OIL STROKES'
+      },
+      fuji: {
+        name: 'Фудзи // Dawn',
+        themeKey: 'fuji',
+        bgMode: 'minimal',
+        watermark: '富士 // DAWN',
+        pill: 'FUJI DAWN • SAKURA PETALS'
+      },
+      makie: {
+        name: 'Маки-э // Black Lacquer',
+        themeKey: 'makie',
+        bgMode: 'minimal',
+        watermark: '蒔絵 // MAKI-E',
+        pill: 'BLACK LACQUER • GOLD DUST'
+      },
+      shrine: {
+        name: 'Тёмный храм // Domain',
+        themeKey: 'shrine',
+        bgMode: 'minimal',
+        watermark: '呪 // DOMAIN',
+        pill: 'MALEVOLENT SHRINE • CURSED EMBERS'
+      },
+      cosmos: {
+        name: 'Космос // Nebula',
+        themeKey: 'cosmos',
+        bgMode: 'minimal',
+        watermark: '星雲 // COSMOS',
+        pill: 'LIVE NEBULA • DEEP SPACE'
+      },
+      liquidgold: {
+        name: 'Жидкое золото // Marble',
+        themeKey: 'liquidgold',
+        bgMode: 'minimal',
+        watermark: '金 // LIQUID GOLD',
+        pill: 'BLACK MARBLE • FLOWING GOLD'
+      },
+      curse: {
+        name: 'Проклятая энергия // Flow',
+        themeKey: 'curse',
+        bgMode: 'minimal',
+        watermark: '呪力 // CURSE',
+        pill: 'CURSED ENERGY • LIVE FLOW'
+      },
+      biolum: {
+        name: 'Био-свечение // Deep',
+        themeKey: 'biolum',
+        bgMode: 'minimal',
+        watermark: '光 // BIOLUM',
+        pill: 'DEEP SEA • BIOLUMINESCENCE'
       },
       kimi: {
         name: 'Твоё имя // Twilight Comet',
