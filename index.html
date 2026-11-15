@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KITSUNE // ANIME — Spatial Cyber-Magazine & Trophy Gallery</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2307080b'/%3E%3Cpath d='M14 14 L25 26 L32 24 L39 26 L50 14 L47 36 L32 52 L17 36 Z' fill='none' stroke='%23f43f5e' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M23 34 L28 36 M41 34 L36 37' stroke='%23f43f5e' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Outfit:wght@700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- HLS.js для прямого потокового вещания AniLibria -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            dark: {
+              950: '#06080e',
+              900: '#0c0f17',
+              800: '#141824',
+              700: '#1c2233',
+            },
+            brand: {
+              300: 'var(--brand-300, #fda4af)',
+              400: 'var(--brand-400, #fb7185)',
+              500: 'var(--brand-500, #f43f5e)',
+              600: 'var(--brand-600, #e11d48)',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white anim-60fps pb-20 lg:pb-0">
+
+  <!-- ЖИВАЯ СЦЕНА ФОНА (AMBIENT BACKDROP STAGE) -->
+  <div id="ambientBackdropStage">
+    <img id="ambientPosterBlur" src="https://anilibria.top/storage/releases/posters/9651/poster.jpg" alt="" />
+    <div id="ambientOrbsLayer">
+      <div class="ambient-orb ambient-orb-1"></div>
+      <div class="ambient-orb ambient-orb-2"></div>
+    </div>
+    <div id="animeUniverseBgLayer"></div>
+    <div id="cyberGridLayer">
+      <div id="cyberGridPlane"></div>
+    </div>
+    <div id="seigaihaLayer"></div>
+    <div id="tokyoTwilightLayer">
+      <div class="sunset-ray" style="--rx:12%;--rw:20vw;--rdeg:-22deg"></div>
+      <div class="sunset-ray" style="--rx:42%;--rw:24vw;--rdeg:-16deg"></div>
+      <div class="sunset-ray" style="--rx:74%;--rw:18vw;--rdeg:-28deg"></div>
+    </div>
+    <div id="specialBgEffectsLayer" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+    <div id="cursorAuraGlow"></div>
+  </div>
+
+  <!-- Слой живых сезонных частиц -->
+  <div id="seasonParticlesLayer" class="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-60"></div>
+
+  <!-- ШАПКА ПОРТАЛА -->
+  <header class="sticky top-0 z-40 glass border-b border-white/10">
+    <div class="max-w-[92rem] mx-auto px-2 sm:px-4 h-16 sm:h-[72px] flex items-center justify-between gap-2 sm:gap-2.5">
+
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- НОВЫЙ ОРИГИНАЛЬНЫЙ МОДУЛЬ СЛЕВА ОТ ЛОГОТИПА: СФЕРА ОМИКУДЗИ И ПУЛЬСА КАНАЛА -->
+        <div class="relative">
+          <button
+            type="button"
+            id="kitsuneOmikujiBtn"
+            onclick="toggleOmikujiPopover(event)"
+            title="Вытянуть аниме-предсказание Омикудзи на сегодня"
+            class="group relative h-10 px-2 sm:px-2.5 rounded-2xl bg-gradient-to-r from-brand-500/20 via-dark-800 to-dark-900 hover:from-brand-500/30 border border-brand-500/40 hover:border-brand-400 flex items-center gap-1.5 shadow-lg transition-all cursor-pointer"
+          >
+            <!-- Вращающееся энергетическое кольцо со сферой -->
+            <span class="relative w-6 h-6 rounded-xl bg-black/50 border border-brand-400/50 flex items-center justify-center shrink-0 overflow-hidden">
+              <span class="absolute inset-0 rounded-xl border border-dashed border-brand-300/60 animate-spin" style="animation-duration: 9s;"></span>
+              <span id="omikujiOrbRankKanji" class="font-serif font-black text-xs text-brand-300 group-hover:scale-110 transition-transform">吉</span>
+            </span>
+
+            <div class="hidden 2xl:flex flex-col items-start leading-none text-left">
+              <div class="flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="omikujiTopStatus" class="text-[9px] font-mono font-extrabold uppercase tracking-wider text-brand-300">ОМИКУДЗИ // ДЕНЬ</span>
+              </div>
+              <span id="omikujiMainTitle" class="text-[11px] font-display font-bold text-white tracking-tight mt-0.5">Свиток удачи</span>
+            </div>
+          </button>
+
+          <!-- Выпадающая карточка «Свиток Омикудзи & Тайтл-хранитель дня» -->
+          <div
+            id="omikujiPopoverCard"
+            onclick="event.stopPropagation()"
+            class="hidden absolute left-0 top-full mt-2.5 w-80 sm:w-96 bg-[#0b0e17] border border-brand-500/40 rounded-3xl shadow-[0_28px_80px_rgba(0,0,0,0.95)] p-4 z-50 space-y-3.5 modal-panel"
+          >
+            <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-md bg-brand-600 text-white font-serif font-black text-xs" id="omikujiPopSeal">大吉</span>
+                <div>
+                  <div class="text-[10px] font-mono font-bold uppercase tracking-widest text-brand-400">KITSUNE SHRINE ORACLE</div>
+                  <div class="text-xs font-display font-black text-white" id="omikujiPopLuckTitle">Великая удача просмотра</div>
+                </div>
+              </div>
+              <button
+                type="button"
+                onclick="rollNewOmikujiFortune()"
+                class="px-2.5 py-1 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-[11px] font-bold text-brand-300 transition cursor-pointer"
+              >↻ Новый свиток</button>
+            </div>
+
+            <p id="omikujiPopProphecy" class="text-xs text-zinc-300 leading-relaxed italic bg-dark-800/90 border border-white/5 rounded-2xl p-3">
+              «Сегодня идеальный вечер для историй с внезапным сюжетным поворотом. Не пропускай сцену после титров.»
+            </p>
+
+            <!-- Тайтл-хранитель сегодняшнего дня -->
+            <div class="space-y-1.5">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Твой тайтл-хранитель на сегодня:</div>
+              <div
+                id="omikujiGuardianAnimeBox"
+                class="p-2.5 rounded-2xl bg-dark-800 hover:bg-dark-700 border border-white/10 hover:border-brand-500/50 flex items-center gap-3 transition cursor-pointer group"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <a href="#home" onclick="navigateTo('home'); return false;" class="flex items-center gap-2.5 group">
+        <a href="#home" onclick="navigateTo('home'); return false;" class="flex items-center gap-2 group">
+          <div id="headerLogoBox" class="w-9 h-9 rounded-xl bg-dark-800 border border-white/10 group-hover:border-brand-500/50 flex items-center justify-center transition-colors shadow-lg">
+            <svg id="headerFoxSvg" class="w-5 h-5 text-brand-500 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 64 64" fill="none">
+              <path d="M12 12 L24 25 L32 23 L40 25 L52 12 L48 37 L32 54 L16 37 Z" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round" />
+              <path d="M22 35 L28 37 M42 35 L36 37" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+              <path d="M10 31 L17 33 M54 31 L47 33" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" opacity="0.65" />
+            </svg>
+          </div>
+          <div class="leading-none">
+            <span id="headerBrandTitle" class="font-display font-black text-base sm:text-lg tracking-tight text-white">KITSUNE</span>
+            <span class="text-brand-500 font-display font-black text-base sm:text-lg">//</span>
+          </div>
+        </a>
+
+        <button type="button" id="headerRadioEq" onclick="toggleLofiRadio()" title="KITSUNE Lo-Fi Radio" class="hidden items-end gap-0.5 h-6 px-2 py-1 rounded-lg bg-brand-500/15 border border-brand-500/30 cursor-pointer">
+          <span class="eq-bar w-0.5 h-3 bg-brand-400" style="animation-delay:0s"></span>
+          <span class="eq-bar w-0.5 h-3 bg-brand-400" style="animation-delay:0.2s"></span>
+          <span class="eq-bar w-0.5 h-3 bg-brand-400" style="animation-delay:0.4s"></span>
+          <span class="eq-bar w-0.5 h-3 bg-brand-400" style="animation-delay:0.1s"></span>
+        </button>
+      </div>
+
+      <nav class="hidden lg:flex items-center gap-0.5 bg-dark-900/90 border border-white/10 p-1 rounded-2xl shrink-0">
+        <button type="button" data-top-nav="home" onclick="navigateTo('home'); switchFeedTab('popular');" class="top-nav-pill inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-brand-600 text-white transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Каталог</span>
+        </button>
+        <button type="button" data-top-nav="mylist" onclick="navigateTo('home'); switchFeedTab('mylist');" class="top-nav-pill inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-white/5 transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <span>Список</span>
+          <span id="myListCountBadge" class="px-1.5 py-0.5 rounded-md bg-brand-500/20 text-brand-400 font-bold text-[10px]">0</span>
+        </button>
+        <button type="button" data-top-nav="tierlist" onclick="navigateTo('tierlist')" class="top-nav-pill inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-white/5 transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          <span>Тир-лист</span>
+        </button>
+        <button type="button" data-top-nav="calendar" onclick="navigateTo('calendar')" class="top-nav-pill inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-white/5 transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Календарь</span>
+        </button>
+        <button type="button" data-top-nav="ai" onclick="navigateTo('ai')" class="top-nav-pill inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-white/5 transition cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+          <span>ИИ</span>
+        </button>
+      </nav>
+
+      <!-- Широкая строка поиска на всё освободившееся место -->
+      <div class="relative flex-1 min-w-[200px] max-w-2xl xl:max-w-3xl mx-1">
+        <div
+          onclick="document.getElementById('searchInput')?.focus()"
+          class="relative flex items-center w-full h-11 sm:h-12 rounded-2xl bg-dark-900/95 hover:bg-dark-800 border-2 border-white/15 focus-within:border-brand-500 focus-within:shadow-[0_0_24px_-4px_var(--season-glow)] transition-all cursor-text px-4 gap-3 shadow-inner"
+        >
+          <svg class="w-5 h-5 text-brand-400 shrink-0 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+          </svg>
+
+          <input
+            id="searchInput"
+            type="text"
+            autocomplete="off"
+            oninput="handleSearchInput(this.value)"
+            onfocus="handleSearchInput(this.value)"
+            onkeydown="if(event.key === 'Enter') { event.preventDefault(); handleSearchInput(this.value); }"
+            placeholder="Поиск аниме или жанра..."
+            class="w-full h-full bg-transparent text-sm sm:text-base font-semibold text-white placeholder-zinc-400 outline-none"
+          />
+
+          <div class="flex items-center gap-1.5 shrink-0">
+            <kbd
+              id="searchHotkeyHint"
+              class="hidden sm:inline-flex items-center justify-center px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[11px] font-mono font-bold text-zinc-400 pointer-events-none"
+            >/</kbd>
+
+            <button
+              id="clearSearchBtn"
+              type="button"
+              onclick="event.stopPropagation(); clearSearch(); document.getElementById('searchInput')?.focus();"
+              aria-label="Очистить поиск"
+              class="hidden w-7 h-7 rounded-xl bg-white/10 hover:bg-rose-600 text-zinc-300 hover:text-white flex items-center justify-center transition cursor-pointer"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Выпадающее окно результатов -->
+        <div
+          id="liveSearchDropdown"
+          class="no-scrollbar hidden absolute left-0 right-0 top-full mt-2.5 w-full min-w-[300px] sm:min-w-[480px] bg-[#0c0f17] rounded-2xl overflow-hidden z-50 max-h-[72vh] overflow-y-auto"
+        ></div>
+      </div>
+
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <div class="relative">
+          <button
+            type="button"
+            id="themeQuickBtn"
+            onclick="toggleThemeMiniMenu(event)"
+            class="h-10 px-2.5 sm:px-3 rounded-xl bg-dark-800 hover:bg-dark-700 border border-white/10 hover:border-brand-500/40 inline-flex items-center gap-1.5 text-xs font-bold text-zinc-200 transition cursor-pointer"
+          >
+            <svg class="w-4 h-4 text-brand-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+            <span id="headerThemeBadge" class="hidden sm:inline text-brand-300">Неон</span>
+            <svg class="w-3 h-3 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+
+          <div
+            id="themeMiniMenuDropdown"
+            class="hidden absolute right-0 top-full mt-2 w-80 bg-[#0c0e14] border border-white/15 rounded-2xl shadow-2xl p-3.5 z-50 space-y-3 modal-panel"
+          >
+            <!-- Быстрые переключатели атмосферы внутри меню палитры -->
+            <div class="space-y-1.5 pb-2.5 border-b border-white/10">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 px-1">Живая атмосфера</div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <button type="button" id="bgModeHeaderBtn" onclick="cycleBackgroundMode()" class="flex items-center justify-center px-2.5 py-2 rounded-xl text-[11px] font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-200 transition cursor-pointer truncate">
+                  <span id="bgModeHeaderLabel" class="truncate">Фон: Аврора</span>
+                </button>
+                <button type="button" id="eveningVibeQuickBtn" onclick="activateEveningVibePreset()" class="flex items-center justify-center px-2.5 py-2 rounded-xl text-[11px] font-bold bg-white/5 hover:bg-amber-500/20 border border-white/10 text-zinc-200 hover:text-amber-200 transition cursor-pointer truncate">
+                  <span class="truncate">Лаунж-режим</span>
+                </button>
+                <button type="button" onclick="applyUiMorphMode('ghibli_lanterns'); document.getElementById('themeMiniMenuDropdown').classList.add('hidden');" class="col-span-2 flex items-center justify-center gap-1.5 px-2.5 py-2 rounded-xl text-[11px] font-bold bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/50 text-amber-200 transition cursor-pointer">
+                  <span>🏮 Включить уютные фонарики Ghibli</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between px-1">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Дизайны портала (20)</span>
+              <button type="button" onclick="document.getElementById('themeMiniMenuDropdown').classList.add('hidden'); navigateTo('settings');" class="text-[10px] text-brand-400 hover:underline font-bold cursor-pointer">Все темы →</button>
+            </div>
+            <div id="themeMiniMenuGrid" class="grid grid-cols-2 gap-1.5 max-h-72 overflow-y-auto pr-0.5 no-scrollbar"></div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <button
+            type="button"
+            id="headerMiniMenuBtn"
+            title="Настройки"
+            onclick="toggleHeaderMiniMenu(event)"
+            class="gear-btn w-10 h-10 rounded-xl bg-dark-800 hover:bg-dark-700 border border-white/10 hover:border-brand-500/40 flex items-center justify-center text-zinc-200 transition cursor-pointer"
+          >
+            <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </button>
+
+          <div
+            id="headerMiniMenuDropdown"
+            class="hidden absolute right-0 top-full mt-2 w-64 bg-[#0c0e14] border border-white/15 rounded-2xl shadow-2xl p-2 z-50 space-y-1 modal-panel"
+          >
+            <button type="button" onclick="closeHeaderMiniMenu(); navigateTo('settings');" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl bg-brand-500/15 hover:bg-brand-500/25 text-left text-xs font-bold text-brand-300 cursor-pointer">
+              <span>Все настройки портала</span>
+              <span>→</span>
+            </button>
+            <button type="button" onclick="toggleLofiRadio()" class="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/10 text-left text-xs font-semibold text-zinc-200 cursor-pointer">
+              <span>KITSUNE Lo-Fi Radio</span>
+              <span id="radioStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-zinc-400">ВЫКЛ</span>
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          id="headerProfileBtn"
+          onclick="navigateTo('profile')"
+          class="h-10 inline-flex items-center gap-2 px-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition shadow-lg shadow-brand-600/20 cursor-pointer"
+        >
+          <span id="headerAvatarCircle" class="w-6 h-6 rounded-lg bg-black/25 flex items-center justify-center text-[11px] font-black overflow-hidden">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <span id="headerProfileName" class="hidden sm:inline max-w-[95px] truncate">Войти</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- МОБИЛЬНЫЙ ДОК -->
+  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 glass border-t border-white/10 px-2 py-1.5 flex items-center justify-around">
+    <button type="button" onclick="navigateTo('home'); switchFeedTab('popular');" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Каталог</span>
+    </button>
+    <button type="button" onclick="navigateTo('home'); switchFeedTab('mylist');" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span>Список</span>
+    </button>
+    <button type="button" onclick="navigateTo('tierlist')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      <span>Тир-лист</span>
+    </button>
+    <button type="button" onclick="navigateTo('calendar')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Календарь</span>
+    </button>
+    <button type="button" onclick="navigateTo('ai')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-zinc-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+      <span>ИИ-подбор</span>
+    </button>
+    <button type="button" onclick="navigateTo('settings')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-brand-300 hover:text-brand-400 cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9"/></svg>
+      <span>Студия</span>
+    </button>
+  </nav>
+
+  <!-- СТРАНИЦА 1: ГЛАВНАЯ И КАТАЛОГ -->
+  <main id="page-home" class="page-view relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-7">
+
+    <!-- HERO ПРЕМЬЕРЫ -->
+    <section
+      id="heroBannerSection"
+      onmouseenter="if (typeof state !== 'undefined') state.heroPaused = true"
+      onmouseleave="if (typeof state !== 'undefined') state.heroPaused = false"
+      class="relative rounded-3xl overflow-hidden border border-white/10 bg-dark-900 shadow-2xl"
+    >
+      <div class="absolute inset-0 bg-gradient-to-r from-[#07080b] via-[#07080b]/85 to-transparent z-10"></div>
+      <img
+        id="heroPosterBg"
+        src="https://anilibria.top/storage/releases/posters/9651/poster.jpg"
+        onerror="this.src='https://placehold.co/1200x480/131620/f43f5e?text=KITSUNE+ANIME'"
+        alt="Featured Anime"
+        class="absolute right-0 top-0 w-full md:w-3/5 h-full object-cover opacity-55 transition-opacity duration-500"
+      />
+      <!-- Динамический водяной знак и декоративный штамп активной темы -->
+      <div id="heroThemeWatermark" class="pointer-events-none select-none absolute right-6 top-4 z-10 text-6xl sm:text-8xl font-black tracking-tighter">
+        狐 // NEON
+      </div>
+      <div class="relative z-20 p-6 sm:p-10 max-w-2xl space-y-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="heroThemePill" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-500/20 border border-brand-500/40 text-brand-300 text-[11px] font-bold uppercase tracking-wider">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span id="heroThemePillText">Прямой HLS поток • Без VPN</span>
+          </span>
+          <span id="heroRatingBadge" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>9.1</span>
+          </span>
+        </div>
+
+        <h1 id="heroTitle" class="font-display font-black text-2xl sm:text-4xl text-white leading-tight">
+          Поднятие уровня в одиночку
+        </h1>
+
+        <p id="heroDesc" class="text-xs sm:text-sm text-zinc-300 line-clamp-3 leading-relaxed">
+          Десять лет назад открылись Врата, соединившие реальный мир с измерением монстров. Сон Джин-Ву — слабейший охотник E-ранга, который получает загадочную Систему прокачки.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3 pt-1">
+          <button
+            type="button"
+            onclick="openHeroAnime()"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-600/30 transition cursor-pointer"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Смотреть онлайн</span>
+          </button>
+          <button
+            type="button"
+            onclick="navigateTo('tierlist')"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-xs sm:text-sm font-semibold transition cursor-pointer"
+          >
+            <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            <span>Составить Тир-лист</span>
+          </button>
+        </div>
+
+        <div id="heroDotsBar" class="flex items-center gap-2 pt-2"></div>
+      </div>
+    </section>
+
+    <!-- ПРОДОЛЖИТЬ ПРОСМОТР -->
+    <section id="continueWatchingSection" class="hidden space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
+          <svg class="w-5 h-5 text-brand-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+          <span>Продолжить просмотр</span>
+          <span id="historyOwnerTag" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-white/5 text-zinc-400"></span>
+        </h2>
+        <button type="button" onclick="clearWatchHistory()" class="text-xs text-zinc-500 hover:text-zinc-300 cursor-pointer">
+          Очистить историю
+        </button>
+      </div>
+      <div id="continueWatchingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+    </section>
+
+    <!-- КАТАЛОГ С АВТОПОДГРУЗКОЙ -->
+    <section class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-1.5 bg-dark-900 p-1 rounded-2xl border border-white/10 self-start overflow-x-auto max-w-full no-scrollbar">
+          <button type="button" id="tab-popular" onclick="switchFeedTab('popular')" class="feed-tab inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white transition cursor-pointer shrink-0">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            <span>Популярное</span>
+          </button>
+          <button type="button" id="tab-ongoing" onclick="switchFeedTab('ongoing')" class="feed-tab inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition cursor-pointer shrink-0">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Онгоинги</span>
+          </button>
+          <button type="button" id="tab-top" onclick="switchFeedTab('top')" class="feed-tab inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition cursor-pointer shrink-0">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Топ рейтинга</span>
+          </button>
+          <button type="button" id="tab-mylist" onclick="switchFeedTab('mylist')" class="feed-tab inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition cursor-pointer shrink-0">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            <span>Мой список</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <select
+            id="genreFilterSelect"
+            onchange="applyGenreFilter(this.value)"
+            class="bg-dark-900 border border-white/10 rounded-xl px-3 py-2 text-xs font-semibold text-zinc-200 outline-none cursor-pointer"
+          >
+            <option value="">Все жанры</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="myListSubfilters" class="hidden flex flex-wrap items-center gap-2 bg-dark-900/70 p-2 rounded-2xl border border-white/10">
+        <button type="button" data-list-sub="all" onclick="setMyListSubfilter('all')" class="mylist-sub-btn px-3 py-1.5 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer">Все закладки</button>
+        <button type="button" data-list-sub="watching" onclick="setMyListSubfilter('watching')" class="mylist-sub-btn px-3 py-1.5 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">Смотрю</button>
+        <button type="button" data-list-sub="planned" onclick="setMyListSubfilter('planned')" class="mylist-sub-btn px-3 py-1.5 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">В планах</button>
+        <button type="button" data-list-sub="completed" onclick="setMyListSubfilter('completed')" class="mylist-sub-btn px-3 py-1.5 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">Просмотрено</button>
+      </div>
+
+      <div id="animeCatalogGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+
+      <!-- Бесконечный скролл: сенсор автоподгрузки -->
+      <div id="infiniteScrollSentinel" class="py-6 flex flex-col items-center justify-center gap-3">
+        <div id="catalogSpinner" class="hidden w-6 h-6 rounded-full border-2 border-brand-500 border-t-transparent animate-spin"></div>
+        <div id="catalogStatusText" class="text-xs text-zinc-400">Листайте ниже для автоподгрузки релизов</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- СТРАНИЦА 2: ТИР-ЛИСТ -->
+  <section id="page-tierlist" class="page-view hidden relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-dark-900 border border-white/10 rounded-3xl p-5 sm:p-6">
+      <div>
+        <div class="text-xs font-bold uppercase tracking-wider text-brand-400 mb-1">Интерактивный рейтинг</div>
+        <h2 class="font-display font-black text-xl sm:text-2xl text-white flex items-center gap-2">
+          <svg class="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          <span>Твой персональный Тир-лист</span>
+        </h2>
+        <p class="text-xs text-zinc-400 mt-1">Распределяй тайтлы по рангам S / A / B / C. Релизы S-ранга получают золотую печать 「神」 в каталоге.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button type="button" onclick="copyTierListSummary()" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition cursor-pointer">
+          Скопировать список
+        </button>
+        <button type="button" onclick="resetTierList()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold text-zinc-200 cursor-pointer">
+          Сбросить
+        </button>
+        <button type="button" onclick="navigateTo('home')" class="px-4 py-2 rounded-xl bg-dark-800 border border-white/10 text-xs font-semibold text-zinc-300 cursor-pointer">
+          В каталог
+        </button>
+      </div>
+    </div>
+
+    <div id="tierRowsContainer" class="space-y-3"></div>
+
+    <div class="bg-dark-900 border border-white/10 rounded-3xl p-5 sm:p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <h3 class="font-display font-bold text-base text-white">Пул доступных релизов</h3>
+        <input
+          type="text"
+          id="tierSearchInput"
+          oninput="handleTierSearch(this.value)"
+          placeholder="Найти любое аниме для тир-листа..."
+          class="w-full sm:w-80 bg-dark-800 border border-white/10 focus:border-brand-500 rounded-xl px-4 py-2 text-xs text-white placeholder-zinc-500 outline-none"
+        />
+      </div>
+      <div id="tierPoolGrid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-3"></div>
+    </div>
+  </section>
+
+  <!-- СТРАНИЦА 3: КАЛЕНДАРЬ В РЕАЛЬНОМ ВРЕМЕНИ (БЕЗ ПРОШЕДШИХ ДНЕЙ) -->
+  <section id="page-calendar" class="page-view hidden relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-dark-900 border border-white/10 rounded-3xl p-5 sm:p-6">
+      <div class="space-y-1.5">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>LIVE СИНХРОНИЗАЦИЯ • ПРОШЕДШИЕ ДНИ СКРЫТЫ</span>
+        </div>
+        <h2 class="font-display font-black text-xl sm:text-2xl text-white">Живой календарь релизов</h2>
+        <p id="calendarSubtitleInfo" class="text-xs text-zinc-400">
+          Отображаются только сегодняшние премьеры и будущие дни недели. Как только день заканчивается в 00:00, он автоматически уходит из сетки.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="px-4 py-2.5 rounded-2xl bg-dark-800 border border-white/10 text-right">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-brand-400">Текущее время</div>
+          <div id="calendarRealtimeClock" class="font-mono font-bold text-sm sm:text-base text-white">--:--:--</div>
+          <div id="calendarRealtimeDate" class="text-[11px] text-zinc-400">Загрузка даты...</div>
+        </div>
+        <button type="button" onclick="toggleCalendarMode()" id="calendarViewModeBtn" class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-zinc-200 cursor-pointer">
+          Скрыты прошедшие: ВКЛ
+        </button>
+        <button type="button" onclick="navigateTo('home')" class="px-4 py-2.5 rounded-xl bg-dark-800 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">
+          В каталог
+        </button>
+      </div>
+    </div>
+
+    <div id="calendarDaysGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </section>
+
+  <!-- СТРАНИЦА 4: ИИ-ПОДБОР -->
+  <section id="page-ai" class="page-view hidden relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="bg-dark-900 border border-white/10 rounded-3xl p-6 space-y-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-bold text-brand-400 uppercase tracking-wider">KITSUNE AI CURATOR // GEMINI 2.5 PRO</span>
+            <span id="aiBackendStatusBadge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-800 border border-white/10 text-[10px] font-mono font-bold text-zinc-400">
+              <span id="aiBackendStatusDot" class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>
+              <span id="aiBackendStatusText">Проверка сервера...</span>
+            </span>
+          </div>
+          <h2 class="font-display font-black text-xl sm:text-2xl text-white mt-1">Умный подбор по вайбу, темпу и тропам</h2>
+          <p class="text-xs text-zinc-400 mt-0.5">Понимает сложные нарративные тропы, атмосферу, темп повествования и строгие исключения («без роботов», «не гаремник»).</p>
+        </div>
+        <button type="button" onclick="navigateTo('home')" class="px-3.5 py-2 rounded-xl bg-dark-800 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">Назад</button>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button type="button" onclick="runAiMoodPick('Мрачный экшен с сильным главным героем')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-xs font-semibold text-zinc-200 transition cursor-pointer">Мрачный экшен</button>
+        <button type="button" onclick="runAiMoodPick('Уютное фэнтези и приключения для отдыха вечером')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-xs font-semibold text-zinc-200 transition cursor-pointer">Уютное фэнтези</button>
+        <button type="button" onclick="runAiMoodPick('Романтика, чувства и драма до мурашек')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-xs font-semibold text-zinc-200 transition cursor-pointer">Романтика и драма</button>
+        <button type="button" onclick="runAiMoodPick('Запутанный детектив, интриги, мистика и триллер')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-xs font-semibold text-zinc-200 transition cursor-pointer">Детектив и триллер</button>
+        <button type="button" onclick="runAiMoodPick('Весёлая комедия и повседневность поднять настроение')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-xs font-semibold text-zinc-200 transition cursor-pointer">Комедия и чилл</button>
+        <button type="button" onclick="runAiMoodPick('Исекай, магия, другой мир и прокачка героя')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-xs font-semibold text-zinc-200 transition cursor-pointer">Исекай и магия</button>
+        <button type="button" onclick="runAiMoodPick('Хочу что-то депрессивное с ненадежным рассказчиком и крутым саундтреком, как в Евангелионе, но без роботов')" class="px-3 py-1.5 rounded-xl bg-brand-500/15 hover:bg-brand-500/30 border border-brand-500/40 text-xs font-bold text-brand-300 transition cursor-pointer">✦ Как Евангелион, но без роботов</button>
+        <button type="button" onclick="runAiMoodPick('Временные петли, отчаяние и попытки спасти близкого человека без фансервиса и гарема')" class="px-3 py-1.5 rounded-xl bg-brand-500/15 hover:bg-brand-500/30 border border-brand-500/40 text-xs font-bold text-brand-300 transition cursor-pointer">✦ Временные петли без гарема</button>
+        <button type="button" onclick="runAiMoodPick('Интеллектуальная дуэль двух гениев с серой моралью, где главный герой — антигерой')" class="px-3 py-1.5 rounded-xl bg-brand-500/15 hover:bg-brand-500/30 border border-brand-500/40 text-xs font-bold text-brand-300 transition cursor-pointer">✦ Битва умов и серая мораль</button>
+      </div>
+      <!-- Прямой ключ Gemini API для работы прямо из браузера без Python-сервера -->
+      <div class="p-3.5 rounded-2xl bg-dark-800/80 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+        <div class="space-y-0.5">
+          <div class="text-xs font-bold text-white flex items-center gap-1.5">
+            <span>🔑 Прямой режим без сервера (Zero-Server Gemini API)</span>
+          </div>
+          <p class="text-[11px] text-zinc-400">Вставь ключ из Google AI Studio один раз — подбор по тропам и выжимка Reddit будут работать напрямую из этого HTML-файла без запуска Python.</p>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <input
+            type="password"
+            id="directGeminiKeyInput"
+            placeholder="AIzaSy... (ключ Gemini)"
+            class="w-48 sm:w-56 bg-dark-900 border border-white/15 focus:border-brand-500 rounded-xl px-3 py-1.5 text-xs font-mono text-white outline-none"
+          />
+          <label class="inline-flex items-center gap-1 text-[10px] text-zinc-300 cursor-pointer" title="Ключ удалится сразу после закрытия вкладки (защита на чужом ПК)">
+            <input type="checkbox" id="geminiSessionOnlyChk" checked class="accent-rose-500 cursor-pointer" />
+            <span>Только сессия</span>
+          </label>
+          <button
+            type="button"
+            onclick="saveDirectGeminiApiKey()"
+            class="px-3.5 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold cursor-pointer"
+          >Сохранить</button>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <input type="text" id="aiMoodInput" onkeydown="if(event.key==='Enter') runAiMoodPick()" placeholder="Опиши настроение, сюжет или на что должно быть похоже..." class="flex-1 bg-dark-800 border border-white/10 focus:border-brand-500 rounded-xl px-4 py-2.5 text-xs text-white outline-none" />
+        <button type="button" onclick="runAiMoodPick()" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition cursor-pointer">Подобрать</button>
+      </div>
+      <div id="aiCuratorSummary" class="hidden text-xs text-brand-300 bg-brand-500/10 border border-brand-500/30 rounded-2xl px-4 py-2.5"></div>
+      <div id="aiRecommendationsResult" class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2"></div>
+    </div>
+  </section>
+
+  <!-- СТРАНИЦА 5: НАСТРОЙКИ И СТУДИЯ ЖИВОГО ДИЗАЙНА -->
+  <section id="page-settings" class="page-view hidden relative z-10 flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="bg-dark-900 border border-white/10 rounded-3xl p-5 sm:p-7 space-y-6 shadow-2xl">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-widest text-brand-400">KITSUNE // DESIGN STUDIO V12</span>
+          <h2 class="font-display font-black text-xl sm:text-2xl text-white">Студия дизайна, макета и живой атмосферы</h2>
+          <p class="text-xs text-zinc-400 mt-0.5">Все настройки аккуратно разделены на 3 вкладки без визуального перегруза.</p>
+        </div>
+        <button type="button" onclick="navigateTo('home')" class="px-4 py-2 rounded-xl bg-dark-800 hover:bg-dark-700 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer self-start sm:self-center">← В каталог</button>
+      </div>
+
+      <!-- ЧИСТЫЕ 3 ТАБА НАСТРОЕК (РЕШЕНИЕ ПРОБЛЕМЫ #3) -->
+      <div class="flex flex-wrap items-center gap-2 bg-dark-800/90 p-1.5 rounded-2xl border border-white/10">
+        <button
+          type="button"
+          id="settingsTabBtn-worlds"
+          onclick="switchSettingsStudioTab('worlds')"
+          class="flex-1 min-w-[160px] py-2.5 px-4 rounded-xl bg-brand-600 text-white text-xs font-bold transition cursor-pointer flex items-center justify-center gap-2 shadow-lg"
+        >
+          <span>🎨 1. Миры и Темы (28)</span>
+        </button>
+        <button
+          type="button"
+          id="settingsTabBtn-layout"
+          onclick="switchSettingsStudioTab('layout')"
+          class="flex-1 min-w-[160px] py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 text-xs font-semibold transition cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span>📐 2. Формат карточек и геометрия</span>
+        </button>
+        <button
+          type="button"
+          id="settingsTabBtn-atmosphere"
+          onclick="switchSettingsStudioTab('atmosphere')"
+          class="flex-1 min-w-[160px] py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 text-xs font-semibold transition cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span>🌧️ 3. Атмосфера, Звук и GPU</span>
+        </button>
+      </div>
+
+      <!-- ТАБ 1: МИРЫ, АНИМЕ-ВСЕЛЕННЫЕ И ТЕМЫ -->
+      <div id="settingsTabContent-worlds" class="space-y-6">
+        <!-- УЮТНЫЕ ЖИВЫЕ МИРЫ И ЗВУКОВАЯ АТМОСФЕРА (COZY SANCTUARY STUDIO V8) -->
+      <div class="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-500/20 via-[#1a120e] to-[#0d0907] border-2 border-amber-400/50 space-y-5 shadow-2xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-300/15 pb-4">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-mono font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-amber-500 text-zinc-950 mb-1.5">
+              🍵 COZY SANCTUARY // ТЁПЛЫЕ АТМОСФЕРНЫЕ МИРЫ
+            </span>
+            <h3 class="font-display font-black text-lg sm:text-xl text-amber-100">Уютные живописные вселенные и живой звук</h3>
+            <p class="text-xs text-amber-200/80 mt-0.5">Мягкий тёплый свет бумажных фонариков Ghibli, звёздные сумерки Макото Синкая, ночная кофейня в Токио под шум дождя и сад со светлячками.</p>
+          </div>
+
+          <!-- Встроенный генератор живого уютного звука (WebAudio API без внешних файлов) -->
+          <div class="flex flex-wrap items-center gap-1.5 shrink-0">
+            <button type="button" id="cozySoundRainBtn" onclick="toggleCozyAmbience('rain')" class="px-3 py-2 rounded-2xl bg-black/40 hover:bg-amber-500/25 border border-amber-300/30 text-xs font-bold text-amber-200 transition cursor-pointer">
+              🌧️ Шум дождя
+            </button>
+            <button type="button" id="cozySoundVinylBtn" onclick="toggleCozyAmbience('vinyl')" class="px-3 py-2 rounded-2xl bg-black/40 hover:bg-amber-500/25 border border-amber-300/30 text-xs font-bold text-amber-200 transition cursor-pointer">
+              📻 Тёплый винил + Камин
+            </button>
+            <button type="button" onclick="toggleLofiRadio()" class="px-3 py-2 rounded-2xl bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/50 text-xs font-bold text-amber-100 transition cursor-pointer">
+              🎵 Lo-Fi Пианино
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <button
+            type="button"
+            data-morph-card="ghibli_lanterns"
+            onclick="applyUiMorphMode('ghibli_lanterns')"
+            class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#29170e] to-[#140b06] border-2 border-amber-400/60 hover:border-amber-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-xl"
+          >
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-500/25 border border-amber-400/50 text-amber-200 font-serif font-black text-xs">千と千尋</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-black">LANTERN GLOW</span>
+            </div>
+            <div>
+              <div class="font-serif italic font-bold text-sm text-amber-100 group-hover:text-white">🏮 Огни святилища Ghibli</div>
+              <p class="text-[11px] text-amber-200/75 mt-1">Тёплые качающиеся бумажные фонарики на деревянной веранде, отражения в воде и золотые духи света.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="shinkai_twilight"
+            onclick="applyUiMorphMode('shinkai_twilight')"
+            class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#1b193e] via-[#2a173b] to-[#0f1026] border-2 border-pink-400/60 hover:border-sky-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-xl"
+          >
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-pink-500/25 border border-pink-300/50 text-pink-200 font-serif font-black text-xs">君の名は</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-sky-400 to-pink-400 text-black">KATAWARE-DOKI</span>
+            </div>
+            <div>
+              <div class="font-serif italic font-bold text-sm text-pink-100 group-hover:text-white">🌠 Сумерки Макото Синкая</div>
+              <p class="text-[11px] text-pink-200/75 mt-1">Волшебный час заката, падающая двухвостая комета Тиамат и розово-лазурные облака над холмом.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="lofi_cafe"
+            onclick="applyUiMorphMode('lofi_cafe')"
+            class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#261b14] to-[#120d0a] border-2 border-orange-400/55 hover:border-amber-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-xl"
+          >
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-orange-500/25 border border-orange-400/50 text-orange-200 font-mono font-bold text-xs">纯喫茶</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-400 text-black">RAINY ATTIC</span>
+            </div>
+            <div>
+              <div class="font-display font-bold text-sm text-orange-100 group-hover:text-white">☕ Ночная кофейня в Токио</div>
+              <p class="text-[11px] text-orange-200/75 mt-1">Тёплый свет ретро-лампы Эдисона, горячий пар над чашкой кофе, спящий кот на подоконнике и капли дождя.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="kyoto_fireflies"
+            onclick="applyUiMorphMode('kyoto_fireflies')"
+            class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#0d2820] to-[#06120e] border-2 border-lime-400/55 hover:border-lime-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-xl"
+          >
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-lime-500/20 border border-lime-400/50 text-lime-200 font-serif font-bold text-xs">蛍の庭</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-lime-400 text-black">FIREFLY ZEN</span>
+            </div>
+            <div>
+              <div class="font-serif italic font-bold text-sm text-lime-100 group-hover:text-white">🌿 Чайный сад со светлячками</div>
+              <p class="text-[11px] text-lime-200/75 mt-1">Лунная ночь в Киото, силуэты бамбуковой рощи, красный мостик над водой и десятки парящих светлячков.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="frieren_moon"
+            onclick="applyUiMorphMode('frieren_moon')"
+            class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#0c1d42] via-[#131238] to-[#050816] border-2 border-sky-400/75 hover:border-amber-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-[0_0_30px_-6px_rgba(56,189,248,0.45)]"
+          >
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-sky-400/20 border border-sky-300/60 text-sky-200 font-serif font-black text-xs">葬送 // 魔導の極致</span>
+              <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-gradient-to-r from-sky-300 via-amber-200 to-purple-300 text-slate-950">ZOLTRAAK // 6 RINGS</span>
+            </div>
+            <div>
+              <div class="font-serif italic font-bold text-sm text-sky-100 group-hover:text-amber-200">💠 Фрирен: Заклинание Золтраак</div>
+              <p class="text-[11px] text-sky-200/80 mt-1">Вращающиеся многослойные магические печати Золтраак, столкновение золотой и лазурной маны, руны Древних и бабочки света.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="violet_letter"
+            onclick="applyUiMorphMode('violet_letter')"
+            class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#331a29] to-[#170b12] border-2 border-amber-300/60 hover:border-amber-200 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-xl"
+          >
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/50 text-amber-200 font-serif font-bold text-xs">ヴァイオレット</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-300 text-slate-950">AUTO MEMORY</span>
+            </div>
+            <div>
+              <div class="font-serif italic font-bold text-sm text-amber-100 group-hover:text-white">✉️ Вайолет: Письма на закате</div>
+              <p class="text-[11px] text-amber-200/75 mt-1">Тёплый розовый закат Лейденшафтлиха, двойные золотые филигранные рамки, сургучная печать и парящие письма.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="kamakura_train"
+            onclick="applyUiMorphMode('kamakura_train')"
+            class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#132c3d] via-[#2b1f28] to-[#0a141e] border-2 border-orange-400/60 hover:border-teal-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-xl"
+          >
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-teal-400/20 border border-teal-300/50 text-teal-200 font-mono font-bold text-xs">江ノ電 // 鎌倉</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-teal-300 to-orange-400 text-slate-950">OCEAN SUNSET</span>
+            </div>
+            <div>
+              <div class="font-display font-bold text-sm text-orange-100 group-hover:text-white">🚋 Поезд у океана Камакуры</div>
+              <p class="text-[11px] text-orange-200/75 mt-1">Зелёный ретро-вагончик Энодэн с тёплыми светящимися окнами на фоне бирюзового океана и огромного закатного солнца.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="snowy_onsen"
+            onclick="applyUiMorphMode('snowy_onsen')"
+            class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#172642] to-[#0a101d] border-2 border-amber-300/55 hover:border-sky-200 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-xl"
+          >
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-sky-400/20 border border-sky-300/50 text-sky-200 font-serif font-bold text-xs">雪見温泉</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-300 text-slate-950">HOT SPRING</span>
+            </div>
+            <div>
+              <div class="font-serif italic font-bold text-sm text-amber-100 group-hover:text-white">♨️ Снежный онсэн Хоккайдо</div>
+              <p class="text-[11px] text-sky-200/75 mt-1">Контраст морозной снежной ночи и горячего источника с густым тёплым паром и янтарными деревянными фонарями.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+        <!-- НОВАЯ ФИШКА: КАРДИНАЛЬНАЯ ТРАНСФОРМАЦИЯ АРХИТЕКТУРЫ ДИЗАЙНА (UI MORPH STUDIO) -->
+      <div class="p-5 rounded-2xl bg-gradient-to-br from-brand-500/15 via-dark-800 to-dark-900 border border-brand-500/40 space-y-4 shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-md bg-brand-600 text-white mb-1">
+              ЭКСКЛЮЗИВНАЯ ТРАНСФОРМАЦИЯ UI
+            </span>
+            <h3 class="font-display font-black text-base sm:text-lg text-white">Полная смена концепции дизайна (не просто цвет!)</h3>
+            <p class="text-xs text-zinc-300">Переключай весь визуальный движок сайта: от тактического ЭЛТ-терминала NERV со сканлайнами до живой страницы японской манги с комикс-рамками.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <button
+            type="button"
+            data-morph-card="spatial"
+            onclick="applyUiMorphMode('spatial')"
+            class="ui-morph-btn p-4 rounded-2xl bg-dark-900/90 border border-white/15 hover:border-brand-500 text-left transition flex flex-col justify-between gap-3 cursor-pointer group"
+          >
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-brand-500/20 border border-brand-500/40 flex items-center justify-center text-brand-300 font-mono text-xs font-black">3D</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white/10 text-zinc-300">DEFAULT</span>
+            </div>
+            <div>
+              <div class="font-display font-bold text-sm text-white group-hover:text-brand-300">Spatial Cyber-Glass</div>
+              <p class="text-[11px] text-zinc-400 mt-0.5">Глубокое 3D-стекло, мягкое неоновое свечение и парящие карточки.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="nerv"
+            onclick="applyUiMorphMode('nerv')"
+            class="ui-morph-btn p-4 rounded-2xl bg-[#07120e] border border-emerald-500/40 hover:border-emerald-400 text-left transition flex flex-col justify-between gap-3 cursor-pointer group"
+          >
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300 font-mono text-xs font-black">OS</span>
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">HUD // CRT</span>
+            </div>
+            <div>
+              <div class="font-mono font-bold text-sm text-emerald-300">NERV // Tactical OS</div>
+              <p class="text-[11px] text-zinc-400 mt-0.5">ЭЛТ-развёртка на экране, рубленные военные углы, маркеры [SYS.RDY] и радарный шрифт.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="manga"
+            onclick="applyUiMorphMode('manga')"
+            class="ui-morph-btn p-4 rounded-2xl bg-[#14141b] border-2 border-white/80 hover:border-rose-400 text-left transition flex flex-col justify-between gap-3 cursor-pointer group"
+          >
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-white text-black flex items-center justify-center font-serif font-black text-xs">漫</span>
+              <span class="text-[10px] font-black px-2 py-0.5 rounded bg-white text-black">INK // 漫画</span>
+            </div>
+            <div>
+              <div class="font-display font-black text-sm text-white group-hover:text-rose-300">Tokyo Manga Ink</div>
+              <p class="text-[11px] text-zinc-300 mt-0.5">Контрастные комикс-рамки, жёсткие тени 7px, скринтон-точки и динамический наклон.</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            data-morph-card="ukiyoe"
+            onclick="applyUiMorphMode('ukiyoe')"
+            class="ui-morph-btn p-4 rounded-2xl bg-[#19110b] border-2 border-amber-400/50 hover:border-amber-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group"
+          >
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-serif font-black text-xs">浮</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">EDO // 浮世絵</span>
+            </div>
+            <div>
+              <div class="font-serif italic font-bold text-sm text-amber-200">Ukiyo-e Imperial Scroll</div>
+              <p class="text-[11px] text-zinc-400 mt-0.5">Двойной золотой переплёт, благородная антиква и эстетика императорского свитка Киото.</p>
+            </div>
+          </button>
+        </div>
+
+        <!-- БЛОК: ДИЗАЙНЫ ПО КУЛЬТОВЫМ АНИМЕ (ВОЛЕЙБОЛ / ХОРИМИЯ / МАГ БИТВА / САО) -->
+        <div class="pt-3 border-t border-white/10 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-black uppercase tracking-wider text-amber-300">Специальные дизайны по аниме-вселенным</span>
+            <span class="text-[10px] text-zinc-400 font-semibold">Меняют фоновую сцену, частицы и геометрию</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <button
+              type="button"
+              data-morph-card="haikyuu"
+              onclick="applyUiMorphMode('haikyuu')"
+              class="ui-morph-btn p-4 rounded-2xl bg-[#140c06] border-2 border-orange-500/60 hover:border-orange-400 text-left transition flex flex-col justify-between gap-3 cursor-pointer group"
+            >
+              <div class="flex items-center justify-between">
+                <span class="w-7 h-7 rounded-lg bg-orange-500/20 border border-orange-400/50 flex items-center justify-center text-orange-300 font-display font-black text-xs">10</span>
+                <span class="text-[10px] font-black px-2 py-0.5 rounded bg-orange-500 text-black">KARASUNO #10</span>
+              </div>
+              <div>
+                <div class="font-display font-black text-sm text-orange-300 group-hover:text-white">Волейбол!! (Haikyuu)</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Зал старшей школы Карасуно на закате, Хината #10 перед сеткой и парящие мячи.</p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              data-morph-card="horimiya"
+              onclick="applyUiMorphMode('horimiya')"
+              class="ui-morph-btn p-4 rounded-2xl bg-[#1b1021] border-2 border-dashed border-pink-400/60 hover:border-pink-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group"
+            >
+              <div class="flex items-center justify-between">
+                <span class="w-7 h-7 rounded-lg bg-pink-500/20 border border-pink-400/50 flex items-center justify-center text-pink-300 font-serif font-black text-xs">青</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-pink-500 to-sky-400 text-white">ROMCOM // 青春</span>
+              </div>
+              <div>
+                <div class="font-display font-bold text-sm text-pink-200 group-hover:text-white">Хоримия (Horimiya)</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Нежная пастель, пунктирные рамки школьного дневника и акварельные облака.</p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              data-morph-card="jjk"
+              onclick="applyUiMorphMode('jjk')"
+              class="ui-morph-btn p-4 rounded-2xl bg-[#0b0518] border-2 border-purple-500/60 hover:border-purple-400 text-left transition flex flex-col justify-between gap-3 cursor-pointer group"
+            >
+              <div class="flex items-center justify-between">
+                <span class="w-7 h-7 rounded-lg bg-purple-500/20 border border-purple-400/50 flex items-center justify-center text-purple-300 font-serif font-black text-xs">茈</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-600/30 border border-purple-400/40 text-purple-200">領域展開 // 茈</span>
+              </div>
+              <div>
+                <div class="font-display font-black text-sm text-purple-300 group-hover:text-white">Магическая битва (JJK)</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Проклятая энергия и Пустота Фиолетовый Годзё, затмение Бесконечности и молнии.</p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              data-morph-card="sao"
+              onclick="applyUiMorphMode('sao')"
+              class="ui-morph-btn p-4 rounded-2xl bg-[#051322] border-2 border-sky-400/60 hover:border-sky-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group"
+            >
+              <div class="flex items-center justify-between">
+                <span class="w-7 h-7 rounded-lg bg-sky-500/20 border border-sky-400/50 flex items-center justify-center text-sky-300 font-mono font-black text-[10px]">SAO</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sky-500/20 text-emerald-300">LINK START!</span>
+              </div>
+              <div>
+                <div class="font-mono font-bold text-sm text-sky-300 group-hover:text-white">САО (Sword Art Online)</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Голографический HUD Айнкрада, парящий 100-этажный замок и кристаллы телепортации.</p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              data-morph-card="solo_monarch"
+              onclick="applyUiMorphMode('solo_monarch')"
+              class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#180a38] via-[#0d0622] to-[#05020d] border-2 border-purple-500/75 hover:border-sky-400 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-[0_0_28px_-6px_rgba(168,85,247,0.5)]"
+            >
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-purple-500/25 border border-purple-400/60 text-purple-200 font-mono font-black text-xs">起きろ // ARISE</span>
+                <span class="text-[10px] font-mono font-black px-2 py-0.5 rounded bg-gradient-to-r from-purple-500 to-sky-400 text-slate-950">SHADOW MONARCH</span>
+              </div>
+              <div>
+                <div class="font-display font-black text-sm text-purple-200 group-hover:text-sky-300">👑 Соло Левелинг: Монарх Теней</div>
+                <p class="text-[11px] text-zinc-300 mt-0.5">Заклинание «Восстань!» (Arise), вращающаяся печать Бездны Сон Джин-Ву, лазурное окно Системы и фиолетовое пламя теней.</p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              data-morph-card="demon_infinity"
+              onclick="applyUiMorphMode('demon_infinity')"
+              class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#331008] via-[#1f0905] to-[#0d0402] border-2 border-orange-500/75 hover:border-amber-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-[0_0_28px_-6px_rgba(249,115,22,0.5)]"
+            >
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-orange-500/25 border border-orange-400/60 text-orange-200 font-serif font-black text-xs">ヒノカミ神楽</span>
+                <span class="text-[10px] font-black px-2 py-0.5 rounded bg-gradient-to-r from-orange-500 to-amber-300 text-slate-950">SUN BREATHING</span>
+              </div>
+              <div>
+                <div class="font-serif italic font-bold text-sm text-orange-200 group-hover:text-amber-200">🔥 Клинок: Танец Бога Огня</div>
+                <p class="text-[11px] text-zinc-300 mt-0.5">Огненное кольцо Дыхания Солнца (Хиноками Кагура), золотые искры углей и бесконечные коридоры Замка Бесконечности.</p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              data-morph-card="apothecary_palace"
+              onclick="applyUiMorphMode('apothecary_palace')"
+              class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#0b2e24] via-[#071c16] to-[#030e0b] border-2 border-emerald-400/70 hover:border-amber-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-[0_0_28px_-6px_rgba(16,185,129,0.45)]"
+            >
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-400/60 text-emerald-200 font-serif font-black text-xs">薬屋のひとりごと</span>
+                <span class="text-[10px] font-black px-2 py-0.5 rounded bg-gradient-to-r from-emerald-400 to-amber-300 text-slate-950">IMPERIAL JADE</span>
+              </div>
+              <div>
+                <div class="font-serif italic font-bold text-sm text-emerald-100 group-hover:text-amber-200">🌺 Монолог фармацевта: Дворец</div>
+                <p class="text-[11px] text-zinc-300 mt-0.5">Императорский нефрит, золотая филигранная печать Внутреннего Дворца, алые лепестки пионов и свечение редких трав Маомао.</p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              data-morph-card="bleach_bankai"
+              onclick="applyUiMorphMode('bleach_bankai')"
+              class="ui-morph-btn p-4 rounded-2xl bg-gradient-to-b from-[#290d36] via-[#180722] to-[#09020e] border-2 border-pink-400/75 hover:border-fuchsia-300 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-[0_0_28px_-6px_rgba(236,72,153,0.5)]"
+            >
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-pink-500/25 border border-pink-400/60 text-pink-200 font-serif font-black text-xs">卍解 // 千本桜</span>
+                <span class="text-[10px] font-black px-2 py-0.5 rounded bg-gradient-to-r from-pink-400 to-purple-400 text-slate-950">SENBONZAKURA</span>
+              </div>
+              <div>
+                <div class="font-serif italic font-bold text-sm text-pink-100 group-hover:text-white">🌸 Блич: Банкай Сэнбонзакура</div>
+                <p class="text-[11px] text-zinc-300 mt-0.5">Два ряда гигантских сияющих клинков Банкая Бьякуи Кучики и вихрь из тысячи светящихся лепестков сакуры в ночи.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- БЛОК: ЛЕГЕНДАРНЫЕ СТРИМИНГ-ПЛАТФОРМЫ (NETFLIX & CRUNCHYROLL) -->
+        <div class="pt-3 border-t border-white/10 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-black uppercase tracking-wider text-rose-400">Режимы стриминг-гигантов (Netflix & Crunchyroll)</span>
+            <span class="text-[10px] text-zinc-400 font-semibold">Фирменная вёрстка, цвета, плашки и фон</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button
+              type="button"
+              data-morph-card="netflix"
+              onclick="applyUiMorphMode('netflix')"
+              class="ui-morph-btn p-4 rounded-2xl bg-[#141414] border-2 border-[#E50914]/70 hover:border-[#E50914] text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-xl"
+            >
+              <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5 font-display font-black text-sm tracking-widest text-[#E50914]">
+                  <span class="px-2 py-0.5 rounded bg-[#E50914] text-white text-xs font-black">N</span>
+                  <span>NETFLIX</span>
+                </span>
+                <span class="text-[10px] font-black px-2 py-0.5 rounded bg-[#E50914]/20 border border-[#E50914]/50 text-rose-300">N SERIES // ТОП-10</span>
+              </div>
+              <div>
+                <div class="font-display font-black text-sm text-white group-hover:text-[#E50914] transition-colors">Netflix // Anime Hub</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Фирменный чёрный кинозал #141414, красный акцент #E50914, плашки «N SERIES» на постерах и спектральное свечение заставки Tudum.</p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              data-morph-card="crunchyroll"
+              onclick="applyUiMorphMode('crunchyroll')"
+              class="ui-morph-btn p-4 rounded-2xl bg-[#141519] border-2 border-[#F47521]/70 hover:border-[#F47521] text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-xl"
+            >
+              <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5 font-display font-black text-sm text-[#F47521]">
+                  <span class="w-5 h-5 rounded-full bg-[#F47521] text-black flex items-center justify-center text-xs font-black">CR</span>
+                  <span>crunchyroll</span>
+                </span>
+                <span class="text-[10px] font-black px-2 py-0.5 rounded bg-[#F47521] text-black">MEGA FAN</span>
+              </div>
+              <div>
+                <div class="font-display font-black text-sm text-white group-hover:text-[#F47521] transition-colors">Crunchyroll // Simulcast UI</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Оранжевый стиль #F47521 на графитовом #141519, карточки с оранжевой нижней линией, метки «СУБ | ОЗВ» и вихревая эмблема Crunchyroll.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- БЛОК: АВАНГАРДНЫЕ И КУЛЬТОВЫЕ СТИЛИ (PERSONA 5 / EDGERUNNERS / CHAINSAW VHS / SHAFT) -->
+        <div class="pt-3 border-t border-white/10 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-black uppercase tracking-wider text-yellow-300">Экстремальная смена геометрии (Новинки!)</span>
+            <span class="text-[10px] text-zinc-400 font-semibold">Панк-комикс, Кибер-глитч 2077, VHS 1997 и Артхаус SHAFT</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <button type="button" data-morph-card="persona5" onclick="applyUiMorphMode('persona5')" class="ui-morph-btn p-4 rounded-2xl bg-black border-2 border-white hover:border-red-500 text-left transition flex flex-col justify-between gap-3 cursor-pointer group shadow-[5px_5px_0_#e60012]">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 bg-[#e60012] text-white font-black text-xs -rotate-3">P5 // ★</span>
+                <span class="text-[10px] font-black px-2 py-0.5 bg-white text-black">TAKE YOUR HEART</span>
+              </div>
+              <div>
+                <div class="font-display font-black text-sm text-white group-hover:text-red-400">Persona 5 // Phantom UI</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Рваные карточки под углом, красно-чёрный панк и звёзды Сибуи.</p>
+              </div>
+            </button>
+
+            <button type="button" data-morph-card="edgerunners" onclick="applyUiMorphMode('edgerunners')" class="ui-morph-btn p-4 rounded-2xl bg-[#0b0a18] border-2 border-[#fcee0a] hover:border-cyan-400 text-left transition flex flex-col justify-between gap-3 cursor-pointer group">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 bg-[#fcee0a] text-black font-mono font-black text-xs">2077</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 bg-cyan-400/20 text-cyan-300">BRAINDANCE</span>
+              </div>
+              <div>
+                <div class="font-mono font-black text-sm text-[#fcee0a] group-hover:text-cyan-300">Cyberpunk // Edgerunners</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Неоновый жёлтый #FCEE0A, RGB-глитч контуры и луна Найт-Сити.</p>
+              </div>
+            </button>
+
+            <button type="button" data-morph-card="chainsaw" onclick="applyUiMorphMode('chainsaw')" class="ui-morph-btn p-4 rounded-2xl bg-[#12100d] border-2 border-lime-400 hover:border-orange-500 text-left transition flex flex-col justify-between gap-3 cursor-pointer group">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 bg-lime-400 text-black font-mono font-black text-xs">VHS</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 bg-orange-500 text-black">REC ● 1997</span>
+              </div>
+              <div>
+                <div class="font-mono font-black text-sm text-lime-300 group-hover:text-orange-400">Chainsaw // VHS 1997</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Кислотный грайндхаус 90-х, таймкод кассеты и стартер бензопилы.</p>
+              </div>
+            </button>
+
+            <button type="button" data-morph-card="shaft" onclick="applyUiMorphMode('shaft')" class="ui-morph-btn p-4 rounded-2xl bg-[#09080a] border border-white/60 border-t-4 border-t-rose-600 text-left transition flex flex-col justify-between gap-3 cursor-pointer group">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 border border-white/60 text-white font-serif font-black text-xs">物語</span>
+                <span class="text-[10px] font-mono font-bold text-rose-400">【 壱 // SHAFT 】</span>
+              </div>
+              <div>
+                <div class="font-serif italic font-bold text-sm text-white group-hover:text-rose-400">Monogatari // SHAFT</div>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Артхаусная типографика, номера сцен и кровавая луна.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+        <!-- ФИШКА 2: КОНСТРУКТОР СВОЕЙ ТЕМЫ (LIVE THEME MIXER) -->
+      <div class="p-5 rounded-2xl bg-dark-800/90 border border-white/10 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 class="font-display font-bold text-base text-white">Конструктор своей темы (Custom Theme Lab)</h3>
+            <p class="text-xs text-zinc-400">Собери собственный стиль: выбери любой неоновый акцент, глубину фона и архитектуру геометрии карточек.</p>
+          </div>
+          <button type="button" onclick="applyCustomUserTheme()" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold cursor-pointer self-start">
+            Применить свой стиль
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+          <label class="p-3.5 rounded-xl bg-dark-900 border border-white/10 flex items-center justify-between cursor-pointer">
+            <div>
+              <div class="text-xs font-bold text-white">Цвет неона</div>
+              <div class="text-[11px] text-zinc-400">Акцент кнопок и свечения</div>
+            </div>
+            <input type="color" id="customAccentPicker" value="#f43f5e" oninput="previewCustomThemeLive()" class="w-9 h-9 rounded-lg bg-transparent border-0 cursor-pointer" />
+          </label>
+
+          <label class="p-3.5 rounded-xl bg-dark-900 border border-white/10 flex items-center justify-between cursor-pointer">
+            <div>
+              <div class="text-xs font-bold text-white">Глубина фона</div>
+              <div class="text-[11px] text-zinc-400">Основной оттенок ночи</div>
+            </div>
+            <input type="color" id="customBgPicker" value="#07080b" oninput="previewCustomThemeLive()" class="w-9 h-9 rounded-lg bg-transparent border-0 cursor-pointer" />
+          </label>
+
+          <div class="p-3.5 rounded-xl bg-dark-900 border border-white/10 flex flex-col justify-between">
+            <div class="text-xs font-bold text-white mb-1">Архитектура форм</div>
+            <select id="customArchSelect" onchange="previewCustomThemeLive()" class="bg-dark-800 border border-white/15 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-white outline-none cursor-pointer">
+              <option value="default">Классическое кибер-стекло</option>
+              <option value="cyber">Рубленные HUD-углы (Cyberpunk)</option>
+              <option value="soft">Воздушные капсулы (Soft Pill)</option>
+              <option value="zen">Двойные храмовые рамки (Kyoto Zen)</option>
+              <option value="crystal">Хрустальный глянец (Crystal Blur)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-brand-400">Готовые дизайнерские пресеты (20 тем)</h3>
+          <span id="activeDesignBadge" class="px-3 py-1 rounded-full bg-brand-500/15 border border-brand-500/30 text-brand-300 text-xs font-bold">Багровый неон</span>
+        </div>
+        <p class="text-xs text-zinc-400">Каждый дизайн полностью меняет цветовую палитру, геометрию карточек, фоновый узор, шрифт заголовков и живые частицы.</p>
+        <div id="settingsThemeCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3"></div>
+      </div>
+      </div>
+
+      <!-- ТАБ 2: АРХИТЕКТУРА ЭКРАНА, САЙДБАР, BENTO-СЕТКА И КНОПКИ -->
+      <div id="settingsTabContent-layout" class="hidden space-y-6">
+        <!-- НОВЫЙ ГЛАВНЫЙ МОДУЛЬ: ЖЁСТКАЯ СМЕНА РАСПОЛОЖЕНИЯ НАВИГАЦИИ, СЕТКИ И ФОРМЫ КНОПОК -->
+      <div class="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-brand-600/20 via-[#0d111d] to-[#080a12] border-2 border-brand-500/50 space-y-6 shadow-2xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-mono font-black uppercase tracking-widest px-2.5 py-1 rounded-md bg-brand-600 text-white mb-1.5">
+              ⚡ АРХИТЕКТУРНЫЙ ТРАНСФОРМЕР V7 // NEXT-GEN UI
+            </span>
+            <h3 class="font-display font-black text-lg sm:text-xl text-white">Настройка формата карточек каталога и геометрии кнопок</h3>
+            <p class="text-xs text-zinc-300 mt-0.5">Переключай вид каталога между классическими постерами, широкими горизонтальными баннерами и Bento-витриной, а также меняй форму кнопок.</p>
+          </div>
+        </div>
+
+
+
+        <!-- 2. Архитектура сетки и ориентация карточек аниме -->
+        <div class="space-y-2.5 pt-3 border-t border-white/10">
+          <div class="text-xs font-bold uppercase tracking-wider text-amber-300">1. Архитектура карточек в каталоге (Постеры vs Широкие баннеры vs Bento):</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <button type="button" data-card-pill="posters" onclick="setSiteCardLayout('posters')" class="card-layout-btn p-3.5 rounded-2xl bg-dark-900 border border-white/15 hover:border-brand-500 text-left transition cursor-pointer">
+              <div class="font-display font-bold text-xs text-white">Вертикальные постеры (5 в ряд)</div>
+              <p class="text-[11px] text-zinc-400 mt-1">Классическая витрина обложек 3:4.</p>
+            </button>
+
+            <button type="button" data-card-pill="wide_banners" onclick="setSiteCardLayout('wide_banners')" class="card-layout-btn p-3.5 rounded-2xl bg-dark-900 border border-white/15 hover:border-brand-500 text-left transition cursor-pointer">
+              <div class="font-display font-bold text-xs text-amber-300">Горизонтальные баннеры (2 в ряд)</div>
+              <p class="text-[11px] text-zinc-400 mt-1">Широкие карточки: постер слева + инфо справа.</p>
+            </button>
+
+            <button type="button" data-card-pill="bento_grid" onclick="setSiteCardLayout('bento_grid')" class="card-layout-btn p-3.5 rounded-2xl bg-dark-900 border border-white/15 hover:border-brand-500 text-left transition cursor-pointer">
+              <div class="font-display font-bold text-xs text-emerald-300">Асимметричный Bento-Грид</div>
+              <p class="text-[11px] text-zinc-400 mt-1">Крупные двойные развороты чередуются с обычными.</p>
+            </button>
+
+            <button type="button" data-card-pill="compact_wall" onclick="setSiteCardLayout('compact_wall')" class="card-layout-btn p-3.5 rounded-2xl bg-dark-900 border border-white/15 hover:border-brand-500 text-left transition cursor-pointer">
+              <div class="font-display font-bold text-xs text-sky-300">Плотная стена (6 в ряд)</div>
+              <p class="text-[11px] text-zinc-400 mt-1">Максимальное количество тайтлов на один экран.</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Геометрия кнопок (Срезанные лезвия / Жёсткий сдвиг / Голографические капсулы) -->
+        <div class="space-y-2.5 pt-3 border-t border-white/10">
+          <div class="text-xs font-bold uppercase tracking-wider text-purple-300">2. Геометрия всех кнопок сайта:</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <button type="button" data-btn-pill="default" onclick="setSiteButtonStyle('default')" class="btn-style-pill px-3.5 py-2.5 rounded-xl bg-dark-900 border border-white/15 text-xs font-bold text-white cursor-pointer">Скруглённый Glass</button>
+            <button type="button" data-btn-pill="mecha_blade" onclick="setSiteButtonStyle('mecha_blade')" class="btn-style-pill px-3.5 py-2.5 rounded-xl bg-dark-900 border border-brand-500/40 text-xs font-bold text-brand-300 cursor-pointer">Срезанные лезвия 45°</button>
+            <button type="button" data-btn-pill="brutal_offset" onclick="setSiteButtonStyle('brutal_offset')" class="btn-style-pill px-3.5 py-2.5 rounded-xl bg-dark-900 border border-amber-400/40 text-xs font-bold text-amber-300 cursor-pointer">Жёсткий сдвиг 4px</button>
+            <button type="button" data-btn-pill="holo_pill" onclick="setSiteButtonStyle('holo_pill')" class="btn-style-pill px-3.5 py-2.5 rounded-xl bg-dark-900 border border-sky-400/40 text-xs font-bold text-sky-300 cursor-pointer">Неоновые капсулы</button>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- ТАБ 3: ЖИВАЯ СЦЕНА ФОНА, POSTER BLUR И ОПТИМИЗАЦИЯ GPU -->
+      <div id="settingsTabContent-atmosphere" class="hidden space-y-6">
+        <!-- ЖИВАЯ СЦЕНА ФОНА И ГЛУБИНА ПОСТЕРА -->
+      <div class="p-5 rounded-2xl bg-dark-800/95 border border-white/10 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span class="text-[10px] font-black uppercase tracking-wider text-brand-400">ATMOSPHERIC BACKDROP ENGINE</span>
+            <h3 class="font-display font-bold text-base text-white">Режимы живого фона и глубина размытия постера</h3>
+            <p class="text-xs text-zinc-400">Управляй задним планом сайта: кибер-волны горизонта, неоновый дождь Токио, размытое полотно текущего аниме или звёздная туманность.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-2">
+          <button type="button" data-bg-mode="twilight" onclick="setBackgroundMode('twilight')" class="bg-mode-pill p-2.5 rounded-xl bg-dark-900 border border-amber-400/40 text-xs font-bold text-amber-300 cursor-pointer hover:border-brand-500 transition">Вечерний Токио</button>
+          <button type="button" data-bg-mode="aurora" onclick="setBackgroundMode('aurora')" class="bg-mode-pill p-2.5 rounded-xl bg-dark-900 border border-white/10 text-xs font-bold text-white cursor-pointer hover:border-brand-500 transition">Аврора + Постер</button>
+          <button type="button" data-bg-mode="cybergrid" onclick="setBackgroundMode('cybergrid')" class="bg-mode-pill p-2.5 rounded-xl bg-dark-900 border border-white/10 text-xs font-bold text-white cursor-pointer hover:border-brand-500 transition">Кибер-волны</button>
+          <button type="button" data-bg-mode="rain" onclick="setBackgroundMode('rain')" class="bg-mode-pill p-2.5 rounded-xl bg-dark-900 border border-white/10 text-xs font-bold text-white cursor-pointer hover:border-brand-500 transition">Дождь Токио</button>
+          <button type="button" data-bg-mode="nebula" onclick="setBackgroundMode('nebula')" class="bg-mode-pill p-2.5 rounded-xl bg-dark-900 border border-white/10 text-xs font-bold text-white cursor-pointer hover:border-brand-500 transition">Туманность</button>
+          <button type="button" data-bg-mode="seigaiha" onclick="setBackgroundMode('seigaiha')" class="bg-mode-pill p-2.5 rounded-xl bg-dark-900 border border-white/10 text-xs font-bold text-white cursor-pointer hover:border-brand-500 transition">Волны Киото</button>
+          <button type="button" data-bg-mode="minimal" onclick="setBackgroundMode('minimal')" class="bg-mode-pill p-2.5 rounded-xl bg-dark-900 border border-white/10 text-xs font-bold text-white cursor-pointer hover:border-brand-500 transition">Минимализм</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+          <div class="p-3.5 rounded-xl bg-dark-900 border border-white/10 space-y-1.5">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-white">Сила размытого постера на фоне</span>
+              <span id="posterBlurIntensityVal" class="text-brand-300 font-bold">38%</span>
+            </div>
+            <input type="range" id="posterBlurSlider" min="0" max="75" value="38" oninput="updatePosterBackdropIntensity(this.value)" class="w-full accent-rose-500 cursor-pointer" />
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-dark-900 border border-white/10 flex items-center justify-between">
+            <div>
+              <div class="text-xs font-bold text-white">Световой ореол за курсором</div>
+              <div class="text-[11px] text-zinc-400">Мягкий неоновый прожектор при движении мыши</div>
+            </div>
+            <input type="checkbox" id="cursorAuraToggle" checked onchange="toggleCursorAura(this.checked)" class="w-5 h-5 accent-rose-500 cursor-pointer" />
+          </div>
+        </div>
+      </div>
+
+        <!-- Панель контроля GPU и энергосбережения (Решение проблемы #4) -->
+        <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <span class="text-[10px] font-mono font-black uppercase tracking-wider text-emerald-300">⚡ SMART GPU SHIELD // AUTO-PAUSE ACTIVE</span>
+              <h3 class="font-display font-bold text-base text-white">Интеллектуальная защита видеокарты и 60 FPS</h3>
+              <p class="text-xs text-zinc-300 mt-0.5">Во время открытия видеоплеера или сворачивания вкладки все многослойные SVG-кольца (Золтраак, Пустота Годзё) и частицы автоматически ставятся на паузу (0% нагрузки на GPU).</p>
+            </div>
+            <span class="px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-mono font-bold shrink-0 self-start">АКТИВНО ✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- СТРАНИЦА 6: ПРОФИЛЬ И КОЛЛЕКЦИЯ ТРОФЕЕВ -->
+  <section id="page-profile" class="page-view hidden relative z-10 flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <div class="bg-dark-900 border border-white/10 rounded-3xl p-6 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+        <div class="flex items-center gap-4">
+          <!-- Аватар профиля с загрузкой фото с компьютера -->
+          <div class="relative group shrink-0">
+            <input
+              type="file"
+              id="avatarFileInput"
+              accept="image/*"
+              onchange="handleAvatarFileUpload(event)"
+              class="hidden"
+            />
+            <div
+              id="profileBigAvatar"
+              onclick="triggerAvatarFilePicker()"
+              title="Нажми, чтобы выбрать аватарку с компьютера"
+              class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-brand-600 text-white flex items-center justify-center font-display font-black text-2xl overflow-hidden cursor-pointer shadow-xl transition-transform group-hover:scale-105"
+            >
+              <svg class="w-8 h-8" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round"><path d="M12 12 L24 25 L32 23 L40 25 L52 12 L48 37 L32 54 L16 37 Z"/></svg>
+            </div>
+            <button
+              type="button"
+              onclick="triggerAvatarFilePicker()"
+              title="Загрузить аватарку с компьютера"
+              class="absolute -bottom-1.5 -right-1.5 w-7 h-7 rounded-xl bg-brand-600 hover:bg-brand-500 border-2 border-[#0c0f17] text-white flex items-center justify-center shadow-lg cursor-pointer transition"
+            >
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </button>
+          </div>
+
+          <div class="space-y-1.5">
+            <h2 id="profileDisplayName" class="font-display font-black text-xl sm:text-2xl text-white">Гость KITSUNE</h2>
+            <p id="profileDisplayEmail" class="text-xs text-zinc-400">Личный кабинет и галерея трофеев</p>
+            <div class="flex flex-wrap items-center gap-2 pt-0.5">
+              <button
+                type="button"
+                onclick="triggerAvatarFilePicker()"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-500/15 hover:bg-brand-500/25 border border-brand-500/30 text-brand-300 text-[11px] font-bold transition cursor-pointer"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span>Загрузить фото с ПК</span>
+              </button>
+              <button
+                type="button"
+                id="resetAvatarBtn"
+                onclick="removeCustomAvatar()"
+                class="hidden px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-rose-500/20 border border-white/10 text-zinc-400 hover:text-rose-300 text-[11px] font-semibold transition cursor-pointer"
+              >
+                Сбросить фото
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 self-start sm:self-center">
+          <button type="button" onclick="exportCollectionPng()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-600/20 hover:bg-brand-600/30 border border-brand-500/40 text-brand-300 text-xs font-bold transition cursor-pointer">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Паспорт PNG</span>
+          </button>
+          <button type="button" onclick="navigateTo('home')" class="px-4 py-2 rounded-xl bg-dark-800 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">
+            В каталог
+          </button>
+        </div>
+      </div>
+
+      <!-- Выбор неоновой рамки аватара -->
+      <div class="p-3.5 rounded-2xl bg-dark-800/70 border border-white/10 flex flex-wrap items-center justify-between gap-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-brand-400">Неоновая рамка аватара:</span>
+        <div class="flex flex-wrap gap-1.5">
+          <button type="button" onclick="setAvatarFrame('')" class="px-3 py-1 rounded-xl bg-dark-900 border border-white/10 text-xs font-semibold text-zinc-300 hover:border-brand-500 cursor-pointer">Без рамки</button>
+          <button type="button" onclick="setAvatarFrame('frame-kitsune')" class="px-3 py-1 rounded-xl bg-dark-900 border border-rose-500/40 text-xs font-semibold text-rose-300 cursor-pointer">Пламя Кицунэ</button>
+          <button type="button" onclick="setAvatarFrame('frame-crown')" class="px-3 py-1 rounded-xl bg-dark-900 border border-amber-400/40 text-xs font-semibold text-amber-300 cursor-pointer">Корона S-ранга</button>
+          <button type="button" onclick="setAvatarFrame('frame-ice')" class="px-3 py-1 rounded-xl bg-dark-900 border border-sky-400/40 text-xs font-semibold text-sky-300 cursor-pointer">Ледяной кристалл</button>
+          <button type="button" onclick="setAvatarFrame('frame-cyber')" class="px-3 py-1 rounded-xl bg-dark-900 border border-purple-500/40 text-xs font-semibold text-purple-300 cursor-pointer">Кибер-нимб</button>
+        </div>
+      </div>
+
+      <!-- Вкладки профиля: Статистика / Галерея коллекции / Избранное / Витрина -->
+      <div class="space-y-4 pt-2">
+        <div class="flex flex-wrap items-center gap-2 border-b border-white/10 pb-2">
+          <button type="button" id="profileTab-collection" onclick="switchProfileTab('collection')" class="px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer">
+            Коллекция трофеев (<span id="collectionCountBadge">0</span>)
+          </button>
+          <button type="button" id="profileTab-favorites" onclick="switchProfileTab('favorites')" class="px-4 py-2 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer inline-flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-rose-400 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span>Избранное (<span id="favoritesCountBadge">0</span>)</span>
+          </button>
+          <button type="button" id="profileTab-showcase" onclick="switchProfileTab('showcase')" class="px-4 py-2 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">
+            Витрина топов
+          </button>
+          <button type="button" id="profileTab-friends" onclick="switchProfileTab('friends')" class="px-4 py-2 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer inline-flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-brand-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Друзья (<span id="friendsCountBadge">0</span>)</span>
+          </button>
+          <button type="button" id="profileTab-auth" onclick="switchProfileTab('auth')" class="px-4 py-2 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">
+            Аккаунт и безопасность
+          </button>
+        </div>
+
+        <!-- ВКЛАДКА 1: КОЛЛЕКЦИЯ ТРОФЕЕВ С СОРТИРОВКОЙ -->
+        <div id="profileContent-collection" class="space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-dark-800/80 p-3.5 rounded-2xl border border-white/10">
+            <div id="collectionGenreFilterSlot" class="flex flex-wrap items-center gap-1.5"></div>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-[11px] font-bold text-zinc-400">Сортировка:</span>
+              <select id="collectionSortSelect" onchange="renderUserCollection()" class="bg-dark-900 border border-white/15 rounded-xl px-3 py-1.5 text-xs font-semibold text-white outline-none cursor-pointer">
+                <option value="default">По дате добавления</option>
+                <option value="alpha">По алфавиту (А–Я)</option>
+                <option value="alpha_rev">По алфавиту (Я–А)</option>
+                <option value="year">По году выпуска</option>
+                <option value="rating">По рейтингу</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="userCollectionGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+        </div>
+
+        <!-- ВКЛАДКА 1.5: ИЗБРАННОЕ ПОЛЬЗОВАТЕЛЯ -->
+        <div id="profileContent-favorites" class="hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-dark-800/80 p-3.5 rounded-2xl border border-white/10">
+            <div>
+              <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-rose-400 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Твои любимые тайтлы в Избранном</span>
+              </div>
+              <p class="text-[11px] text-zinc-400">Нажимай на иконку сердца на любой карточке каталога, в поиске или внутри плеера, чтобы сохранить аниме сюда.</p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-[11px] font-bold text-zinc-400">Сортировка:</span>
+              <select id="favoritesSortSelect" onchange="renderUserFavorites()" class="bg-dark-900 border border-white/15 rounded-xl px-3 py-1.5 text-xs font-semibold text-white outline-none cursor-pointer">
+                <option value="default">Сначала новые</option>
+                <option value="rating">По рейтингу</option>
+                <option value="alpha">По алфавиту (А–Я)</option>
+                <option value="year">По году выпуска</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="userFavoritesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+        </div>
+
+        <!-- ВКЛАДКА 2: ВИТРИНА ТОПОВ -->
+        <div id="profileContent-showcase" class="hidden space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-dark-800/70 p-3.5 rounded-2xl border border-white/10">
+            <div>
+              <div class="text-xs font-bold text-white">Твоя почётная Витрина Топ-3 (<span id="showcaseFilledCount">0</span> / 3)</div>
+              <p class="text-[11px] text-zinc-400">Закрепи до 3 любимых аниме — нажми на карточку ниже или на кнопку «ТОП» в коллекции.</p>
+            </div>
+            <button type="button" onclick="clearUserShowcase()" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-rose-500/20 border border-white/10 text-[11px] font-semibold text-zinc-300 hover:text-rose-300 cursor-pointer self-start sm:self-auto">
+              Очистить витрину
+            </button>
+          </div>
+
+          <div id="userShowcaseGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+
+          <div class="p-4 rounded-2xl bg-dark-800/60 border border-white/10 space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div class="text-xs font-bold text-white">Быстрое добавление на витрину (нажми на тайтл, чтобы закрепить / убрать)</div>
+              <input
+                type="text"
+                id="showcaseSearchInput"
+                oninput="renderShowcaseCandidatePool(this.value)"
+                placeholder="Найти тайтл для витрины..."
+                class="w-full sm:w-64 bg-dark-900 border border-white/10 focus:border-brand-500 rounded-xl px-3 py-1.5 text-xs text-white outline-none"
+              />
+            </div>
+            <div id="showcaseCandidatesGrid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5 max-h-72 overflow-y-auto pr-1"></div>
+          </div>
+        </div>
+
+        <!-- ВКЛАДКА 2.5: ДРУЗЬЯ, ПОИСК ПО НИКНЕЙМУ И ЧУЖИЕ ПРОФИЛИ -->
+        <div id="profileContent-friends" class="hidden space-y-5">
+          <!-- ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ КОМНАТЫ НА 4 ДРУЗЕЙ (БЕЗ СВОЕГО СЕРВЕРА) -->
+          <div class="p-5 rounded-2xl bg-gradient-to-br from-emerald-500/15 via-dark-800 to-dark-900 border border-emerald-500/40 space-y-4 shadow-xl">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[10px] font-mono font-bold">
+                  <span id="squadSyncDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span id="squadSyncStatusLabel">SQUAD CLOUD // СИНХРОНИЗАЦИЯ НА 4 ЧЕЛОВЕК</span>
+                </div>
+                <h3 class="font-display font-black text-base sm:text-lg text-white mt-1">Общая облачная комната вашей четвёрки</h3>
+                <p class="text-xs text-zinc-300">Создай комнату в 1 клик и скинь код своим 3 друзьям — вы будете видеть реальные тир-листы, оценки, витрины и живую ленту друг друга со своих ПК.</p>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button type="button" onclick="createNewSquadCloudRoom()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold cursor-pointer shadow-lg">
+                  ⚡ Создать комнату пати
+                </button>
+                <button type="button" onclick="syncSquadCloudNow(true)" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-bold cursor-pointer">
+                  ↻ Синхронизировать
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <input
+                type="text"
+                id="squadRoomUrlInput"
+                placeholder="Код / URL вашей комнаты (создаётся кнопкой выше)..."
+                class="sm:col-span-2 bg-dark-900 border border-white/15 focus:border-emerald-400 rounded-xl px-3.5 py-2 text-xs font-mono text-white outline-none"
+              />
+              <div class="flex gap-2">
+                <button type="button" onclick="connectToSquadRoom()" class="flex-1 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold cursor-pointer">
+                  Подключить код
+                </button>
+                <button type="button" onclick="copySquadInviteCode()" title="Скопировать код для друзей" class="px-3 py-2 rounded-xl bg-dark-900 border border-white/15 text-xs font-bold text-emerald-300 hover:bg-white/10 cursor-pointer">
+                  Копировать
+                </button>
+              </div>
+            </div>
+
+            <!-- Живая лента событий вашей четвёрки -->
+            <div class="space-y-1.5 pt-2 border-t border-white/10">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-300">Живой пульс вашей компании (последние действия друзей):</div>
+              <div id="squadActivityFeedBox" class="space-y-1.5 max-h-40 overflow-y-auto pr-1 text-xs text-zinc-300">
+                <div class="text-[11px] text-zinc-500">Подключите или создайте комнату выше, чтобы видеть действия друзей в реальном времени.</div>
+              </div>
+            </div>
+          </div>
+          <!-- Поиск по никнейму -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-dark-800/80 border border-white/10 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-brand-400">KITSUNE // SOCIAL NEXUS</div>
+                <h3 class="font-display font-bold text-base text-white">Поиск друзей по никнейму</h3>
+                <p class="text-xs text-zinc-400">Введи никнейм пользователя, чтобы добавить его в друзья или заглянуть в его коллекцию трофеев и витрину.</p>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2">
+              <div class="relative flex-1">
+                <input
+                  type="text"
+                  id="friendNicknameSearchInput"
+                  oninput="renderFriendSearchResults(this.value)"
+                  onkeydown="if(event.key === 'Enter') { event.preventDefault(); addFriendByExactInput(); }"
+                  placeholder="Введи никнейм или часть ника (например: Akira)..."
+                  class="w-full bg-dark-900 border border-white/15 focus:border-brand-500 rounded-xl pl-4 pr-10 py-2.5 text-xs text-white placeholder-zinc-500 outline-none"
+                />
+              </div>
+              <button
+                type="button"
+                onclick="addFriendByExactInput()"
+                class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold shrink-0 cursor-pointer shadow-lg shadow-brand-600/20"
+              >
+                + Добавить по нику
+              </button>
+            </div>
+
+            <!-- Быстрая подсказка со всеми зарегистрированными никами -->
+            <div id="registeredNicknamesHintBar" class="flex flex-wrap items-center gap-1.5 text-[11px] text-zinc-400"></div>
+
+            <!-- Результаты поиска пользователей -->
+            <div id="friendSearchResultsBox" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-1"></div>
+          </div>
+
+          <!-- Список моих друзей -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="font-display font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                <span>Твой список друзей</span>
+                <span id="myFriendsListCounter" class="px-2 py-0.5 rounded-lg bg-brand-500/20 text-brand-300 text-xs font-bold">0</span>
+              </h4>
+              <span class="text-[11px] text-zinc-400">Нажми на карточку друга, чтобы открыть его профиль</span>
+            </div>
+            <div id="myFriendsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5"></div>
+          </div>
+        </div>
+
+        <!-- ВКЛАДКА 3: АККАУНТ И БЕЗОПАСНОСТЬ -->
+        <div id="profileContent-auth" class="hidden space-y-4">
+          <div id="savedAccountsSwitcher" class="hidden p-4 rounded-2xl bg-dark-800/70 border border-white/10 space-y-2">
+            <div class="text-xs font-bold text-zinc-300">Аккаунты на этом устройстве:</div>
+            <div id="savedAccountsList" class="flex flex-wrap gap-2"></div>
+          </div>
+
+          <div id="authSectionBox" class="max-w-md space-y-3 bg-dark-800/60 p-5 rounded-2xl border border-white/10">
+            <div class="flex items-center gap-2 bg-dark-900 p-1 rounded-xl border border-white/10">
+              <button type="button" id="authModeRegBtn" onclick="switchAuthMode('register')" class="flex-1 py-1.5 rounded-lg bg-brand-600 text-white text-xs font-bold cursor-pointer">Регистрация</button>
+              <button type="button" id="authModeLoginBtn" onclick="switchAuthMode('login')" class="flex-1 py-1.5 rounded-lg text-zinc-400 text-xs font-semibold cursor-pointer">Вход</button>
+            </div>
+            <form onsubmit="handleEmailAuth(event)" class="space-y-3">
+              <input type="text" id="authNickInput" placeholder="Придумай никнейм" class="w-full bg-dark-900 border border-white/10 focus:border-brand-500 rounded-xl px-3.5 py-2 text-xs text-white outline-none" />
+              <input type="email" id="authEmailInput" required placeholder="Твой Email" class="w-full bg-dark-900 border border-white/10 focus:border-brand-500 rounded-xl px-3.5 py-2 text-xs text-white outline-none" />
+              <input type="password" id="authPassInput" required minlength="4" placeholder="Пароль (от 4 символов)" class="w-full bg-dark-900 border border-white/10 focus:border-brand-500 rounded-xl px-3.5 py-2 text-xs text-white outline-none" />
+              <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold cursor-pointer">
+                Сохранить профиль
+              </button>
+            </form>
+          </div>
+
+          <div id="loggedOutBar" class="hidden flex items-center justify-between pt-2">
+            <span class="text-xs text-emerald-400 font-semibold">Все списки и коллекция трофеев привязаны к вашему профилю</span>
+            <button type="button" onclick="logoutAccount()" class="px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 text-xs font-bold cursor-pointer">Выйти из аккаунта</button>
+          </div>
+
+          <!-- МОДУЛЬ ПОЛНОГО РЕЗЕРВНОГО КОПИРОВАНИЯ И ПЕРЕНОСА ПРОФИЛЯ (.JSON) — РЕШЕНИЕ ПРОБЛЕМЫ #2 -->
+          <div class="p-5 rounded-2xl bg-gradient-to-br from-brand-500/15 via-dark-800 to-dark-900 border border-brand-500/40 space-y-3.5 mt-4 shadow-xl">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span class="text-[10px] font-mono font-black uppercase tracking-widest text-brand-400">💾 PORTABLE DATA VAULT // РЕЗЕРВНАЯ КОПИЯ</span>
+                <h4 class="font-display font-bold text-sm sm:text-base text-white">Экспорт и импорт всех данных профиля (.JSON)</h4>
+                <p class="text-xs text-zinc-300 mt-0.5">Сохрани все свои списки, коллекцию трофеев, Тир-лист, витрину, друзей и настройки в один файл, чтобы перенести их на другой ПК, телефон или браузер без потери данных.</p>
+              </div>
+            </div>
+
+            <input type="file" id="importBackupFileInput" accept=".json,application/json" onchange="importFullKitsuneBackupJson(event)" class="hidden" />
+
+            <div class="flex flex-wrap items-center gap-2.5 pt-1">
+              <button
+                type="button"
+                onclick="exportFullKitsuneBackupJson()"
+                class="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition cursor-pointer shadow-lg flex items-center gap-2"
+              >
+                <span>⬇️ Скачать полный бэкап (.JSON)</span>
+              </button>
+              <button
+                type="button"
+                onclick="document.getElementById('importBackupFileInput')?.click()"
+                class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-bold transition cursor-pointer flex items-center gap-2"
+              >
+                <span>⬆️ Восстановить из файла (.JSON)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- МОДАЛЬНОЕ ОКНО ПЛЕЕРА И КАРТОЧКИ ТАЙТЛА -->
+  <div id="playerModal" onclick="if(event.target === this) closePlayerModal()" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md overflow-y-auto p-2 sm:p-6">
+    <div id="playerCinemaBox" class="modal-panel max-w-5xl mx-auto bg-dark-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl my-auto transition-shadow duration-500">
+
+      <div class="px-4 sm:px-6 py-3.5 border-b border-white/10 flex flex-wrap items-center justify-between gap-3 bg-[#0c0e14]">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+          <h3 id="modalAnimeTitle" class="font-display font-bold text-base sm:text-lg text-white truncate">Название аниме</h3>
+          <span id="playerStreamBadge" class="hidden sm:inline-block text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-zinc-400">Серия 1 • AniLibria HLS</span>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <button type="button" id="ambilightToggleBtn" onclick="toggleAmbilight(); this.blur();" class="px-2.5 py-1.5 rounded-lg bg-brand-500/20 border border-brand-500/40 text-xs text-brand-300 font-semibold cursor-pointer">Амбилайт</button>
+          <button type="button" id="theaterModeBtn" onclick="toggleTheaterMode(); this.blur();" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-zinc-200 cursor-pointer">Кинотеатр</button>
+          <select
+            id="hlsQualitySelect"
+            onchange="changeHlsQuality(this.value); this.blur();"
+            class="bg-dark-800 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 font-semibold outline-none cursor-pointer"
+          >
+            <option value="1080">1080p</option>
+            <option value="720" selected>720p</option>
+            <option value="480">480p</option>
+          </select>
+          <select
+            id="playbackSpeedSelect"
+            onchange="changePlaybackSpeed(this.value); this.blur();"
+            class="bg-dark-800 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 font-semibold outline-none cursor-pointer"
+          >
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1.0x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2.0x</option>
+          </select>
+          <button
+            type="button"
+            onclick="togglePlayerFullscreen(); this.blur();"
+            title="Полный экран (F)"
+            class="px-2.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-xs text-white font-bold cursor-pointer"
+          >Полный экран</button>
+          <button type="button" onclick="closePlayerModal()" aria-label="Закрыть" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-rose-500/20 text-zinc-400 hover:text-rose-300 flex items-center justify-center cursor-pointer">✕</button>
+        </div>
+      </div>
+
+      <div
+        id="playerVideoContainer"
+        onmousemove="revealFullscreenOverlay()"
+        ontouchstart="revealFullscreenOverlay()"
+        ondblclick="togglePlayerFullscreen(event)"
+        class="relative aspect-video bg-black group select-none overflow-hidden"
+      >
+        <video
+          id="animeVideoElement"
+          controls
+          controlsList="nodownload"
+          playsinline
+          crossorigin="anonymous"
+          onclick="handleVideoSurfaceClick(event)"
+          ontimeupdate="handlePlayerTimeUpdate()"
+          onpause="saveCurrentWatchProgress(true)"
+          onended="handleEpisodeEnded()"
+          class="w-full h-full object-contain bg-black cursor-pointer outline-none"
+        ></video>
+
+        <!-- Панель переключения серий поверх видео и в полном экране -->
+        <div
+          id="fullscreenEpisodeBar"
+          class="opacity-0 transition-opacity duration-300 absolute top-3 left-3 right-3 z-30 flex items-center justify-between pointer-events-none"
+        >
+          <div class="pointer-events-auto inline-flex items-center gap-1.5 rounded-2xl bg-black/80 backdrop-blur-md border border-white/15 p-1.5 shadow-2xl">
+            <button
+              type="button"
+              id="fsPrevEpBtn"
+              onclick="stepEpisode(-1); this.blur();"
+              class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-35 text-xs font-bold text-white cursor-pointer"
+            >← Пред.</button>
+
+            <div class="relative">
+              <button
+                type="button"
+                onclick="toggleFullscreenEpDropdown(); this.blur();"
+                class="px-3.5 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-xs font-bold text-white inline-flex items-center gap-1.5 cursor-pointer"
+              >
+                <span id="fsCurrentEpLabel">Серия 1 / 12</span>
+                <span>▾</span>
+              </button>
+              <div
+                id="fsEpisodeDropdownList"
+                class="hidden absolute left-0 top-full mt-2 w-44 max-h-60 overflow-y-auto rounded-2xl bg-[#090d16]/95 border border-white/15 p-1.5 shadow-2xl space-y-1"
+              ></div>
+            </div>
+
+            <button
+              type="button"
+              id="fsNextEpBtn"
+              onclick="stepEpisode(1); this.blur();"
+              class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-35 text-xs font-bold text-white cursor-pointer"
+            >След. →</button>
+          </div>
+
+          <button
+            type="button"
+            id="fsToggleBtnLabel"
+            onclick="togglePlayerFullscreen(); this.blur();"
+            class="pointer-events-auto px-3.5 py-2 rounded-xl bg-black/80 hover:bg-brand-600 backdrop-blur-md border border-white/15 text-xs font-bold text-white cursor-pointer"
+          >Полный экран (F)</button>
+        </div>
+
+        <div id="playerHudFeedback" class="hidden pointer-events-none absolute inset-0 flex items-center justify-center z-30">
+          <div id="playerHudText" class="px-5 py-2.5 rounded-2xl bg-black/80 border border-white/15 text-white font-display font-bold text-sm sm:text-base shadow-2xl backdrop-blur-md"></div>
+        </div>
+      </div>
+
+      <div class="p-4 sm:p-6 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="text-[11px] text-zinc-500">Хоткеи: <span class="text-zinc-300 font-semibold">Space</span> Пауза • <span class="text-zinc-300 font-semibold">Стрелки</span> Перемотка • <span class="text-zinc-300 font-semibold">F</span> Экран</div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              id="modalFavoriteBtn"
+              onclick="toggleModalFavorite()"
+              class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-dark-800 hover:bg-rose-500/20 border border-white/10 text-xs font-bold text-zinc-200 transition cursor-pointer"
+            >
+              <span id="modalFavoriteIcon" class="inline-flex items-center"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+              <span id="modalFavoriteText">В избранное</span>
+            </button>
+            <select id="modalStatusSelect" onchange="setAnimeUserStatus(this.value)" class="bg-dark-800 border border-white/10 rounded-xl px-3 py-1.5 text-xs font-bold text-white outline-none cursor-pointer">
+              <option value="">+ В мой список / Коллекцию</option>
+              <option value="watching">Смотрю</option>
+              <option value="planned">В планах</option>
+              <option value="completed">Просмотрено (в коллекцию)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="episodesRibbon" class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar"></div>
+
+        <!-- РАСШИРЕННАЯ КАРТОЧКА ОПИСАНИЯ, ХАРАКТЕРИСТИК, СЕЗОНОВ И ПОХОЖИХ ТАЙТЛОВ -->
+        <div class="pt-3 border-t border-white/10 space-y-6">
+          <div class="flex flex-col md:flex-row gap-5 items-start">
+            <!-- Постер аниме + быстрые действия -->
+            <div class="w-36 sm:w-44 shrink-0 mx-auto md:mx-0 space-y-2.5">
+              <div class="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/15 bg-dark-800 shadow-2xl group">
+                <img
+                  id="modalAnimePoster"
+                  src=""
+                  onerror="this.src='https://placehold.co/320x450/131620/f43f5e?text=KITSUNE'"
+                  alt="Poster"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div id="modalPosterRatingBadge" class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-lg bg-black/85 border border-amber-400/30 text-amber-300 text-xs font-black shadow-lg">
+                  ★ 9.1
+                </div>
+                <div id="modalPosterOngoingBadge" class="hidden absolute bottom-2.5 left-2.5 px-2 py-0.5 rounded-md bg-emerald-500/90 text-zinc-950 text-[10px] font-black uppercase tracking-wider">
+                  Онгоинг
+                </div>
+              </div>
+
+              <button
+                type="button"
+                id="modalShowcasePinBtn"
+                onclick="if(state.currentAnime) { toggleShowcase(state.currentAnime.id, state.currentAnime); syncModalShowcasePinBtn(); }"
+                class="w-full py-2 px-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/30 text-amber-300 text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
+                <span id="modalShowcasePinText">На витрину Топ-3</span>
+              </button>
+            </div>
+
+            <!-- Подробная информация о релизе -->
+            <div class="flex-1 min-w-0 space-y-4 w-full">
+              <div class="space-y-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span id="modalTypeBadge" class="px-2.5 py-0.5 rounded-md bg-brand-600 text-white text-[10px] font-black uppercase tracking-wider">TV СЕРИАЛ</span>
+                  <span id="modalSeasonYearBadge" class="px-2.5 py-0.5 rounded-md bg-white/10 text-zinc-200 text-[11px] font-bold">2024</span>
+                  <span id="modalAgeRatingBadge" class="px-2 py-0.5 rounded-md bg-rose-500/20 border border-rose-500/40 text-rose-300 text-[10px] font-black">16+</span>
+                </div>
+                <h4 id="modalFullTitle" class="font-display font-black text-lg sm:text-xl text-white leading-snug pt-0.5">Название аниме</h4>
+                <div id="modalAltTitle" class="text-xs font-mono text-zinc-400">Original Title</div>
+              </div>
+
+              <!-- Жанровые теги (кликабельные для фильтрации) -->
+              <div id="modalGenresRow" class="flex flex-wrap gap-1.5"></div>
+
+              <!-- Сетка ключевых характеристик -->
+              <div id="modalInfoSpecsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <div class="p-2.5 rounded-xl bg-dark-800/90 border border-white/10">
+                  <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Статус релиза</div>
+                  <div id="specReleaseStatus" class="text-xs font-bold text-emerald-400 mt-0.5">Завершён</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-dark-800/90 border border-white/10">
+                  <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Эпизоды</div>
+                  <div id="specEpisodesCount" class="text-xs font-bold text-white mt-0.5">12 эп. (~24 мин)</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-dark-800/90 border border-white/10">
+                  <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Сезон и год</div>
+                  <div id="specSeasonYear" class="text-xs font-bold text-white mt-0.5">Зима 2024</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-dark-800/90 border border-white/10">
+                  <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Озвучка / Поток</div>
+                  <div id="specVoiceStudio" class="text-xs font-bold text-brand-300 mt-0.5">AniLibria • 1080p HLS</div>
+                </div>
+              </div>
+
+              <!-- Полное описание сюжета -->
+              <div class="p-3.5 rounded-2xl bg-dark-800/60 border border-white/10 space-y-1.5">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-brand-400">Описание сюжета</div>
+                <p id="modalAnimeDesc" class="text-xs sm:text-sm text-zinc-300 leading-relaxed"></p>
+              </div>
+
+              <!-- БЛОК: ВЫЖИМКА ОБСУЖДЕНИЙ СЕРИИ С REDDIT (r/anime) БЕЗ СПОЙЛЕРОВ -->
+              <div class="p-4 rounded-2xl bg-gradient-to-br from-orange-500/10 via-dark-800 to-dark-900 border border-orange-500/30 space-y-3 shadow-lg">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded-md bg-orange-600 text-white text-[10px] font-black uppercase tracking-wider">r/anime AI Pulse</span>
+                    <span class="text-xs font-bold text-white">Пульс серии на Reddit (Без спойлеров)</span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      id="redditPulseBtn"
+                      onclick="loadRedditEpisodePulse(false)"
+                      class="px-3 py-1.5 rounded-xl bg-orange-500/20 hover:bg-orange-500/35 border border-orange-400/40 text-orange-300 text-[11px] font-bold transition cursor-pointer"
+                    >
+                      Собрать мнения о серии
+                    </button>
+                    <button
+                      type="button"
+                      title="Обновить без кэша"
+                      onclick="loadRedditEpisodePulse(true)"
+                      class="px-2 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 text-[11px] font-bold transition cursor-pointer"
+                    >↻</button>
+                  </div>
+                </div>
+                <div id="redditPulseContainer" class="text-xs text-zinc-400 leading-relaxed">
+                  Нажми «Собрать мнения о серии», чтобы спарсить тред обсуждения текущего эпизода на Reddit (r/anime) и сгенерировать выжимку через Gemini: за что серию хвалят и за что ругают — строго без сюжетных спойлеров.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- БЛОК: СЛЕДУЮЩИЕ СЕЗОНЫ, СИКВЕЛЫ И ХРОНОЛОГИЯ ФРАНШИЗЫ -->
+          <div class="space-y-3 pt-2 border-t border-white/10">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+                <h4 class="font-display font-bold text-sm sm:text-base text-white">Все сезоны, продолжения и хронология просмотра</h4>
+              </div>
+              <span id="modalFranchiseCountBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-brand-500/20 text-brand-300">Загрузка...</span>
+            </div>
+            <div id="modalFranchiseGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+          </div>
+
+          <!-- БЛОК: ПОХОЖИЕ АНИМЕ ПО ЖАНРАМ И АТМОСФЕРЕ -->
+          <div class="space-y-3 pt-2 border-t border-white/10">
+            <div class="flex items-center justify-between">
+              <h4 class="font-display font-bold text-sm sm:text-base text-white">Похожие тайтлы по атмосфере</h4>
+              <span class="text-[11px] text-zinc-400">Рекомендации на основе жанров</span>
+            </div>
+            <div id="modalSimilarGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно заметки к тайтлу в коллекции -->
+  <div id="noteModal" onclick="if(event.target === this) closeNoteModal()" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md p-4 flex items-center justify-center">
+    <div class="modal-panel max-w-md w-full bg-dark-900 border border-white/15 rounded-3xl p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 id="noteModalTitle" class="font-display font-bold text-base text-white">Заметка к трофею</h3>
+        <button type="button" onclick="closeNoteModal()" class="w-7 h-7 rounded-lg bg-white/10 text-zinc-300 text-xs flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+      <textarea id="noteTextarea" rows="4" placeholder="Напишите свою рецензию или памятную заметку..." class="w-full bg-dark-800 border border-white/10 rounded-2xl p-3 text-xs text-white outline-none focus:border-brand-500"></textarea>
+      <div class="flex justify-end gap-2">
+        <button type="button" onclick="closeNoteModal()" class="px-4 py-2 rounded-xl bg-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">Отмена</button>
+        <button type="button" onclick="saveNoteModal()" class="px-5 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-xs font-bold text-white cursor-pointer">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО ПРОСМОТРА ЧУЖОГО ПРОФИЛЯ -->
+  <div id="publicProfileModal" onclick="if(event.target === this) closePublicProfileModal()" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md overflow-y-auto p-3 sm:p-6">
+    <div class="modal-panel max-w-4xl w-full mx-auto bg-dark-900 border border-white/15 rounded-3xl p-5 sm:p-7 space-y-6 shadow-2xl my-auto">
+      <!-- Шапка чужого профиля -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+        <div class="flex items-center gap-4">
+          <div id="pubProfileAvatar" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-brand-600 text-white flex items-center justify-center font-display font-black text-2xl overflow-hidden shrink-0 shadow-xl">
+            K
+          </div>
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <h3 id="pubProfileName" class="font-display font-black text-xl sm:text-2xl text-white">Никнейм</h3>
+              <span id="pubProfileRankBadge" class="px-2.5 py-0.5 rounded-full bg-brand-500/20 border border-brand-500/40 text-brand-300 text-[11px] font-bold">Мастер Кицунэ</span>
+              <span id="pubProfileOnlineDot" class="inline-flex items-center gap-1 text-[11px] text-emerald-400 font-semibold">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>В сети
+              </span>
+            </div>
+            <p id="pubProfileBio" class="text-xs text-zinc-400">Коллекционер аниме и ценитель японской анимации</p>
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <span id="pubProfileCompatibility" class="px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-400/30 text-amber-300 text-[11px] font-bold">
+                Совместимость вкусов: 92%
+              </span>
+              <span id="pubProfileStatsLine" class="text-[11px] text-zinc-400 font-semibold"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 self-start sm:self-center">
+          <button
+            type="button"
+            id="pubProfileFriendActionBtn"
+            onclick="toggleFriendFromPublicModal()"
+            class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition cursor-pointer shadow-lg"
+          >
+            + В друзья
+          </button>
+          <button
+            type="button"
+            onclick="closePublicProfileModal()"
+            class="w-9 h-9 rounded-xl bg-white/10 hover:bg-rose-500/20 text-zinc-300 hover:text-rose-300 flex items-center justify-center cursor-pointer"
+          >✕</button>
+        </div>
+      </div>
+
+      <!-- Вкладки внутри чужого профиля -->
+      <div class="flex flex-wrap items-center gap-2 border-b border-white/10 pb-2">
+        <button type="button" id="pubTab-showcase" onclick="switchPublicProfileTab('showcase')" class="px-3.5 py-1.5 rounded-xl bg-brand-600 text-white text-xs font-bold cursor-pointer">
+          Витрина Топ-3
+        </button>
+        <button type="button" id="pubTab-collection" onclick="switchPublicProfileTab('collection')" class="px-3.5 py-1.5 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">
+          Коллекция трофеев (<span id="pubCollectionCount">0</span>)
+        </button>
+        <button type="button" id="pubTab-favorites" onclick="switchPublicProfileTab('favorites')" class="px-3.5 py-1.5 rounded-xl bg-white/5 text-zinc-300 text-xs font-semibold cursor-pointer">
+          Избранное (<span id="pubFavoritesCount">0</span>)
+        </button>
+      </div>
+
+      <!-- Контент: Витрина чужого профиля -->
+      <div id="pubContent-showcase" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+
+      <!-- Контент: Коллекция чужого профиля -->
+      <div id="pubContent-collection" class="hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5 max-h-[55vh] overflow-y-auto pr-1"></div>
+
+      <!-- Контент: Избранное чужого профиля -->
+      <div id="pubContent-favorites" class="hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5 max-h-[55vh] overflow-y-auto pr-1"></div>
+    </div>
+  </div>
+
+  <!-- Модальное окно «Вечерний кинобилет KITSUNE» -->
+  <div id="cinemaSessionModal" onclick="if(event.target === this) closeCinemaSessionModal()" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md p-4 flex items-center justify-center">
+    <div class="modal-panel max-w-lg w-full bg-dark-900 border border-white/15 rounded-3xl p-6 space-y-5 shadow-2xl relative overflow-hidden">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-brand-400">KITSUNE // NIGHT CINEMA PASS</span>
+          <h3 class="font-display font-black text-lg text-white">Генератор вечернего киносеанса</h3>
+        </div>
+        <button type="button" onclick="closeCinemaSessionModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-zinc-300 text-xs flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <!-- Фильтры настроения сеанса -->
+      <div class="flex flex-wrap gap-1.5">
+        <button type="button" onclick="generateCinemaTicket('action')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">Драйв и экшен</button>
+        <button type="button" onclick="generateCinemaTicket('cozy')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">Уютный вечер</button>
+        <button type="button" onclick="generateCinemaTicket('mystery')" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 border border-white/10 text-xs font-semibold text-zinc-200 cursor-pointer">Тайны и интриги</button>
+        <button type="button" onclick="generateCinemaTicket('random')" class="px-3 py-1.5 rounded-xl bg-brand-500/20 border border-brand-500/40 text-xs font-bold text-brand-300 cursor-pointer">Случайный билет</button>
+      </div>
+
+      <!-- Сам билет -->
+      <div id="cinemaTicketBox" class="p-4 rounded-2xl bg-dark-800 border border-brand-500/30 flex flex-col sm:flex-row gap-4 items-center relative">
+        <img id="ticketPoster" src="" alt="Poster" class="w-24 h-36 rounded-xl object-cover shrink-0 shadow-lg border border-white/10" />
+        <div class="flex-1 space-y-2 text-left min-w-0">
+          <div class="flex items-center justify-between gap-2">
+            <span id="ticketCodeBadge" class="px-2 py-0.5 rounded-md bg-brand-600 text-white text-[10px] font-black tracking-wider">HALL #07 • VIP</span>
+            <span id="ticketRatingBadge" class="text-xs font-bold text-amber-400">★ 9.1</span>
+          </div>
+          <h4 id="ticketAnimeTitle" class="font-display font-black text-base text-white truncate">Поднятие уровня в одиночку</h4>
+          <div id="ticketPlanText" class="text-xs text-zinc-300">План на вечер: 3 серии подряд (~72 мин)</div>
+          <div id="ticketSnackText" class="text-[11px] text-brand-300 font-semibold">Рекомендуемый снек: Острый рамен и зелёный чай</div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+        <button type="button" onclick="downloadCinemaTicketPng()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-bold text-white cursor-pointer">
+          Скачать билет PNG
+        </button>
+        <button type="button" onclick="startCinemaTicketSession()" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-xs font-bold text-white shadow-lg shadow-brand-600/30 cursor-pointer">
+          ▶ Начать киносеанс
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-20 lg:bottom-6 right-6 z-50 translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-[#0c0e14] border border-white/15 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold">
+    <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+    <span id="toastMessage">Готово!</span>
+  </div>
+
+  <footer class="relative z-10 border-t border-white/10 bg-dark-900/90 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
+      <div class="flex items-center gap-2"><span class="font-display font-black text-white">KITSUNE // ANIME</span><span>• Spatial Glass Trophy Gallery</span></div>
+      <div class="flex items-center gap-4"><button type="button" onclick="navigateTo('home')" class="hover:text-white cursor-pointer">Каталог</button><button type="button" onclick="navigateTo('tierlist')" class="hover:text-white cursor-pointer">Тир-лист</button><button type="button" onclick="navigateTo('profile')" class="hover:text-white cursor-pointer">Профиль</button></div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
